@@ -1,0 +1,2 @@
+@extends('nguoidung.layout.master')
+

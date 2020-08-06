@@ -14,14 +14,13 @@ class Ghe extends Migration
     {
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('ID');
-            $table->bigInteger('phong_chieu_id')->nullable();
-            $table->string('ma_hang')->nullable();
-            $table->string('ma_cot')->nullable();
-            $table->string('loai_ghe')->nullable();
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('phong_chieu_id');
+            $table->string('ma_hang', 2);
+            $table->unsignedInteger('thu_tu_trong_hang');
+            $table->enum('loai_ghe', [ 'STANDARD', 'VIP'])->default('STANDARD');
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
 
 
         });

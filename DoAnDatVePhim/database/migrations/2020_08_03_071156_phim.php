@@ -15,16 +15,20 @@ class Phim extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
-            $table->string('ten_phim')->nullable();
-            $table->bigInteger('phim_the_loai_id')->nullable();
-            $table->dateTime('ngay_khoi_chieu')->nullable();
-            $table->dateTime('ngay_ket_thuc')->nullable();
-            $table->string('mo_ta')->nullable();
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
-
-
+            $table->string('ten_phim', 255);
+            $table->unsignedDecimal('diem_danh_gia', 2, 1);
+            $table->unsignedInteger('thoi_luong_chieu')->comment('Thời lượng chiếu tính bằng phút');
+            $table->string('quoc_gia_san_xuat', 255)->nullable();
+            $table->string('nha_san_xuat', 255)->nullable();
+            $table->string('dao_dien', 255)->nullable();
+            $table->string('dien_vien', 255)->nullable();
+            $table->date('ngay_khoi_chieu');
+            $table->date('ngay_ket_thuc')->nullable();
+            $table->text('noi_dung_phim')->nullable();
+            $table->string('anh_bia', 255);
+            $table->string('url_trailer_video', 255)->nullable();
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

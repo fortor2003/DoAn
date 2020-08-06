@@ -14,18 +14,14 @@ class Ve extends Migration
     {
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('ID');
-            $table->char('ma_ve')->unique()->nullable()->comment('Mã barcode');
-            $table->bigInteger('suat_chieu_id')->nullable();
-            $table->bigInteger('ghe_id')->nullable();
-            $table->bigInteger('nguoi_mua_id')->nullable();
-            $table->bigInteger('nguoi_ban_id')->nullable();
-
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
-
-
+            $table->bigIncrements('id');
+            $table->string('ma_ve', 100);
+            $table->unsignedBigInteger('suat_chieu_id');
+            $table->unsignedBigInteger('ghe_id');
+            $table->unsignedBigInteger('khach_hang_id');
+            $table->unsignedBigInteger('nhan_vien_id');
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

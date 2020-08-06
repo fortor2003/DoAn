@@ -4,24 +4,22 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TheLoai extends Migration
+class KhungThoiGian extends Migration
 {
     // Tên table trong cơ sở dữ liệu
-    private $ten_bang = 'THE_LOAI';
-    private $chu_thich_bang = 'Thể loại';
+    private $ten_bang = 'KHUNG_THOI_GIAN';
+    private $chu_thich_bang = 'Từ điển khung thời gian trong ngày';
 
     public function up()
     {
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
-            $table->bigIncrements('id')->comment('ID');
-            $table->string('ten_the_loai', 150);
+            $table->bigIncrements('id');
+            $table->string('thoi_gian', 4);
+            $table->unsignedInteger('so_thu_tu');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
         });
-        // Tạo comment cho bảng
-//        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");
     }
 
     public function down()

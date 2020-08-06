@@ -15,13 +15,14 @@ class SuatChieu extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
-            $table->bigInteger('phim_id')->nullable();
-            $table->bigInteger('phong_chieu_id')->nullable();
-            $table->dateTime('gio_bat_dau')->nullable();
-            $table->dateTime('gio_ket_thuc')->nullable();
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
+            $table->unsignedBigInteger('phim_id');
+            $table->unsignedBigInteger('phong_chieu_id');
+            $table->date('ngay_chieu');
+            $table->unsignedBigInteger('gio_bat_dau_id');
+            $table->unsignedBigInteger('gio_ket_thuc_id');
+            $table->boolean('giao_ngay')->default(0)->comment('Nếu = 1 => phim được chiều từ hh:mm đến hh:mm ngày hôm sau');
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
 
 
         });

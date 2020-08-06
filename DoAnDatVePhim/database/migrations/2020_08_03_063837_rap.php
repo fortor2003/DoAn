@@ -14,12 +14,12 @@ class Rap extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('ten_rap')->nullable();
-            $table->string('dia_chi')->nullable();
-            $table->string('phone')->nullable();
-            $table->string('mo_ta')->nullable();
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
+            $table->string('ten_rap', 100);
+            $table->string('dia_chi', 255)->nullable();
+            $table->string('so_dien_thoai', 15)->nullable();
+            $table->string('mo_ta', 255)->nullable();
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
         });
     }
 

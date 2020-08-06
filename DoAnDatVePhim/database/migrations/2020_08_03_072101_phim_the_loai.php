@@ -15,12 +15,10 @@ class PhimTheLoai extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
-
-            $table->bigInteger('phim_id')->nullable();
-            $table->bigInteger('the_loai_id')->nullable();
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
+            $table->unsignedBigInteger('phim_id');
+            $table->unsignedBigInteger('the_loai_id');
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
 
         });
         // Tạo comment cho bảng

@@ -15,15 +15,14 @@ class TaiKhoan extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
-            $table->String('email')->nullable();
-            $table->String('mat_khau')->nullable();
-            $table->bigInteger('quyen_hang_id')->nullable();
-            $table->String('ho_ten')->nullable();
-            $table->String('phone')->nullable();
-            $table->unsignedDecimal('point')->nullable();
-
-            $table->dateTime('thoiDiemTao')->useCurrent();
-            $table->dateTime('thoiDiemCapNhat')->useCurrent();
+            $table->String('email');
+            $table->String('mat_khau');
+            $table->unsignedBigInteger('vai_tro_id');
+            $table->String('ho_ten');
+            $table->String('so_dien_thoai')->nullable();
+            $table->unsignedBigInteger('diem_thuong')->default(0);
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
 
         });
         // Tạo comment cho bảng

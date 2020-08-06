@@ -15,11 +15,11 @@ class PhongChieu extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
-            $table->bigInteger('rap_id')->nullable()->comment('Mã Rạp');
-            $table->string('ten_phong')->nullable()->comment('Tên Phòng');
-            $table->string('suc_chua')->nullable()->comment('Sức chưa');
-            $table->dateTime('thoiDiemTao')->useCurrent()->comment('Thời điểm tạo');
-            $table->dateTime('thoiDiemCapNhat')->useCurrent()->comment('Thời điểm cập nhật');
+            $table->unsignedBigInteger('rap_id')->comment('Xác định rạp mà phòng chiếu này thuộc về');
+            $table->string('ten_phong', 100)->comment('Tên Phòng');
+            $table->unsignedInteger('suc_chua')->comment('Sức chưa');
+            $table->dateTime('thoi_diem_tao')->useCurrent();
+            $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
 
 
         });

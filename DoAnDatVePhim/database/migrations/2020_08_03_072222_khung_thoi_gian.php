@@ -19,6 +19,7 @@ class KhungThoiGian extends Migration
             $table->unsignedInteger('so_thu_tu');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
+            $table->unique('thoi_gian', 'KHUNG_THOI_GIAN_UNQ_IDX');
         });
     }
 

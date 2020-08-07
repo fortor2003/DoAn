@@ -18,7 +18,7 @@ class TheLoai extends Migration
             $table->string('ten_the_loai', 150);
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
+            $table->unique('ten_the_loai', 'THE_LOAI_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

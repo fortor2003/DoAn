@@ -19,6 +19,7 @@ class VaiTro extends Migration
             $table->String('ten_vai_tro', 100);
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
+            $table->unique('ma_vai_tro', 'VAI_TRO_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

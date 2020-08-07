@@ -23,7 +23,7 @@ class TaiKhoan extends Migration
             $table->unsignedBigInteger('diem_thuong')->default(0);
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
+            $table->unique(['email', 'vai_tro_id'], 'TAI_KHOAN_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

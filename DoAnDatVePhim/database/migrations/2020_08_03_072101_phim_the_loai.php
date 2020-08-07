@@ -19,7 +19,7 @@ class PhimTheLoai extends Migration
             $table->unsignedBigInteger('the_loai_id');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
+            $table->unique(['phim_id', 'the_loai_id'], 'PHIM_THE_LOAI_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

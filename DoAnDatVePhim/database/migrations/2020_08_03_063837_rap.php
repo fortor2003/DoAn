@@ -20,6 +20,7 @@ class Rap extends Migration
             $table->string('mo_ta', 255)->nullable();
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
+            $table->unique('ten_rap', 'RAP_UNQ_IDX');
         });
     }
 

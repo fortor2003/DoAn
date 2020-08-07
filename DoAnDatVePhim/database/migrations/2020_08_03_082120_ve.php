@@ -22,6 +22,8 @@ class Ve extends Migration
             $table->unsignedBigInteger('nhan_vien_id');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
+            $table->unique('ma_ve', 'VE_UNQ_IDX_1');
+            $table->unique(['suat_chieu_id', 'ghe_id'], 'VE_UNQ_IDX_2');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

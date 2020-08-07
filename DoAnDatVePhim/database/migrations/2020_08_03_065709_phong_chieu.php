@@ -20,8 +20,7 @@ class PhongChieu extends Migration
             $table->unsignedInteger('suc_chua')->comment('Sức chưa');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
-
+            $table->unique(['rap_id', 'ten_phong'], 'PHONG_CHIEU_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

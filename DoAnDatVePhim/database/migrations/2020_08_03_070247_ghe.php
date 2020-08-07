@@ -21,8 +21,7 @@ class Ghe extends Migration
             $table->enum('loai_ghe', [ 'STANDARD', 'VIP'])->default('STANDARD');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-
-
+            $table->unique(['phong_chieu_id', 'ma_hang', 'thu_tu_trong_hang'], 'GHE_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

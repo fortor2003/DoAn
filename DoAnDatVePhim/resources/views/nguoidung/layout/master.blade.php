@@ -25,9 +25,11 @@
     @include('nguoidung.layout.header_section')
 
     <!-- Slider -->
-    @include('nguoidung.layout.slider')
-
+    @yield('slider')
     <!--end slider -->
+
+    <!-- Search bar -->
+    @yield('timKiem')
 
     <!-- Main content -->
     @yield('noiDung')

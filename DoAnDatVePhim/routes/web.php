@@ -9,3 +9,11 @@ Route::get('/aaaa', 'khachHang\PageController@trangChu');
 Route::get('/', function (){
     return view('nguoidung.page.trangChinhPage');
 });
+//đăng nhập
+Route::get('/dang-nhap', function (){
+    return view('nguoidung.page.dangNhapPage');
+});
+//Chi tiết phim
+Route::get('/dang-nhap', function (){
+    return view('nguoidung.page.chiTietPhimPage');
+});

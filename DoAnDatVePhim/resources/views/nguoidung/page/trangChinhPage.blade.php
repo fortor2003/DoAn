@@ -1,5 +1,9 @@
 @extends('nguoidung.layout.master')
 
+@section('slider')
+    @include('nguoidung.layout.slider')
+@endsection
+
 @section('noiDung')
     <section class="container">
         <div class="movie-best">

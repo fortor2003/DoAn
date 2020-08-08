@@ -15,6 +15,7 @@ class TheLoai extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
+            $table->unsignedInteger('external_id')->nullable();
             $table->string('ten_the_loai', 150);
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();

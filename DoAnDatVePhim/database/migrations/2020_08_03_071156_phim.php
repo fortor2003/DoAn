@@ -15,6 +15,7 @@ class Phim extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
+            $table->unsignedInteger('external_id')->nullable();
             $table->string('tieu_de_goc', 255);
             $table->string('ten_phim', 255);
             $table->unsignedDecimal('diem_danh_gia', 2, 1);

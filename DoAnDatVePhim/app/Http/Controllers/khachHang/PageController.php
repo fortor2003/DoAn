@@ -10,6 +10,6 @@ class PageController extends Controller
 {
     public function trangChu(PageService $pageService) {
         dump($pageService->thongTinPhim(187));
-        return view('welcome');
+        return view('nguoidung.page.trangChinhPage');
     }
 }

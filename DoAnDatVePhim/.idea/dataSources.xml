@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="CINEMA@localhost" uuid="e19791c9-e2c1-48c7-b8a0-9b81c6dfa125">
-      <driver-ref>oracle</driver-ref>
-      <synchronize>true</synchronize>
-      <auto-commit>false</auto-commit>
-      <jdbc-driver>oracle.jdbc.OracleDriver</jdbc-driver>
-      <jdbc-url>jdbc:oracle:thin:@localhost:1521:orcl</jdbc-url>
-    </data-source>
     <data-source source="LOCAL" name="CINEMA@public" uuid="cb3c18e1-06b1-4329-8197-d0628e06dac2">
       <driver-ref>oracle</driver-ref>
       <synchronize>true</synchronize>

@@ -9,19 +9,20 @@
 <!-- Stylesheets -->
 
 <!-- Mobile menu -->
-<link href="css/gozha-nav.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="{{ asset('css/gozha-nav.css') }}">
+{{--<link href="css/gozha-nav.css" rel="stylesheet" />--}}
 <!-- Select -->
-<link href="css/external/jquery.selectbox.css" rel="stylesheet" />
+<link href=" {{ asset('css/external/jquery.selectbox.css') }}" rel="stylesheet" />
 
 <!-- REVOLUTION BANNER CSS SETTINGS -->
-<link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+<link rel="stylesheet" type="text/css" href=" {{ asset('rs-plugin/css/settings.css') }}" media="screen" />
 
 <!-- Custom -->
-<link href="css/style.css?v=1" rel="stylesheet" />
-
+{{--<link href="css/style.css?v=1" rel="stylesheet" />--}}
+<link rel="stylesheet" type="text/css" href="{{ asset('css/style.css?v=1') }}">
 
 <!-- Modernizr -->
-<script src="js/external/modernizr.custom.js"></script>
+<script src="{{ asset('js/external/modernizr.custom.js') }}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>

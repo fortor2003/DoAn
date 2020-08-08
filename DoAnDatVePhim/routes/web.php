@@ -14,6 +14,6 @@ Route::get('/dang-nhap', function (){
     return view('nguoidung.page.dangNhapPage');
 });
 //Chi tiết phim
-Route::get('/dang-nhap', function (){
+Route::get('/chi-tiet/{idPhim}', function ($idPhim){
     return view('nguoidung.page.chiTietPhimPage');
 });

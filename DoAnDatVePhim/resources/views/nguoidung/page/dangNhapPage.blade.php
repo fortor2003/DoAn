@@ -28,3 +28,7 @@
         </form>
     </section>
 @endsection
+
+@section('jscript')
+
+@endsection

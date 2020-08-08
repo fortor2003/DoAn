@@ -522,3 +522,10 @@
     </section>
 @endsection
 
+@section('jscript')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            init_Home();
+        });
+    </script>
+@endsection

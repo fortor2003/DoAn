@@ -106,14 +106,9 @@
 <!-- Form validation -->
 <script src="js/form.js"></script>
 
-<!-- Twitter feed -->
-<script src="js/external/twitterfeed.js"></script>
 
 <!-- Custom -->
 <script src="js/custom.js"></script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        init_Home();
-    });
-</script>
+
+

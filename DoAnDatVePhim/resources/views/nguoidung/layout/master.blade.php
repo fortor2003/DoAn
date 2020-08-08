@@ -38,6 +38,7 @@
 
     <!--footer-->
     @include('nguoidung.layout.footer')
-
+    <!--thêm js-->
+    @yield('jscript')
 </body>
 </html>

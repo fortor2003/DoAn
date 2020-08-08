@@ -1,28 +1,41 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!doctype html>
+<html>
+<head>
+    <!-- Basic Page Needs -->
+    <meta charset="utf-8">
+    <title>AMovie</title>
+    <meta name="description" content="A Template by Gozha.net">
+    <meta name="keywords" content="HTML, CSS, JavaScript">
+    <meta name="author" content="Gozha.net">
 
-        <title>BK Cinema</title>
+    <!-- Mobile Specific Metas-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="telephone=no" name="format-detection">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-        <!--bootstrap-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    @include('nguoidung.layout.header')
 
-    </head>
-    <body class="container-fluid">
-        <section>
-            @include('nguoidung.layout.header')
-        </section>
+</head>
 
-        <section>
-            @yield('noiDung')
-        </section>
+<body>
+<div class="wrapper">
+    <!-- Banner -->
+    @include('nguoidung.layout.banner')
 
-        <section class="row">
-            @include('nguoidung.layout.footer')
-        </section>
-    </body>
+    <!-- Header section -->
+    @include('header_Section')
+
+    <!-- Slider -->
+    @include('slider')
+
+    <!--end slider -->
+
+    <!-- Main content -->
+    @yield('noiDung')
+
+    <div class="clearfix"></div>
+
+    <!--footer-->
+    @include('nguoidung.layout.footer')
+
+</body>
 </html>

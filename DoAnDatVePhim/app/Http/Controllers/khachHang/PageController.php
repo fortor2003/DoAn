@@ -9,7 +9,9 @@ use App\Services\khachHang\PageService;
 class PageController extends Controller
 {
     public function trangChuPage(PageService $pageService) {
-        return view('nguoidung.page.trangChinhPage');
+        $danhSachPhimHayNhatHomNay = $pageService->danhSachPhimHayNhatHomNay();
+        $danhSachPhimDangChieu = $pageService->danhSachPhimDangChieu();
+        return view('nguoidung.page.trangChinhPage', compact(['danhSachPhimHayNhatHomNay', 'danhSachPhimDangChieu']));
     }
     public function dangNhapPage(PageService $pageService) {
         return view('nguoidung.page.dangNhapPage');

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\ITheLoaiRepository;
+use App\Services\khachHang\PageService;
 use Illuminate\Support\ServiceProvider;
 use Yajra\Oci8\Oci8ServiceProvider;
 
@@ -15,6 +17,9 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(Oci8ServiceProvider::class);
+        $this->app->bind(PageService::class, function ($app) {
+            return new PageService();
+        });
     }
 
     /**

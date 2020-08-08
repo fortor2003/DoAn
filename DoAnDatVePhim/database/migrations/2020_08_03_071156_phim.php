@@ -16,22 +16,25 @@ class Phim extends Migration
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id')->comment('ID');
             $table->unsignedInteger('external_id')->nullable();
+            $table->string('the_loai_external_id', 255)->nullable();
             $table->string('tieu_de_goc', 255);
-            $table->string('ten_phim', 255);
-            $table->unsignedDecimal('diem_danh_gia', 2, 1);
+            $table->string('tieu_de_vi', 255);
+            $table->unsignedDecimal('diem_danh_gia', 3, 1);
             $table->unsignedInteger('thoi_luong_chieu')->comment('Thời lượng chiếu tính bằng phút');
             $table->string('quoc_gia_san_xuat', 100)->nullable();
             $table->string('nha_san_xuat', 100)->nullable();
             $table->string('dao_dien', 100)->nullable();
-            $table->string('dien_vien', 1000)->nullable();
-            $table->date('ngay_khoi_chieu');
+            $table->string('dien_vien', 4000)->nullable();
+            $table->date('ngay_phat_hanh');
+            $table->date('ngay_khoi_chieu')->nullable();
             $table->date('ngay_ket_thuc')->nullable();
-            $table->text('noi_dung_phim')->nullable();
-            $table->string('anh_bia', 255);
+            $table->text('noi_dung_tom_tat')->nullable();
+            $table->string('url_anh_bia', 255)->nullable();
+            $table->string('url_anh_phong_nen', 255)->nullable();
             $table->string('url_trailer_video', 255)->nullable();
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-            $table->unique('tieu_de_goc', 'PHIM_UNQ_IDX');
+            $table->unique('external_id', 'PHIM_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

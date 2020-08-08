@@ -8,8 +8,13 @@ use App\Services\khachHang\PageService;
 
 class PageController extends Controller
 {
-    public function trangChu(PageService $pageService) {
-        dump($pageService->thongTinPhim(187));
+    public function trangChuPage(PageService $pageService) {
         return view('nguoidung.page.trangChinhPage');
+    }
+    public function dangNhapPage(PageService $pageService) {
+        return view('nguoidung.page.dangNhapPage');
+    }
+    public function chiTietPhimPage(PageService $pageService) {
+        return view('nguoidung.page.chiTietPhimPage');
     }
 }

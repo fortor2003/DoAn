@@ -14,7 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = 'App\Http\Controllers';
+    protected $namespaceKhachHang = 'App\Http\Controllers\KhachHang';
 
     /**
      * The path to the "home" route for your application.
@@ -58,9 +58,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
+        // Route khách hàng
         Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(base_path('routes/web.php'));
+            ->namespace($this->namespaceKhachHang)
+            ->group(base_path('routes/khach_hang.php'));
     }
 
     /**

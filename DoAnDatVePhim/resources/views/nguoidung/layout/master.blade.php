@@ -22,10 +22,10 @@
     @include('nguoidung.layout.banner')
 
     <!-- Header section -->
-    @include('header_Section')
+    @include('nguoidung.layout.header_section')
 
     <!-- Slider -->
-    @include('slider')
+    @include('nguoidung.layout.slider')
 
     <!--end slider -->
 

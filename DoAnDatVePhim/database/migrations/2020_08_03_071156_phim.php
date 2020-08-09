@@ -32,6 +32,7 @@ class Phim extends Migration
             $table->string('url_anh_bia', 255)->nullable();
             $table->string('url_anh_phong_nen', 255)->nullable();
             $table->string('url_trailer_video', 255)->nullable();
+            $table->enum('trang_thai', ['NGUNG_CHIEU', 'DANG_CHIEU', 'SAP_CHIEU'])->default('SAP_CHIEU');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
             $table->unique('external_id', 'PHIM_UNQ_IDX');

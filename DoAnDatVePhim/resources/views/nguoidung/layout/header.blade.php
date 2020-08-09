@@ -22,7 +22,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('css/style.css?v=1') }}">
 
 <!-- Modernizr -->
-<script src="{{ asset('js/external/modernizr.custom.js') }}"></script>
+<script src="{{ asset('js/external/modernizr.main.js') }}"></script>
 
 <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>

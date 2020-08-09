@@ -2,9 +2,8 @@
         <div class="container">
             <!-- Logo link-->
             <a href='index.html' class="logo">
-                <img alt='logo' src="images/logo.png">
+                <img alt='logo' src="{{asset('images/logo.png')}}">
             </a>
-
             <!-- Main website navigation-->
             <nav id="navigation-box">
                 <!-- Toggle for mobile menu mode -->

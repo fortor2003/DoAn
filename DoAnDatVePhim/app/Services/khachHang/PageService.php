@@ -30,6 +30,6 @@ class PageService
     }
 
     public function thongTinPhim($id): array {
-        return Phim::findOrFail($id)->makeHidden(['thoi_diem_tao', 'thoi_diem_cap_nhat'])->toArray();
+        return Phim::with('danhSachTheLoai:ten_the_loai')->findOrFail($id)->makeHidden(['thoi_diem_tao', 'thoi_diem_cap_nhat'])->toArray();
     }
 }

@@ -26,6 +26,7 @@ class PhimSeeder extends Seeder
                 'URL_TRAILER_VIDEO' => $item->trailer,
                 'THOI_DIEM_TAO' => now(),
                 'THOI_DIEM_CAP_NHAT' => now()
+                'TRANG_THAI' => 'DANG_CHIEU'
             ];
         }, json_decode(Storage::disk('local')->get('movies.json')));
         DB::delete('delete from phim');

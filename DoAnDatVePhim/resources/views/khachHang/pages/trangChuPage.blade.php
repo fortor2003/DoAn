@@ -117,12 +117,9 @@
                     </ul>
 
                     <ul class="select__group film-category">
-                        <li class="select__variant" data-value="Children's">Children's</li>
-                        <li class="select__variant" data-value='Comedy'>Comedy</li>
-                        <li class="select__variant" data-value='Drama'>Drama</li>
-                        <li class="select__variant" data-value='Fantasy'>Fantasy</li>
-                        <li class="select__variant" data-value='Horror'>Horror</li>
-                        <li class="select__variant" data-value='Thriller'>Thriller</li>
+                        @foreach($theLoai as  $tt)
+                            <li class="select__variant" data-value='{{$tt['id']}}'>{{$tt['ten_the_loai']}}</li>
+                        @endforeach
                     </ul>
 
                     <ul class="select__group actors">

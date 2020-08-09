@@ -10,7 +10,9 @@ class PageController extends Controller
     public function trangChuPage(PageService $pageService) {
         $danhSachPhimHayNhatHomNay = $pageService->danhSachPhimHayNhatHomNay();
         $danhSachPhimDangChieu = $pageService->danhSachPhimDangChieu();
-        return view('khachHang.pages.trangChuPage', compact(['danhSachPhimHayNhatHomNay', 'danhSachPhimDangChieu']));
+//        dump( $pageService->danhSachTheLoai());
+        $theLoai = $pageService->danhSachTheLoai();
+        return view('khachHang.pages.trangChuPage', compact(['danhSachPhimHayNhatHomNay', 'danhSachPhimDangChieu','theLoai']));
     }
     public function dangNhapPage(PageService $pageService) {
         return view('nguoidung.page.dangNhapPage');

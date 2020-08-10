@@ -34,11 +34,6 @@ class KhoaNgoai extends Migration
             $table->foreign('gio_ket_thuc_id')->references('id')->on('KHUNG_THOI_GIAN');
         });
 
-        // Bảng tài khoản
-        Schema::table('TAI_KHOAN', function (Blueprint $table) {
-            $table->foreign('vai_tro_id')->references('id')->on('VAI_TRO');
-        });
-
         // Bảng vé
         Schema::table('VE', function (Blueprint $table) {
             $table->foreign('suat_chieu_id')->references('id')->on('SUAT_CHIEU');

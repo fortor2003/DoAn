@@ -17,13 +17,13 @@ class TaiKhoan extends Migration
             $table->bigIncrements('id')->comment('ID');
             $table->String('email');
             $table->String('mat_khau');
-            $table->unsignedBigInteger('vai_tro_id');
+            $table->enum('loai_vai_tro', ['QUAN_TRI', 'NHAN_VIEN', 'KHACH_HANG'])->default('KHACH_HANG');
             $table->String('ho_ten');
             $table->String('so_dien_thoai')->nullable();
             $table->unsignedBigInteger('diem_thuong')->default(0);
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-            $table->unique(['email', 'vai_tro_id'], 'TAI_KHOAN_UNQ_IDX');
+            $table->unique(['email', 'loai_vai_tro'], 'TAI_KHOAN_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

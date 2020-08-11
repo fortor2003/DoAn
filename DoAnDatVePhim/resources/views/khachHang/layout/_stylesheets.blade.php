@@ -6,5 +6,3 @@
 @yield('above_main_style')
 <link href="{{asset('css/style.css?v=1')}}" rel="stylesheet" />
 
-
-

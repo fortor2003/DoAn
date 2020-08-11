@@ -10,7 +10,6 @@ class PageController extends Controller
     public function trangChuPage(PageService $pageService) {
         $danhSachPhimHayNhatHomNay = $pageService->danhSachPhimHayNhatHomNay();
         $danhSachPhimDangChieu = $pageService->danhSachPhimDangChieu();
-//        dump( $pageService->danhSachTheLoai());
         $theLoai = $pageService->danhSachTheLoai();
         return view('khachHang.pages.trangChuPage', compact(['danhSachPhimHayNhatHomNay', 'danhSachPhimDangChieu','theLoai']));
     }
@@ -19,7 +18,6 @@ class PageController extends Controller
     }
     public function chiTietPhimPage($id, PageService $pageService) {
         $thongTinPhim = $pageService->thongTinPhim($id);
-        // $thongTinPhim = $phim->with('danhSachTheLoai:ten_the_loai')->makeHidden(['thoi_diem_tao', 'thoi_diem_cap_nhat']);
        return view('khachHang.pages.chiTietPhimPage', compact('thongTinPhim'));
     }
 

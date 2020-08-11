@@ -8,6 +8,14 @@ Route::get('/dang-nhap', 'PageController@trangChuPage')->name('khachHang.dangNha
 
 Route::get('/thong-tin-chi-tiet-phim/{id}', 'PageController@chiTietPhimPage')->name('khachHang.chiTietPhimPage');
 
+Route::get('/dat-ve', 'PageController@datVePage')->name('khachHang.datVePage');
+
+Route::get('/dat-ghe', 'PageController@datGhePage')->name('khachHang.datGhePage');
+
+Route::get('/thanh-toan', 'PageController@thanhToanPage')->name('khachHang.thanhToanPage');
+
+Route::get('/hien-thi-ve', 'PageController@hienThiVePage')->name('khachHang.hienThiVePage');
+
 
 Route::get('/test-login', function () {
     if (\Illuminate\Support\Facades\Auth::attempt(['email' => 'khachhang5@example.com', 'password' => 'khachhang5'])) {

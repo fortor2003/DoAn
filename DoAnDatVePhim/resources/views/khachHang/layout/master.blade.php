@@ -20,7 +20,13 @@
         <section class="container">
             @yield('content')
         </section>
+
+        @yield('content1')
+
         <div class="clearfix"></div>
+
+        @yield('pagination')
+
         @include('khachHang.layout._footer')
     </div>
     @include('khachHang.layout._sign_in_popup')

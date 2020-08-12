@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'PageController@trangChuPage')->name('khachHang.trangChuPage');
 
 Route::get('/dang-nhap', 'XacThucController@dangNhapPage')->name('khachHang.dangNhapPage');
+Route::post('/dang-nhap', 'XacThucController@dangNhap')->name('khachHang.dangNhap');
 
 Route::get('/thong-tin-chi-tiet-phim/{id}', 'PageController@chiTietPhimPage')->name('khachHang.chiTietPhimPage');
 

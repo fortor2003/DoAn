@@ -4,6 +4,7 @@ namespace App\Services\khachHang;
 
 use App\Models\Phim;
 use App\Models\TheLoai;
+use  App\Models\Ghe;
 use Illuminate\Support\Facades\DB;
 
 class PageService
@@ -31,6 +32,10 @@ class PageService
 
     public function thongTinPhim($id): array {
         return Phim::with('danhSachTheLoai:ten_the_loai')->findOrFail($id)->makeHidden(['thoi_diem_tao', 'thoi_diem_cap_nhat'])->toArray();
+    }
+
+    public function danhSachGhe(): array {
+        return Ghe::query()->select(['id','ma_hang','thu_tu_trong_hang'])->where('phong_chieu_id',10)->get()->toArray();
     }
 
 

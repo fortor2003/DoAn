@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PhongChieu extends Model
+class Ghe extends Model
 {
-    protected $table = 'phong_chieu';
+    protected $table = 'ghe';
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'integer';
@@ -19,13 +19,7 @@ class PhongChieu extends Model
     protected $hidden = [];
 
 
-    public function rap()
-    {
-        return $this->belongsTo(Rap::class, 'rap_id', 'id');
-    }
-
-    public function danhSachGhe()
-    {
-        return $this->hasMany(Ghe::class, 'phong_chieu_id', 'id');
+    public function phongChieu(){
+        return $this->belongsTo(PhongChieu::class, 'phong_chieu_id', 'id');
     }
 }

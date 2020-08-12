@@ -26,7 +26,9 @@ class PageController extends Controller
     }
 
     public function datGhePage (PageService $pageService){
-        return view('khachHang.pages.datGhePage');
+        $danhSachGhe = $pageService->danhSachGhe();
+//        dd($danhSachGhe);
+        return view('khachHang.pages.datGhePage', compact('danhSachGhe'));
     }
     public function thanhToanPage (PageService $pageService){
         return view('khachHang.pages.thanhToanPage');

@@ -29,10 +29,7 @@
                 <div class="social">
                     <a href='#' class="social__variant fa fa-facebook"></a>
                     <a href='#' class="social__variant fa fa-twitter"></a>
-                    <a href='#' class="social__variant fa fa-vk"></a>
                     <a href='#' class="social__variant fa fa-instagram"></a>
-                    <a href='#' class="social__variant fa fa-tumblr"></a>
-                    <a href='#' class="social__variant fa fa-pinterest"></a>
                 </div>
 
                 <div class="clearfix"></div>

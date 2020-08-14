@@ -6,13 +6,19 @@ namespace App\Utils;
 
 class StringUtil
 {
-    public static function getParamValueOfQueryStringUrl(string $url, string $paramName ): string {
-        $params = null;
-        parse_str(parse_url($url)['query'], $params);
-        return $params[$paramName];
+    public static function getParamValueOfQueryStringUrl($url, $paramName ) {
+        if ($url) {
+            $params = null;
+            parse_str(parse_url($url)['query'], $params);
+            return $params[$paramName];
+        }
+        return null;
     }
 
-    public static function getUrlThumbnailVideoYoutube(string $videoId): string {
-        return "https://img.youtube.com/vi/$videoId/hqdefault.jpg";
+    public static function getUrlThumbnailVideoYoutube($videoId) {
+        if ($videoId) {
+            return "https://img.youtube.com/vi/$videoId/hqdefault.jpg";
+        }
+        return null;
     }
 }

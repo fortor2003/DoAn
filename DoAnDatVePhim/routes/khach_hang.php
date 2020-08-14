@@ -24,7 +24,9 @@ Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thong
 
 
 Route::get('/test', function () {
-    return redirect(\route('khachHang.thongDiepPage', ['message' => 'avascascasc']));
-    dump(\route('khachHang.thongDiepPage', ['message' => 'avascascasc']));
-//    return (new \App\Mail\khachHang\KichHoatTaiKhoanMail('http://example.com'))->to('abc@gmail.com');
+    $danhSachPhimDangChieu = \App\Models\Phim::where(['trang_thai' => 'DANG_CHIEU'])->select(['thoi_luong_chieu'])->get()->toArray();
+    dd($danhSachPhimDangChieu);
+    foreach ($danhSachPhimDangChieu as $phim) {
+        echo $phim['thoi_luong_chieu'];
+    }
 });

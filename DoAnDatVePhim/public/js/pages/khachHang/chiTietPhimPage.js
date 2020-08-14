@@ -225,315 +225,315 @@ $(document).ready(function () {
         $('.map').addClass('hide-map');
     })
 
-    //9. Init map with several markers on.
-    //Map start init
-    var mapOptions = {
-        scaleControl: true,
-        center: new google.maps.LatLng(51.508798, -0.131687),
-        zoom: 15,
-        navigationControl: false,
-        streetViewControl: false,
-        mapTypeControl: false,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    var map = new google.maps.Map(document.getElementById('cimenas-map'), mapOptions);
-    var marker = new google.maps.Marker({
-        map: map,
-        position: map.getCenter()
-    });
-
-    var markerB = new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(51.510838, -0.130400)
-    });
-
-    var markerC = new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(51.512615, -0.130607)
-    });
-
-    var markerD = new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(51.509859, -0.130213)
-    });
-
-    var markerE = new google.maps.Marker({
-        map: map,
-        position: new google.maps.LatLng(51.509194, -0.130091)
-    });
-
-
-    //Custome map style
-    var map_style = [{stylers: [{saturation: -100}, {gamma: 3}]}, {
-        elementType: "labels.text.stroke",
-        stylers: [{visibility: "off"}]
-    }, {
-        featureType: "poi.business",
-        elementType: "labels.text",
-        stylers: [{visibility: "off"}]
-    }, {
-        featureType: "poi.business",
-        elementType: "labels.icon",
-        stylers: [{visibility: "off"}]
-    }, {
-        featureType: "poi.place_of_worship",
-        elementType: "labels.text",
-        stylers: [{visibility: "off"}]
-    }, {
-        featureType: "poi.place_of_worship",
-        elementType: "labels.icon",
-        stylers: [{visibility: "off"}]
-    }, {featureType: "road", elementType: "geometry", stylers: [{visibility: "simplified"}]}, {
-        featureType: "water",
-        stylers: [{visibility: "on"}, {saturation: 0}, {gamma: 2}, {hue: "#aaaaaa"}]
-    }, {
-        featureType: "administrative.neighborhood",
-        elementType: "labels.text.fill",
-        stylers: [{visibility: "off"}]
-    }, {
-        featureType: "road.local",
-        elementType: "labels.text",
-        stylers: [{visibility: "off"}]
-    }, {featureType: "transit.station", elementType: "labels.icon", stylers: [{visibility: "off"}]}]
-
-    //Then we use this data to create the styles.
-    var styled_map = new google.maps.StyledMapType(map_style, {name: "Cusmome style"});
-
-    map.mapTypes.set('map_styles', styled_map);
-    map.setMapTypeId('map_styles');
-
-    //=====================================
-
-    // Maker A
-
-    //=====================================
-
-    //Creates the information to go in the pop-up info box.
-    var boxTextA = document.createElement("div");
-    boxTextA.innerHTML = '<span class="pop_up_box_text">Cineworld, 63-65 Haymarket, London</span>';
-
-    //Sets up the configuration options of the pop-up info box.
-    var infoboxOptionsA = {
-        content: boxTextA
-        , disableAutoPan: false
-        , maxWidth: 0
-        , pixelOffset: new google.maps.Size(30, -50)
-        , zIndex: null
-        , boxStyle: {
-            background: "#4c4145"
-            , opacity: 1
-            , width: "300px"
-            , color: " #b4b1b2"
-            , fontSize: "13px"
-            , padding: '14px 20px 15px'
-        }
-        , closeBoxMargin: "6px 2px 2px 2px"
-        , infoBoxClearance: new google.maps.Size(1, 1)
-        , closeBoxURL: "images/components/close.svg"
-        , isHidden: false
-        , pane: "floatPane"
-        , enableEventPropagation: false
-    };
-
-
-    //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
-    var infoboxA = new InfoBox(infoboxOptionsA);
-
-
-    //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
-    google.maps.event.addListener(marker, "click", function (e) {
-        //Open the Glastonbury info box.
-        infoboxA.open(map, this);
-        //Sets the Glastonbury marker to be the center of the map.
-        map.setCenter(marker.getPosition());
-    });
-
-
-    //=====================================
-
-    // Maker B
-
-    //=====================================
-
-    //Creates the information to go in the pop-up info box.
-    var boxTextB = document.createElement("div");
-    boxTextB.innerHTML = '<span class="pop_up_box_text">Empire Cinemas, 5-6 Leicester Square, London</span>';
-
-    //Sets up the configuration options of the pop-up info box.
-    var infoboxOptionsB = {
-        content: boxTextB
-        , disableAutoPan: false
-        , maxWidth: 0
-        , pixelOffset: new google.maps.Size(30, -50)
-        , zIndex: null
-        , boxStyle: {
-            background: "#4c4145"
-            , opacity: 1
-            , width: "300px"
-            , color: " #b4b1b2"
-            , fontSize: "13px"
-            , padding: '14px 20px 15px'
-        }
-        , closeBoxMargin: "6px 2px 2px 2px"
-        , infoBoxClearance: new google.maps.Size(1, 1)
-        , closeBoxURL: "images/components/close.svg"
-        , isHidden: false
-        , pane: "floatPane"
-        , enableEventPropagation: false
-    };
-
-
-    //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
-    var infoboxB = new InfoBox(infoboxOptionsB);
-
-
-    //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
-    google.maps.event.addListener(markerB, "click", function (e) {
-        //Open the Glastonbury info box.
-        infoboxB.open(map, this);
-        //Sets the Glastonbury marker to be the center of the map.
-        map.setCenter(markerB.getPosition());
-    });
-
-    //=====================================
-
-    // Maker C
-
-    //=====================================
-
-
-    //Creates the information to go in the pop-up info box.
-    var boxTextC = document.createElement("div");
-    boxTextC.innerHTML = '<span class="pop_up_box_text">Curzon Soho, 99 Shaftesbury Ave , London</span>';
-
-    //Sets up the configuration options of the pop-up info box.
-    var infoboxOptionsC = {
-        content: boxTextC
-        , disableAutoPan: false
-        , maxWidth: 0
-        , pixelOffset: new google.maps.Size(30, -50)
-        , zIndex: null
-        , boxStyle: {
-            background: "#4c4145"
-            , opacity: 1
-            , width: "300px"
-            , color: " #b4b1b2"
-            , fontSize: "13px"
-            , padding: '14px 20px 15px'
-        }
-        , closeBoxMargin: "6px 2px 2px 2px"
-        , infoBoxClearance: new google.maps.Size(1, 1)
-        , closeBoxURL: "images/components/close.svg"
-        , isHidden: false
-        , pane: "floatPane"
-        , enableEventPropagation: false
-    };
-
-
-    //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
-    var infoboxC = new InfoBox(infoboxOptionsC);
-
-
-    //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
-    google.maps.event.addListener(markerC, "click", function (e) {
-        //Open the Glastonbury info box.
-        infoboxC.open(map, this);
-        //Sets the Glastonbury marker to be the center of the map.
-        map.setCenter(markerC.getPosition());
-    });
-
-    //=====================================
-
-    // Maker D
-
-    //=====================================
-
-    //Creates the information to go in the pop-up info box.
-    var boxTextD = document.createElement("div");
-    boxTextD.innerHTML = '<span class="pop_up_box_text">Odeon Cinema West End, Leicester Square, London</span>';
-
-    //Sets up the configuration options of the pop-up info box.
-    var infoboxOptionsD = {
-        content: boxTextD
-        , disableAutoPan: false
-        , maxWidth: 0
-        , pixelOffset: new google.maps.Size(30, -50)
-        , zIndex: null
-        , boxStyle: {
-            background: "#4c4145"
-            , opacity: 1
-            , width: "300px"
-            , color: " #b4b1b2"
-            , fontSize: "13px"
-            , padding: '14px 20px 15px'
-        }
-        , closeBoxMargin: "6px 2px 2px 2px"
-        , infoBoxClearance: new google.maps.Size(1, 1)
-        , closeBoxURL: "images/components/close.svg"
-        , isHidden: false
-        , pane: "floatPane"
-        , enableEventPropagation: false
-    };
-
-
-    //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
-    var infoboxD = new InfoBox(infoboxOptionsD);
-
-
-    //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
-    google.maps.event.addListener(markerD, "click", function (e) {
-        //Open the Glastonbury info box.
-        infoboxD.open(map, this);
-        //Sets the Glastonbury marker to be the center of the map.
-        map.setCenter(markerD.getPosition());
-    });
-
-
-    //=====================================
-
-    // Maker E
-
-    //=====================================
-
-    //Creates the information to go in the pop-up info box.
-    var boxTextE = document.createElement("div");
-    boxTextE.innerHTML = '<span class="pop_up_box_text">Picturehouse Cinemas Ltd, Orange Street, London</span>';
-
-    //Sets up the configuration options of the pop-up info box.
-    var infoboxOptionsE = {
-        content: boxTextE
-        , disableAutoPan: false
-        , maxWidth: 0
-        , pixelOffset: new google.maps.Size(30, -50)
-        , zIndex: null
-        , boxStyle: {
-            background: "#4c4145"
-            , opacity: 1
-            , width: "300px"
-            , color: " #b4b1b2"
-            , fontSize: "13px"
-            , padding: '14px 20px 15px'
-        }
-        , closeBoxMargin: "6px 2px 2px 2px"
-        , infoBoxClearance: new google.maps.Size(1, 1)
-        , closeBoxURL: "images/components/close.svg"
-        , isHidden: false
-        , pane: "floatPane"
-        , enableEventPropagation: false
-    };
-
-
-    //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
-    var infoboxE = new InfoBox(infoboxOptionsE);
-
-
-    //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
-    google.maps.event.addListener(markerE, "click", function (e) {
-        //Open the Glastonbury info box.
-        infoboxE.open(map, this);
-        //Sets the Glastonbury marker to be the center of the map.
-        map.setCenter(markerE.getPosition());
-    });
+    // //9. Init map with several markers on.
+    // //Map start init
+    // var mapOptions = {
+    //     scaleControl: true,
+    //     center: new google.maps.LatLng(51.508798, -0.131687),
+    //     zoom: 15,
+    //     navigationControl: false,
+    //     streetViewControl: false,
+    //     mapTypeControl: false,
+    //     mapTypeId: google.maps.MapTypeId.ROADMAP
+    // };
+    // var map = new google.maps.Map(document.getElementById('cimenas-map'), mapOptions);
+    // var marker = new google.maps.Marker({
+    //     map: map,
+    //     position: map.getCenter()
+    // });
+    //
+    // var markerB = new google.maps.Marker({
+    //     map: map,
+    //     position: new google.maps.LatLng(51.510838, -0.130400)
+    // });
+    //
+    // var markerC = new google.maps.Marker({
+    //     map: map,
+    //     position: new google.maps.LatLng(51.512615, -0.130607)
+    // });
+    //
+    // var markerD = new google.maps.Marker({
+    //     map: map,
+    //     position: new google.maps.LatLng(51.509859, -0.130213)
+    // });
+    //
+    // var markerE = new google.maps.Marker({
+    //     map: map,
+    //     position: new google.maps.LatLng(51.509194, -0.130091)
+    // });
+    //
+    //
+    // //Custome map style
+    // var map_style = [{stylers: [{saturation: -100}, {gamma: 3}]}, {
+    //     elementType: "labels.text.stroke",
+    //     stylers: [{visibility: "off"}]
+    // }, {
+    //     featureType: "poi.business",
+    //     elementType: "labels.text",
+    //     stylers: [{visibility: "off"}]
+    // }, {
+    //     featureType: "poi.business",
+    //     elementType: "labels.icon",
+    //     stylers: [{visibility: "off"}]
+    // }, {
+    //     featureType: "poi.place_of_worship",
+    //     elementType: "labels.text",
+    //     stylers: [{visibility: "off"}]
+    // }, {
+    //     featureType: "poi.place_of_worship",
+    //     elementType: "labels.icon",
+    //     stylers: [{visibility: "off"}]
+    // }, {featureType: "road", elementType: "geometry", stylers: [{visibility: "simplified"}]}, {
+    //     featureType: "water",
+    //     stylers: [{visibility: "on"}, {saturation: 0}, {gamma: 2}, {hue: "#aaaaaa"}]
+    // }, {
+    //     featureType: "administrative.neighborhood",
+    //     elementType: "labels.text.fill",
+    //     stylers: [{visibility: "off"}]
+    // }, {
+    //     featureType: "road.local",
+    //     elementType: "labels.text",
+    //     stylers: [{visibility: "off"}]
+    // }, {featureType: "transit.station", elementType: "labels.icon", stylers: [{visibility: "off"}]}]
+    //
+    // //Then we use this data to create the styles.
+    // var styled_map = new google.maps.StyledMapType(map_style, {name: "Cusmome style"});
+    //
+    // map.mapTypes.set('map_styles', styled_map);
+    // map.setMapTypeId('map_styles');
+    //
+    // //=====================================
+    //
+    // // Maker A
+    //
+    // //=====================================
+    //
+    // //Creates the information to go in the pop-up info box.
+    // var boxTextA = document.createElement("div");
+    // boxTextA.innerHTML = '<span class="pop_up_box_text">Cineworld, 63-65 Haymarket, London</span>';
+    //
+    // //Sets up the configuration options of the pop-up info box.
+    // var infoboxOptionsA = {
+    //     content: boxTextA
+    //     , disableAutoPan: false
+    //     , maxWidth: 0
+    //     , pixelOffset: new google.maps.Size(30, -50)
+    //     , zIndex: null
+    //     , boxStyle: {
+    //         background: "#4c4145"
+    //         , opacity: 1
+    //         , width: "300px"
+    //         , color: " #b4b1b2"
+    //         , fontSize: "13px"
+    //         , padding: '14px 20px 15px'
+    //     }
+    //     , closeBoxMargin: "6px 2px 2px 2px"
+    //     , infoBoxClearance: new google.maps.Size(1, 1)
+    //     , closeBoxURL: "images/components/close.svg"
+    //     , isHidden: false
+    //     , pane: "floatPane"
+    //     , enableEventPropagation: false
+    // };
+    //
+    //
+    // //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
+    // var infoboxA = new InfoBox(infoboxOptionsA);
+    //
+    //
+    // //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
+    // google.maps.event.addListener(marker, "click", function (e) {
+    //     //Open the Glastonbury info box.
+    //     infoboxA.open(map, this);
+    //     //Sets the Glastonbury marker to be the center of the map.
+    //     map.setCenter(marker.getPosition());
+    // });
+    //
+    //
+    // //=====================================
+    //
+    // // Maker B
+    //
+    // //=====================================
+    //
+    // //Creates the information to go in the pop-up info box.
+    // var boxTextB = document.createElement("div");
+    // boxTextB.innerHTML = '<span class="pop_up_box_text">Empire Cinemas, 5-6 Leicester Square, London</span>';
+    //
+    // //Sets up the configuration options of the pop-up info box.
+    // var infoboxOptionsB = {
+    //     content: boxTextB
+    //     , disableAutoPan: false
+    //     , maxWidth: 0
+    //     , pixelOffset: new google.maps.Size(30, -50)
+    //     , zIndex: null
+    //     , boxStyle: {
+    //         background: "#4c4145"
+    //         , opacity: 1
+    //         , width: "300px"
+    //         , color: " #b4b1b2"
+    //         , fontSize: "13px"
+    //         , padding: '14px 20px 15px'
+    //     }
+    //     , closeBoxMargin: "6px 2px 2px 2px"
+    //     , infoBoxClearance: new google.maps.Size(1, 1)
+    //     , closeBoxURL: "images/components/close.svg"
+    //     , isHidden: false
+    //     , pane: "floatPane"
+    //     , enableEventPropagation: false
+    // };
+    //
+    //
+    // //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
+    // var infoboxB = new InfoBox(infoboxOptionsB);
+    //
+    //
+    // //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
+    // google.maps.event.addListener(markerB, "click", function (e) {
+    //     //Open the Glastonbury info box.
+    //     infoboxB.open(map, this);
+    //     //Sets the Glastonbury marker to be the center of the map.
+    //     map.setCenter(markerB.getPosition());
+    // });
+    //
+    // //=====================================
+    //
+    // // Maker C
+    //
+    // //=====================================
+    //
+    //
+    // //Creates the information to go in the pop-up info box.
+    // var boxTextC = document.createElement("div");
+    // boxTextC.innerHTML = '<span class="pop_up_box_text">Curzon Soho, 99 Shaftesbury Ave , London</span>';
+    //
+    // //Sets up the configuration options of the pop-up info box.
+    // var infoboxOptionsC = {
+    //     content: boxTextC
+    //     , disableAutoPan: false
+    //     , maxWidth: 0
+    //     , pixelOffset: new google.maps.Size(30, -50)
+    //     , zIndex: null
+    //     , boxStyle: {
+    //         background: "#4c4145"
+    //         , opacity: 1
+    //         , width: "300px"
+    //         , color: " #b4b1b2"
+    //         , fontSize: "13px"
+    //         , padding: '14px 20px 15px'
+    //     }
+    //     , closeBoxMargin: "6px 2px 2px 2px"
+    //     , infoBoxClearance: new google.maps.Size(1, 1)
+    //     , closeBoxURL: "images/components/close.svg"
+    //     , isHidden: false
+    //     , pane: "floatPane"
+    //     , enableEventPropagation: false
+    // };
+    //
+    //
+    // //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
+    // var infoboxC = new InfoBox(infoboxOptionsC);
+    //
+    //
+    // //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
+    // google.maps.event.addListener(markerC, "click", function (e) {
+    //     //Open the Glastonbury info box.
+    //     infoboxC.open(map, this);
+    //     //Sets the Glastonbury marker to be the center of the map.
+    //     map.setCenter(markerC.getPosition());
+    // });
+    //
+    // //=====================================
+    //
+    // // Maker D
+    //
+    // //=====================================
+    //
+    // //Creates the information to go in the pop-up info box.
+    // var boxTextD = document.createElement("div");
+    // boxTextD.innerHTML = '<span class="pop_up_box_text">Odeon Cinema West End, Leicester Square, London</span>';
+    //
+    // //Sets up the configuration options of the pop-up info box.
+    // var infoboxOptionsD = {
+    //     content: boxTextD
+    //     , disableAutoPan: false
+    //     , maxWidth: 0
+    //     , pixelOffset: new google.maps.Size(30, -50)
+    //     , zIndex: null
+    //     , boxStyle: {
+    //         background: "#4c4145"
+    //         , opacity: 1
+    //         , width: "300px"
+    //         , color: " #b4b1b2"
+    //         , fontSize: "13px"
+    //         , padding: '14px 20px 15px'
+    //     }
+    //     , closeBoxMargin: "6px 2px 2px 2px"
+    //     , infoBoxClearance: new google.maps.Size(1, 1)
+    //     , closeBoxURL: "images/components/close.svg"
+    //     , isHidden: false
+    //     , pane: "floatPane"
+    //     , enableEventPropagation: false
+    // };
+    //
+    //
+    // //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
+    // var infoboxD = new InfoBox(infoboxOptionsD);
+    //
+    //
+    // //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
+    // google.maps.event.addListener(markerD, "click", function (e) {
+    //     //Open the Glastonbury info box.
+    //     infoboxD.open(map, this);
+    //     //Sets the Glastonbury marker to be the center of the map.
+    //     map.setCenter(markerD.getPosition());
+    // });
+    //
+    //
+    // //=====================================
+    //
+    // // Maker E
+    //
+    // //=====================================
+    //
+    // //Creates the information to go in the pop-up info box.
+    // var boxTextE = document.createElement("div");
+    // boxTextE.innerHTML = '<span class="pop_up_box_text">Picturehouse Cinemas Ltd, Orange Street, London</span>';
+    //
+    // //Sets up the configuration options of the pop-up info box.
+    // var infoboxOptionsE = {
+    //     content: boxTextE
+    //     , disableAutoPan: false
+    //     , maxWidth: 0
+    //     , pixelOffset: new google.maps.Size(30, -50)
+    //     , zIndex: null
+    //     , boxStyle: {
+    //         background: "#4c4145"
+    //         , opacity: 1
+    //         , width: "300px"
+    //         , color: " #b4b1b2"
+    //         , fontSize: "13px"
+    //         , padding: '14px 20px 15px'
+    //     }
+    //     , closeBoxMargin: "6px 2px 2px 2px"
+    //     , infoBoxClearance: new google.maps.Size(1, 1)
+    //     , closeBoxURL: "images/components/close.svg"
+    //     , isHidden: false
+    //     , pane: "floatPane"
+    //     , enableEventPropagation: false
+    // };
+    //
+    //
+    // //Creates the pop-up infobox for Glastonbury, adding the configuration options set above.
+    // var infoboxE = new InfoBox(infoboxOptionsE);
+    //
+    //
+    // //Add an 'event listener' to the Glastonbury map marker to listen out for when it is clicked.
+    // google.maps.event.addListener(markerE, "click", function (e) {
+    //     //Open the Glastonbury info box.
+    //     infoboxE.open(map, this);
+    //     //Sets the Glastonbury marker to be the center of the map.
+    //     map.setCenter(markerE.getPosition());
+    // });
 
     //10. Scroll down navigation function
     //scroll down

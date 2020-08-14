@@ -39,7 +39,7 @@
                             <p>{{join(' | ', array_map(function ($theLoai) { return $theLoai['ten_the_loai']; }, $phim['danh_sach_the_loai']))}}</p>
                         </li>
                         <li class="last-block">
-                            <a href="movie-page-left.html" class="slide__link">Chi tiết</a>
+                            <a href="{{route('khachHang.chiTietPhimPage', ['id' => $phim['id']])}}" class="slide__link">Chi tiết</a>
                         </li>
                     </ul>
                 </div>
@@ -98,11 +98,11 @@
                 @foreach($danhSachPhimDangChieu as $idx => $phim)
                     <div class="movie movie--test movie--test--dark movie--test--{{intval(floor($idx/2)) % 2 == 0 ? 'left' : 'right'}}">
                         <div class="movie__images">
-                            <a href="#" class="movie-beta__link set-bg" data-bg="{{$phim['url_anh_bia']}}">
+                            <a href="{{route('khachHang.chiTietPhimPage', ['id' => $phim['id']])}}" class="movie-beta__link set-bg" data-bg="{{$phim['url_anh_bia']}}">
                             </a>
                         </div>
                         <div class="movie__info">
-                            <a href='#' class="movie__title">{{$phim['tieu_de_vi']}}</a>
+                            <a href='{{route('khachHang.chiTietPhimPage', ['id' => $phim['id']])}}' class="movie__title">{{$phim['tieu_de_vi']}}</a>
                             <p class="movie__time">{{$phim['thoi_luong_chieu']}} phút</p>
                             <p class="movie__option">
                                 {{join(' | ', array_map(function ($theLoai) { return $theLoai['ten_the_loai']; }, $phim['danh_sach_the_loai']))}}

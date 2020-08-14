@@ -15,7 +15,7 @@ class KhungThoiGian extends Migration
         // Tạo cấu trúc của bảng
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('thoi_gian', 4);
+            $table->string('thoi_gian', 5);
             $table->unsignedInteger('so_thu_tu');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();

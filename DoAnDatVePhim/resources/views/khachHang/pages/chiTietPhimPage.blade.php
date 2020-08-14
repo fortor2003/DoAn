@@ -13,6 +13,16 @@
         .movie__images .movie-poster {
             height: 360px;
         }
+        .swiper-slide {
+            position: relative;
+        }
+        .swiper-slide .set-bg {
+            width: 55px;
+            height: 55px;
+            position: absolute;
+            top: calc(100% - 125px);
+            left: calc(100% - 142px);
+        }
     </style>
 @endsection
 @section('content')
@@ -23,26 +33,23 @@
                 <div class="col-sm-4 col-md-3 movie-mobile">
                     <div class="movie__images">
                         <span class="movie__rating">{{$thongTinPhim['diem_danh_gia'] ?? '--'}}</span>
-{{--                        <img alt='' src="http://placehold.it/526x773">--}}
                         <div class="movie-poster set-bg" data-bg="{{$thongTinPhim['url_anh_bia']}}"></div>
                     </div>
-                    <div class="movie__rate">Đánh giá: <div id='score' class="score"></div></div>
                 </div>
 
                 <div class="col-sm-8 col-md-9">
                     <p class="movie__time">{{$thongTinPhim['thoi_luong_chieu'] ?? '--'}} phút</p>
-
                     <p class="movie__option"><strong>Quốc gia: </strong>{{$thongTinPhim['quoc_gia_san_xuat'] ?? '--'}}</p>
                     <p class="movie__option"><strong>Thể loại: </strong>{{join(', ', array_map(function ($theLoai) { return $theLoai['ten_the_loai']; }, $thongTinPhim['danh_sach_the_loai']))}}</p>
                     <p class="movie__option"><strong>Ngày phát hành: </strong>{{\Carbon\Carbon::parse($thongTinPhim['ngay_phat_hanh'])->format('d/m/Y')}}</p>
                     <p class="movie__option"><strong>Đạo diễn: </strong>{{$thongTinPhim['dao_dien'] ?? '--'}}</p>
                     <p class="movie__option"><strong>Diễn viên: </strong>{{$thongTinPhim['dien_vien'] ?? '--'}}</p>
                     <p class="movie__option"><strong>Giới hạn độ tuổi: </strong>{{$thongTinPhim['gioi_han_do_tuoi'] ?? '--'}}</p>
-
-                    <div class="movie__btns movie__btns--full">
-                        <a href="#" class="btn btn-md btn--warning">Đặt vé</a>
-                        <a href="#" class="watchlist">Thêm vào danh sách theo dõi</a>
-                    </div>
+                    @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
+                        <div class="movie__btns movie__btns--full">
+                            <a href="#" class="btn btn-md btn--warning">Đặt vé</a>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -54,8 +61,8 @@
 
             <div class="movie__media">
                 <div class="movie__media-switch">
-                    <a href="#" class="watchlist list--photo" data-filter='media-photo'>1 ảnh</a>
-                    <a href="#" class="watchlist list--video" data-filter='media-video'>1 videos</a>
+                    <a href="#" class="watchlist list--photo" data-filter='media-photo'>{{$thongTinPhim['url_anh_phong_nen'] ? '1 ảnh' : '0 ảnh'}}</a>
+                    <a href="#" class="watchlist list--video" data-filter='media-video'>{{$thongTinPhim['url_trailer_video'] ? '1 videos' : ''}}</a>
                 </div>
 
                 <div class="swiper-container">
@@ -69,16 +76,16 @@
                         <!-- Video -->
                         <div class="swiper-slide media-video">
                             <a href='{{$thongTinPhim['url_trailer_video']}}' class="movie__media-item ">
+                                <div class="set-bg" data-bg="{{asset('images/button-play.png')}}"></div>
                                 <img alt='' src="{{\App\Utils\StringUtil::getUrlThumbnailVideoYoutube(\App\Utils\StringUtil::getParamValueOfQueryStringUrl($thongTinPhim['url_trailer_video'], 'v'))}}">
                             </a>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
+        @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
         <h2 class="page-heading">Các suất chiếu</h2>
         <div class="choose-container">
             <form id='select' class="select" method='get'>
@@ -93,8 +100,6 @@
                 <span class="datepicker__marker"><i class="fa fa-calendar"></i>Ngày</span>
                 <input type="text" id="datepicker" value='03/10/2014' class="datepicker__input">
             </div>
-
-            <a href="#" id="map-switch" class="watchlist watchlist--map watchlist--map-full"><span class="show-map">Hiển thị các rạp chiếu trên bản đồ</span><span  class="show-time">Hiển thị các rạp chiếu ở dạng bảng</span></a>
 
             <div class="clearfix"></div>
 
@@ -166,98 +171,7 @@
                     </ul>
                 </div>
             </div>
-
-            <!-- hiden maps with multiple locator-->
-            <div  class="map">
-                <div id='cimenas-map'></div>
-            </div>
-
-            <h2 class="page-heading">Bình luận (15)</h2>
-
-            <div class="comment-wrapper">
-                <form id="comment-form" class="comment-form" method='post'>
-                    <textarea class="comment-form__text" placeholder='Viết bình luận ở đây'></textarea>
-                    <label class="comment-form__info">Còn lại 250 ký tự</label>
-                    <button type='submit' class="btn btn-md btn--danger comment-form__btn">Gửi bình luận</button>
-                </form>
-
-                <div class="comment-sets">
-
-                    <div class="comment">
-                        <div class="comment__images">
-                            <img alt='' src="http://placehold.it/50x50">
-                        </div>
-
-                        <a href='#' class="comment__author"><span class="social-used fa fa-facebook"></span>Roberta Inetti</a>
-                        <p class="comment__date">Hôm nay | 03:04</p>
-                        <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                        <a href='#' class="comment__reply">Phản hồi</a>
-                    </div>
-
-                    <div class="comment">
-                        <div class="comment__images">
-                            <img alt='' src="http://placehold.it/50x50">
-                        </div>
-
-                        <a href='#' class="comment__author"><span class="social-used fa fa-vk"></span>Olia Gozha</a>
-                        <p class="comment__date">22.10.2013 | 14:40</p>
-                        <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                        <a href='#' class="comment__reply">Phản hồi</a>
-                    </div>
-
-                    <div class="comment comment--answer">
-                        <div class="comment__images">
-                            <img alt='' src="http://placehold.it/50x50">
-                        </div>
-
-                        <a href='#' class="comment__author"><span class="social-used fa fa-vk"></span>Dmitriy Pustovalov</a>
-                        <p class="comment__date">Hôm nay | 10:19</p>
-                        <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                        <a href='#' class="comment__reply">Phản hồi</a>
-                    </div>
-
-                    <div class="comment comment--last">
-                        <div class="comment__images">
-                            <img alt='' src="http://placehold.it/50x50">
-                        </div>
-
-                        <a href='#' class="comment__author"><span class="social-used fa fa-facebook"></span>Sia Andrews</a>
-                        <p class="comment__date"> 22.10.2013 | 12:31 </p>
-                        <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                        <a href='#' class="comment__reply">Phản hồi</a>
-                    </div>
-
-                    <div id='hide-comments' class="hide-comments">
-                        <div class="comment">
-                            <div class="comment__images">
-                                <img alt='' src="http://placehold.it/50x50">
-                            </div>
-
-                            <a href='#' class="comment__author"><span class="social-used fa fa-facebook"></span>Roberta Inetti</a>
-                            <p class="comment__date">Hôm nay | 03:04</p>
-                            <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                            <a href='#' class="comment__reply">Phản hồi</a>
-                        </div>
-
-                        <div class="comment">
-                            <div class="comment__images">
-                                <img alt='' src="http://placehold.it/50x50">
-                            </div>
-
-                            <a href='#' class="comment__author"><span class="social-used fa fa-vk"></span>Olia Gozha</a>
-                            <p class="comment__date">22.10.2013 | 14:40</p>
-                            <p class="comment__message">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae enim sollicitudin, euismod erat id, fringilla lacus. Cras ut rutrum lectus. Etiam ante justo, volutpat at viverra a, mattis in velit. Morbi molestie rhoncus enim, vitae sagittis dolor tristique et.</p>
-                            <a href='#' class="comment__reply">Phản hồi</a>
-                        </div>
-                    </div>
-
-                    <div class="comment-more">
-                        <a href="#" class="watchlist">Hiển thị thêm bình luận</a>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        @endif
     </div>
 @endsection
 @section('scripts')
@@ -268,11 +182,11 @@
     <!-- Magnific-popup -->
     <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
     <!--*** Google map  ***-->
-    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>
+{{--    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>--}}
     <!--*** Google map infobox  ***-->
-    <script src="{{asset('js/external/infobox.js')}}"></script>
+{{--    <script src="{{asset('js/external/infobox.js')}}"></script>--}}
     <!-- Share buttons -->
-    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+{{--    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>--}}
     <!-- Page -->
     <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
     <script>

@@ -65,24 +65,23 @@ $("#search-sort").selectbox({
 
 //4. Login window pop up
 //Login pop up
-$('.login-window').click(function (e) {
-    e.preventDefault();
-    $('.overlay').removeClass('close').addClass('open');
-});
-
-$('.overlay-close').click(function (e) {
-    e.preventDefault;
-    $('.overlay').removeClass('open').addClass('close');
-
-    setTimeout(function () {
-        $('.overlay').removeClass('close');
-    }, 500);
-});
+// $('.login-window').click(function (e) {
+//     e.preventDefault();
+//     $('.overlay').removeClass('close').addClass('open');
+// });
+//
+// $('.overlay-close').click(function (e) {
+//     e.preventDefault;
+//     $('.overlay').removeClass('open').addClass('close');
+//
+//     setTimeout(function () {
+//         $('.overlay').removeClass('close');
+//     }, 500);
+// });
 
 
 // Gắn background-image
 $('.set-bg[data-bg]').each(function (idx, item) {
-    console.log(idx);
     $(item).css({
         backgroundImage: 'url("'+$(item).data('bg')+'")'
     })

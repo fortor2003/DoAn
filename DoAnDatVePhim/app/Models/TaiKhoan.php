@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\khachHang\KichHoatTaiKhoanNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -35,7 +36,20 @@ class TaiKhoan extends Authenticatable implements MustVerifyEmail
     public function markEmailAsVerified()
     {
         $this->thoi_diem_kich_hoat = now();
+        $this->thoi_diem_cap_nhat = now();
         $this->save();
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        if (!$this->hasVerifiedEmail()) {
+            $this->notify(new KichHoatTaiKhoanNotification());
+        }
+    }
+
+    public function sendEmailResetPasswordNotification()
+    {
+
     }
 
     public function getAuthPassword()
@@ -43,4 +57,8 @@ class TaiKhoan extends Authenticatable implements MustVerifyEmail
         return $this->mat_khau;
     }
 
+    /* Quan hệ */
+    public function danhSachXacThucUrl() {
+        return $this->hasMany(XacThucUrl::class, 'tai_khoan_id', 'id');
+    }
 }

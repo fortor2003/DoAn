@@ -41,6 +41,11 @@ class KhoaNgoai extends Migration
             $table->foreign('khach_hang_id')->references('id')->on('TAI_KHOAN');
             $table->foreign('nhan_vien_id')->references('id')->on('TAI_KHOAN');
         });
+
+        // Bảng xác thục url
+        Schema::table('XAC_THUC_URL', function (Blueprint $table) {
+            $table->foreign('tai_khoan_id')->references('id')->on('TAI_KHOAN');
+        });
     }
 
     public function down()

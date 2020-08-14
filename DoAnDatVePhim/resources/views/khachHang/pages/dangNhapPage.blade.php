@@ -7,6 +7,7 @@
         .login__control .wrap-link {
             margin-top: 50px;
         }
+
         .login__control .wrap-link a {
             margin: 10px 0;
         }
@@ -36,19 +37,42 @@
         <div class="login__control">
             <button type='submit' class="btn btn-md btn--warning btn--wider">Đăng nhập</button>
             <div class="wrap-link">
-                <a href="#" class="login__tracker form__tracker">Bạn chưa có tài khoản ?</a>
-                <a href="#" class="login__tracker form__tracker">Quên mật khẩu ?</a>
+                <a href="{{route('khachHang.dangKyPage')}}" class="login__tracker form__tracker">Bạn chưa có tài khoản ?
+                    Đăng ký ngay bây giờ</a>
+                <a href="{{route('khachHang.quenMatKhauPage')}}" class="login__tracker form__tracker">Quên mật khẩu ?</a>
             </div>
         </div>
     </form>
 @endsection
 @section('scripts')
-    <!-- jQuery REVOLUTION Slider -->
-    <script type="text/javascript" src="{{asset('rs-plugin/js/jquery.themepunch.plugins.min.js')}}"></script>
-    <script type="text/javascript" src="{{asset('rs-plugin/js/jquery.themepunch.revolution.min.js')}}"></script>
-    <!-- Page -->
-    <script src="{{asset('js/pages/khachHang/trangChuPage.js')}}"></script>
     <script>
+        $(document).ready(function () {
+            $('.login').submit(function (e) {
+                console.log(123);
+                var error = 0;
+                var self = $(this);
+                var $email = self.find('[type=email]');
+                var $pass = self.find('[type=password]');
 
+                var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+                if (!emailRegex.test($email.val())) {
+                    createErrTult("Email không hợp lệ", $email)
+                    error++;
+                }
+
+                if ($pass.val().length > 1 && $pass.val() != $pass.attr('placeholder')) {
+                    $pass.removeClass('invalid_field');
+                } else {
+                    createErrTult('Vui lòng nhập mật khẩu', $pass)
+                    error++;
+                }
+
+                if (error != 0) {
+                    e.preventDefault();
+                    return;
+                }
+            }); // end submit
+        });
     </script>
 @endsection

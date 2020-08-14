@@ -1,8 +1,7 @@
 "use strict";
 
 //Plaeholder handler
-$(function () {
-
+$(document).ready(function () {
     if (!Modernizr.input.placeholder) {             //placeholder for old brousers and IE
 
         $('[placeholder]').focus(function () {
@@ -76,49 +75,19 @@ $(function () {
         }); // end post
     }); // end submit
 
-    $('.login').submit(function (e) {
-
-
-        var error = 0;
-        var self = $(this);
-
-        var $email = self.find('[type=email]');
-        var $pass = self.find('[type=password]');
-
-
-        var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-        if (!emailRegex.test($email.val())) {
-            createErrTult("Email không hợp lệ", $email)
-            error++;
-        }
-
-        if ($pass.val().length > 1 && $pass.val() != $pass.attr('placeholder')) {
-            $pass.removeClass('invalid_field');
-        } else {
-            createErrTult('Vui lòng nhập mật khẩu', $pass)
-            error++;
-        }
-
-        if (error != 0) {
-            e.preventDefault();
-            return;
-        }
-    }); // end submit
-
-
-    function createErrTult(text, $elem) {
-        $elem.focus();
-        $('<p />', {
-            'class': 'inv-em alert alert-danger',
-            'html': '<span class="icon-warning"></span>' + text + ' <a class="close" data-dismiss="alert" href="#" aria-hidden="true"></a>',
-        })
-            .appendTo($elem.addClass('invalid_field').parent())
-            .insertAfter($elem)
-            .delay(4000).animate({'opacity': 0}, 300, function () {
-            $(this).slideUp(400, function () {
-                $(this).remove()
-            })
-        });
-    }
 });
+
+function createErrTult(text, $elem) {
+    $elem.focus();
+    $('<p />', {
+        'class': 'inv-em alert alert-danger',
+        'html': '<span class="icon-warning"></span>' + text + ' <a class="close" data-dismiss="alert" href="#" aria-hidden="true"></a>',
+    })
+        .appendTo($elem.addClass('invalid_field').parent())
+        .insertAfter($elem)
+        .delay(4000).animate({'opacity': 0}, 300, function () {
+        $(this).slideUp(400, function () {
+            $(this).remove()
+        })
+    });
+}

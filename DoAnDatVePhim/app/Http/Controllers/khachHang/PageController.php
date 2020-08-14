@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\khachHang;
 
 use App\Http\Controllers\Controller;
+use App\Models\Ghe;
+use App\Models\TaiKhoan;
 use App\Services\khachHang\PageService;
+use Illuminate\Http\Request;
 
 class PageController extends Controller
 {
@@ -27,7 +30,6 @@ class PageController extends Controller
 
     public function datGhePage (PageService $pageService){
         $danhSachGhe = $pageService->danhSachGhe();
-//        dd($danhSachGhe);
         return view('khachHang.pages.datGhePage', compact('danhSachGhe'));
     }
     public function thanhToanPage (PageService $pageService){
@@ -38,4 +40,12 @@ class PageController extends Controller
         return view('khachHang.pages.hienThiVePage');
     }
 
+    public function thongDiepPage (Request $request){
+        $message = $request->query('message');
+        if ($message) {
+            return view('khachHang.pages.thongDiepPage', compact('message'));
+        } else {
+            abort(404);
+        }
+    }
 }

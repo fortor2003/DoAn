@@ -1,9 +1,14 @@
-@extends('khachHang.layout.message')
-@section('title_tab', config('app.name'))
-@section('stylesheets')
-
-@endsection
-@section('content')
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{config('app.name')}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="telephone=no" name="format-detection">
+    @include('khachHang.layout._stylesheets')
+</head>
+<body>
+<div class="wrapper">
     <div class="error-wrapper">
         <a href='index.html' class="logo logo--dark">
             <img alt='logo' src="{{asset('images/logo-dark.png')}}">
@@ -18,6 +23,5 @@
     <div class="copy-bottom">
         <p class="copy">&copy; BKCinema, 2020</p>
     </div>
-@endsection
-@section('scripts')
-@endsection
+</div>
+</body>

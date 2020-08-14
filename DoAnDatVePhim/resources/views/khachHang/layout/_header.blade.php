@@ -2,7 +2,7 @@
 <header class="header-wrapper{{$isHomePage ? ' header-wrapper--home' : ''}}">
     <div class="container">
         <!-- Logo link-->
-        <a href='index.html' class="logo">
+        <a href="{{route('khachHang.trangChuPage')}}" class="logo">
             <img alt='logo' src="{{asset('images/logo.png')}}">
         </a>
         <!-- Main website navigation-->

@@ -11,6 +11,8 @@ Route::post('/dang-ky', 'XacThucController@dangKy')->name('khachHang.dangKy');
 Route::get('/kich-hoat-tai-khoan', 'XacThucController@kichHoatTaiKhoan')->name('khachHang.kichHoatTaiKhoan');
 Route::get('/quen-mat-khau', 'XacThucController@quenMatKhauPage')->name('khachHang.quenMatKhauPage');
 Route::post('/quen-mat-khau', 'XacThucController@quenMatKhau')->name('khachHang.quenMatKhau');
+Route::get('/tao-lai-mat-khau', 'XacThucController@taoLaiMatKhauPage')->name('khachHang.taoLaiMatKhauPage');
+Route::post('/tao-lai-mat-khau', 'XacThucController@taoLaiMatKhau')->name('khachHang.taoLaiMatKhau');
 /** PageController  */
 Route::get('/', 'PageController@trangChuPage')->name('khachHang.trangChuPage');
 Route::get('/thong-tin-chi-tiet-phim/{id}', 'PageController@chiTietPhimPage')->name('khachHang.chiTietPhimPage');

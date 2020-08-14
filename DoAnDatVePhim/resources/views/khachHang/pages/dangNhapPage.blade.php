@@ -29,7 +29,7 @@
                     </ul>
                 </div>
             @endif
-            <input type='email' placeholder='Email' name='email' class="login__input">
+            <input type='email' placeholder='Email' name='email' class="login__input" value="{{old('email')}}">
             <input type='password' placeholder='Mật khẩu' name='matKhau' class="login__input">
             <input type='checkbox' id='#informed' name="duyTriDangNhap" class='login__check styled'>
             <label for='#informed' class='login__check-info'>Duy trì đăng nhập</label>

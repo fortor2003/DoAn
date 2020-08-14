@@ -7,8 +7,9 @@ use App\Utils\StringUtil;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class KichHoatTaiKhoanNotification extends Notification
+class KichHoatTaiKhoanNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 

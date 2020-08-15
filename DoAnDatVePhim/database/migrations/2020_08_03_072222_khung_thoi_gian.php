@@ -16,10 +16,11 @@ class KhungThoiGian extends Migration
         Schema::create($this->ten_bang, function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('thoi_gian', 5);
-            $table->unsignedInteger('so_thu_tu');
+            $table->unsignedInteger('slot');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-            $table->unique('thoi_gian', 'KHUNG_THOI_GIAN_UNQ_IDX');
+            $table->unique('thoi_gian', 'KHUNG_THOI_GIAN_UNQ_IDX_1');
+            $table->unique('slot', 'KHUNG_THOI_GIAN_UNQ_IDX_2');
         });
     }
 

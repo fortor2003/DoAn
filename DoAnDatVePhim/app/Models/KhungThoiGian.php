@@ -18,9 +18,11 @@ class KhungThoiGian extends Model
     ];
     protected $hidden = [];
 
+    public function danhSachSuatChieu_gioBatDau() {
+        return $this->hasMany(SuatChieu::class, 'gio_bat_dau_slot', 'slot');
+    }
 
-//    public function danhSachPhim()
-//    {
-//        return $this->belongsToMany(Phim::class, PhimTheLoai::class, 'the_loai_id', 'phim_id', 'id', 'id');
-//    }
+    public function danhSachSuatChieu_gioKetThuc() {
+        return $this->hasMany(SuatChieu::class, 'gio_ket_thuc_slot', 'slot');
+    }
 }

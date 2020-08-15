@@ -9,16 +9,16 @@ class KhungThoiGianSeeder extends Seeder
     public function run()
     {
         $danhSachKhungThoiGian = [];
-        $soThuTu = 1;
+        $slot = 0;
         for ($h = 0; $h <= 23; $h++) {
             for ($m = 0; $m <= 55; $m += 5) {
                 $danhSachKhungThoiGian[] = [
                     'thoi_gian' => sprintf('%02d', $h).':'.sprintf('%02d', $m),
-                    'so_thu_tu' => $soThuTu,
+                    'offset' => $slot,
                     'thoi_diem_tao' => now(),
                     'thoi_diem_cap_nhat' => now()
                 ];
-                $soThuTu++;
+                $slot++;
             }
         }
         DB::delete('delete from khung_thoi_gian');

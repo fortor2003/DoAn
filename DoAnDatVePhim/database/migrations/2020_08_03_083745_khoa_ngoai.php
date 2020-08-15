@@ -30,8 +30,8 @@ class KhoaNgoai extends Migration
         Schema::table('SUAT_CHIEU', function (Blueprint $table) {
             $table->foreign('phim_id')->references('id')->on('PHIM');
             $table->foreign('phong_chieu_id')->references('id')->on('PHONG_CHIEU');
-            $table->foreign('gio_bat_dau_id')->references('id')->on('KHUNG_THOI_GIAN');
-            $table->foreign('gio_ket_thuc_id')->references('id')->on('KHUNG_THOI_GIAN');
+            $table->foreign('gio_bat_dau_slot')->references('slot')->on('KHUNG_THOI_GIAN');
+            $table->foreign('gio_ket_thuc_slot')->references('slot')->on('KHUNG_THOI_GIAN');
         });
 
         // Bảng vé

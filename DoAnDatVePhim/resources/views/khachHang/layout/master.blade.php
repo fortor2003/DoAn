@@ -9,7 +9,7 @@
     @yield('stylesheets')
 </head>
 <body>
-    <div class="wrapper">
+    <div id="app" class="wrapper">
         @include('khachHang.layout._banner')
         @include('khachHang.layout._header')
         @if($isHomePage)

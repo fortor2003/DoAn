@@ -1,3 +1,4 @@
+<script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('js/external/modernizr.custom.js')}}"></script>
 <script src="{{asset('http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js')}}"></script>
 <script src="{{asset('js/external/jquery-1.10.1.min.js')}}"></script>
@@ -16,6 +17,8 @@
 <script src="{{asset('js/form.js')}}"></script>
 <!-- main -->
 <script src="{{asset('js/main.js')}}"></script>
+<!-- Vue mix app -->
+
 
 
 

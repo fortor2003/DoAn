@@ -21,4 +21,14 @@ class StringUtil
         }
         return null;
     }
+
+
+    /**
+     * Trả về kết quả kiểm tra xem một ngày có hợp lệ không
+     * @param string $date có dạng yyyy-mm-dd
+     * @return bool
+     */
+    public static function isValidDate($date) {
+        return $date ? (bool)strtotime($date) : false;
+    }
 }

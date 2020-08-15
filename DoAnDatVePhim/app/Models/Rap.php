@@ -28,4 +28,8 @@ class Rap extends Model
     {
         return $this->hasManyThrough(Ghe::class, PhongChieu::class, 'rap_id', 'phong_chieu_id', 'id', 'id');
     }
+
+    public function danhSachSuatChieu() {
+        return $this->hasManyThrough(SuatChieu::class, PhongChieu::class, 'rap_id', 'phong_chieu_id', 'id', 'id');
+}
 }

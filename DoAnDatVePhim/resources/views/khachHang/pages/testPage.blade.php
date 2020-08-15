@@ -1,9 +1,14 @@
-@extends('khachHang.layout.master', ['isHomePage' => false])
-@section('title_tab', 'Trang chủ')
-@section('stylesheets')
-@endsection
-@section('content')
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
 
-@endsection
-@section('scripts')
-@endsection
+</head>
+<body>
+
+    <div id="app">
+        <example-component></example-component>
+    </div>
+    <script src="{{asset('js/app.js')}}"></script>
+</body>
+</html>

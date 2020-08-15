@@ -58,10 +58,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        // Route khách hàng
+        // Route khách hàng [web]
         Route::middleware('web')
             ->namespace($this->namespaceKhachHang)
             ->group(base_path('routes/khach_hang.php'));
+        // Route khách hàng [api]
+        Route::middleware('api')->prefix('api')
+            ->namespace($this->namespaceKhachHang)
+            ->group(base_path('routes/khach_hang_api.php'));
     }
 
     /**

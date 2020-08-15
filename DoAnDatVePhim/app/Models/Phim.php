@@ -22,4 +22,8 @@ class Phim extends Model
     {
         return $this->belongsToMany(TheLoai::class, PhimTheLoai::class, 'phim_id', 'the_loai_id');
     }
+
+    public function danhSachSuatChieu() {
+        return $this->hasMany(SuatChieu::class, 'phim_id', 'id');
+    }
 }

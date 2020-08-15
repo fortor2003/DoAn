@@ -24,5 +24,5 @@ Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thong
 
 
 Route::get('/test', function () {
-    echo chr(65);
+   return view('khachHang.pages.testPage');
 });

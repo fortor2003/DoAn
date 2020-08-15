@@ -18,12 +18,12 @@ class SuatChieu extends Migration
             $table->unsignedBigInteger('phim_id');
             $table->unsignedBigInteger('phong_chieu_id');
             $table->date('ngay_chieu');
-            $table->unsignedBigInteger('gio_bat_dau_id');
-            $table->unsignedBigInteger('gio_ket_thuc_id');
+            $table->unsignedInteger('gio_bat_dau_slot');
+            $table->unsignedInteger('gio_ket_thuc_slot');
             $table->boolean('giao_ngay')->default(0)->comment('Nếu = 1 => phim được chiều từ hh:mm đến hh:mm ngày hôm sau');
             $table->dateTime('thoi_diem_tao')->useCurrent();
             $table->dateTime('thoi_diem_cap_nhat')->useCurrent();
-            $table->unique(['phim_id', 'phong_chieu_id', 'ngay_chieu', 'gio_bat_dau_id'], 'SUAT_CHIEU_UNQ_IDX');
+            $table->unique(['phim_id', 'phong_chieu_id', 'ngay_chieu', 'gio_bat_dau_slot'], 'SUAT_CHIEU_UNQ_IDX');
         });
         // Tạo comment cho bảng
 //        DB::statement("ALTER TABLE `$this->ten_bang` comment '$this->chu_thich_bang'");

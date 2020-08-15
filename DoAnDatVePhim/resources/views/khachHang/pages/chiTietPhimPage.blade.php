@@ -41,7 +41,6 @@
         .movie__images .movie-poster {
             height: 300px;
         }
-
     </style>
 @endsection
 @section('content')

@@ -24,9 +24,5 @@ Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thong
 
 
 Route::get('/test', function () {
-    $danhSachPhimDangChieu = \App\Models\Phim::where(['trang_thai' => 'DANG_CHIEU'])->select(['thoi_luong_chieu'])->get()->toArray();
-    dd($danhSachPhimDangChieu);
-    foreach ($danhSachPhimDangChieu as $phim) {
-        echo $phim['thoi_luong_chieu'];
-    }
+    echo chr(65);
 });

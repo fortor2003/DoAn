@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ghe;
 use App\Models\TaiKhoan;
 use App\Services\khachHang\PageService;
+use App\Services\khachHang\RapService;
 use App\Services\khachHang\SuatChieuService;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,13 @@ class PageController extends Controller
 {
     private $pageService;
     private $suatChieuService;
+    private $rapService;
 
-    public function __construct(PageService $pageService, SuatChieuService $suatChieuService)
+    public function __construct(PageService $pageService, SuatChieuService $suatChieuService, RapService $rapService)
     {
         $this->pageService = $pageService;
         $this->suatChieuService = $suatChieuService;
+        $this->rapService = $rapService;
     }
 
     public function trangChuPage()
@@ -36,7 +39,9 @@ class PageController extends Controller
     public function chiTietPhimPage($id)
     {
         $thongTinPhim = $this->pageService->thongTinPhim($id);
-        return view('khachHang.pages.chiTietPhimPage', compact('thongTinPhim'));
+        $danhSachRap = $this->rapService->danhSachRap();
+        $danhSachSuatChieu = $this->suatChieuService->danhSachSuatChieu($id, null, null);
+        return view('khachHang.pages.chiTietPhimPage', compact('thongTinPhim', 'danhSachRap', 'danhSachSuatChieu'));
     }
 
     public function datVePage()

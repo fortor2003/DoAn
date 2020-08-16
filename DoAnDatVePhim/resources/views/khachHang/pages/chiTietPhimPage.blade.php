@@ -114,112 +114,56 @@
                 </div>
             </div>
         </div>
-
         @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
             <h2 class="page-heading">Các suất chiếu</h2>
             <div class="choose-container">
                 <form id='select' class="select" method='get'>
-                    <select name="select_item" id="select-sort" class="select__sort" tabindex="0">
-                        <option value="1" selected='selected'>Hồ Chí Minh</option>
-                        <option value="2">Đà Nẵng</option>
-                        <option value="3">Hà Nội</option>
+                    <select name="select_item" id="select-sort" class="select__sort" tabindex="0" style="width: 150px">
+                        <option value="0" selected='selected'>Tất cả</option>
+                        @foreach($danhSachRap as $rap)
+                            <option value="{{$rap['id']}}">{{$rap['ten_rap']}}</option>
+                        @endforeach
                     </select>
                 </form>
 
                 <div class="datepicker">
                     <span class="datepicker__marker"><i class="fa fa-calendar"></i>Ngày</span>
-                    <input type="text" id="datepicker" value='03/10/2014' class="datepicker__input">
+                    <input type="text" id="datepicker" value='' class="datepicker__input">
                 </div>
 
                 <div class="clearfix"></div>
 
                 <div class="time-select">
-                    <div class="time-select__group group--first">
-                        <div class="col-sm-4">
-                            <p class="time-select__place">Rạp 1</p>
+                    @foreach($danhSachSuatChieu as $rap)
+                        @php $danhSachGioChieu = $rap['danh_sach_suat_chieu']; @endphp
+                        <div class="time-select__group group--first">
+                            <div class="col-sm-4">
+                                <p class="time-select__place">{{$rap['ten_rap']}}</p>
+                            </div>
+                            <ul class="col-sm-8 items-wrap">
+                                @foreach($danhSachGioChieu as $gioChieu)
+                                    <li class="time-select__item"
+                                        data-time='{{$gioChieu['gio_bat_dau']['thoi_gian']}}'>{{$gioChieu['gio_bat_dau']['thoi_gian']}}</li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <ul class="col-sm-8 items-wrap">
-                            <li class="time-select__item" data-time='09:40'>09:40</li>
-                            <li class="time-select__item" data-time='13:45'>13:45</li>
-                            <li class="time-select__item active" data-time='15:45'>15:45</li>
-                            <li class="time-select__item" data-time='19:50'>19:50</li>
-                            <li class="time-select__item" data-time='21:50'>21:50</li>
-                        </ul>
-                    </div>
-
-                    <div class="time-select__group">
-                        <div class="col-sm-4">
-                            <p class="time-select__place">Rạp 2</p>
-                        </div>
-                        <ul class="col-sm-8 items-wrap">
-                            <li class="time-select__item" data-time='10:45'>10:45</li>
-                            <li class="time-select__item" data-time='16:00'>16:00</li>
-                            <li class="time-select__item" data-time='19:00'>19:00</li>
-                            <li class="time-select__item" data-time='21:15'>21:15</li>
-                            <li class="time-select__item" data-time='23:00'>23:00</li>
-                        </ul>
-                    </div>
-
-                    <div class="time-select__group">
-                        <div class="col-sm-4">
-                            <p class="time-select__place">Rạp 3</p>
-                        </div>
-                        <ul class="col-sm-8 items-wrap">
-                            <li class="time-select__item" data-time='09:00'>09:00</li>
-                            <li class="time-select__item" data-time='11:00'>11:00</li>
-                            <li class="time-select__item" data-time='13:00'>13:00</li>
-                            <li class="time-select__item" data-time='15:00'>15:00</li>
-                            <li class="time-select__item" data-time='17:00'>17:00</li>
-                            <li class="time-select__item" data-time='19:0'>19:00</li>
-                            <li class="time-select__item" data-time='21:0'>21:00</li>
-                            <li class="time-select__item" data-time='23:0'>23:00</li>
-                            <li class="time-select__item" data-time='01:0'>01:00</li>
-                        </ul>
-                    </div>
-
-                    <div class="time-select__group">
-                        <div class="col-sm-4">
-                            <p class="time-select__place">Rạp 4</p>
-                        </div>
-                        <ul class="col-sm-8 items-wrap">
-                            <li class="time-select__item" data-time='10:45'>10:45</li>
-                            <li class="time-select__item" data-time='16:00'>16:00</li>
-                            <li class="time-select__item" data-time='19:00'>19:00</li>
-                            <li class="time-select__item" data-time='21:15'>21:15</li>
-                            <li class="time-select__item" data-time='23:00'>23:00</li>
-                        </ul>
-                    </div>
-
-                    <div class="time-select__group group--last">
-                        <div class="col-sm-4">
-                            <p class="time-select__place">Rạp 5</p>
-                        </div>
-                        <ul class="col-sm-8 items-wrap">
-                            <li class="time-select__item" data-time='17:45'>17:45</li>
-                            <li class="time-select__item" data-time='21:30'>21:30</li>
-                            <li class="time-select__item" data-time='02:20'>02:20</li>
-                        </ul>
-                    </div>
+                    @endforeach
                 </div>
                 @endif
-            </div>
-        @endsection
-    @section('scripts')
-        <!-- jQuery UI -->
-            <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-            <!-- Swiper slider -->
-            <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
-            <!-- Magnific-popup -->
-            <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
-            <!--*** Google map  ***-->
-        {{--    <script src="https://maps.google.com/maps/api/js?sensor=true"></script>--}}
-        <!--*** Google map infobox  ***-->
-        {{--    <script src="{{asset('js/external/infobox.js')}}"></script>--}}
-        <!-- Share buttons -->
-        {{--    <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>--}}
+    </div>
+        <input type="hidden" id="txtPhimId" value="{{$thongTinPhim['id']}}">
+@endsection
+@section('scripts')
+    <!-- jQuery UI -->
+    {{--            <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>--}}
+    <!-- Swiper slider -->
+        <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
+        <!-- Magnific-popup -->
+        <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
+        <!--*** Google map  ***-->
         <!-- Page -->
-            <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
-            <script>
+        <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
+        <script>
 
-            </script>
+        </script>
 @endsection

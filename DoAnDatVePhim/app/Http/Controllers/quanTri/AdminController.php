@@ -20,4 +20,10 @@ class AdminController extends Controller
         return view('QuanTri.pages.trangChinhPage');
     }
 
+    public function timKiemPage()
+    {
+        return view('QuanTri.pages.timKiemPage');
+    }
+
+
 }

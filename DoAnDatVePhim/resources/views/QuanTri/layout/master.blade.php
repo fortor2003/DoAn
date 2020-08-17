@@ -65,12 +65,8 @@
 
 <!--Script-->
 @include('QuanTri.layout._scripts')
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>
-    $.widget.bridge('uibutton', $.ui.button)
-</script>
-
-
+@yield('import_bottom_script')
+@yield('inside_script')
 
 <!--/end script-->
 

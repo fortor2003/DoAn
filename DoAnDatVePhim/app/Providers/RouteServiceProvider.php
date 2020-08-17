@@ -14,7 +14,8 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespaceKhachHang = 'App\Http\Controllers\KhachHang';
+    protected $namespaceKhachHang = 'App\Http\Controllers\khachHang';
+    protected $namespaceQuanTri = 'App\Http\Controllers\quanTri';
 
     /**
      * The path to the "home" route for your application.
@@ -66,6 +67,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('api')->prefix('api')
             ->namespace($this->namespaceKhachHang)
             ->group(base_path('routes/khach_hang_api.php'));
+        // Route quản trị [web]
+        Route::middleware('web')->prefix('admin')
+            ->namespace($this->namespaceQuanTri)
+            ->group(base_path('routes/quan_tri.php'));
+//        Route::middleware('api')->prefix('admin/api')
+//            ->namespace($this->namespaceKhachHang)
+//            ->group(base_path('routes/khach_hang_api.php'));
     }
 
     /**

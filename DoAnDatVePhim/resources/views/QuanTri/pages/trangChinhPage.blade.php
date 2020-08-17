@@ -1,0 +1,1 @@
+@extends('quanTri.layout.master')

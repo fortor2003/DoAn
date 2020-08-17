@@ -127,6 +127,17 @@
       <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/phpunit/php-token-stream" />
       <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/phpunit/phpunit" />
       <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/seld/phar-utils" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/seld/jsonlint" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/barryvdh/reflection-docblock" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/justinrainbow/json-schema" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/barryvdh/laravel-ide-helper" />
+      <path value="$PROJECT_DIR$/DoAnDatVePhim/vendor/laravel/ui" />
     </include_path>
   </component>
   <component name="ProjectId" id="1fw1nsBJDgdCqvPQBaho0lsea70" />
@@ -142,6 +153,9 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\resources\views\QuanTri\layout" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\database\seeds" />
       <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\app\Models" />
@@ -158,6 +172,8 @@
       <workItem from="1597114513466" duration="83000" />
       <workItem from="1597115915419" duration="16813000" />
       <workItem from="1597199393612" duration="10112000" />
+      <workItem from="1597629235273" duration="5212000" />
+      <workItem from="1597646277728" duration="8046000" />
     </task>
     <servers />
   </component>
@@ -165,33 +181,41 @@
     <option name="version" value="3" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="232" y="150" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597135557617">
+    <state x="232" y="150" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1597634147844">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="232" y="150" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597135557617" />
-    <state x="474" y="415" key="NewPhpFileDialog" timestamp="1597200124837">
+    <state x="232" y="150" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597634147844" />
+    <state x="474" y="415" key="NewPhpFileDialog" timestamp="1597654281490">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="474" y="415" key="NewPhpFileDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597200124837" />
-    <state x="1428" y="0" width="1023" height="769" maximized="true" key="dock-window-1" timestamp="1597201530369">
+    <state x="474" y="415" key="NewPhpFileDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597654281490" />
+    <state x="522" y="369" width="316" height="246" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1597634090384">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="522" y="369" width="316" height="246" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597634090384" />
+    <state x="0" y="0" key="com.intellij.database.view.ui.DatabasePreviewDialog" timestamp="1597633923999">
+      <screen x="0" y="0" width="1280" height="984" />
+    </state>
+    <state x="0" y="0" key="com.intellij.database.view.ui.DatabasePreviewDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597633923999" />
+    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1" timestamp="1597651320867">
       <screen x="1280" y="0" width="1280" height="984" />
     </state>
-    <state x="1428" y="0" width="1023" height="769" maximized="true" key="dock-window-1/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597201530369" />
+    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597651320867" />
     <state x="1280" y="0" width="943" height="971" maximized="true" key="dock-window-2" timestamp="1597199696758">
       <screen x="1280" y="0" width="1280" height="984" />
     </state>
     <state x="1280" y="0" width="943" height="971" maximized="true" key="dock-window-2/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597199696758" />
-    <state x="347" y="91" width="585" height="801" key="find.popup" timestamp="1597123018119">
+    <state x="347" y="91" width="585" height="801" key="find.popup" timestamp="1597650059826">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="347" y="91" width="585" height="801" key="find.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597123018119" />
+    <state x="347" y="91" width="585" height="801" key="find.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597650059826" />
     <state x="296" y="226" key="run.anything.popup" timestamp="1597202922687">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="296" y="226" key="run.anything.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597202922687" />
-    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup" timestamp="1597139776563">
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup" timestamp="1597638941094">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597139776563" />
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597638941094" />
   </component>
 </project>

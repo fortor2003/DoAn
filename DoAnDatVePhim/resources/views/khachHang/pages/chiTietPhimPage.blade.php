@@ -7,6 +7,8 @@
     <link href="{{asset('css/external/idangerous.swiper.css')}}" rel="stylesheet"/>
     <!-- Magnific-popup -->
     <link href="{{asset('css/external/magnific-popup.css')}}" rel="stylesheet"/>
+    <!-- select 2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('stylesheets')
     <style>
@@ -40,6 +42,17 @@
 
         .movie__images .movie-poster {
             height: 300px;
+        }
+
+        .label-select {
+            font-weight: bold;
+            padding-right: 10px;
+        }
+        .label-select .fa {
+            padding-right: 5px;
+        }
+        .time-select {
+            margin-top: 20px;
         }
     </style>
 @endsection
@@ -117,18 +130,18 @@
         @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
             <h2 class="page-heading">Các suất chiếu</h2>
             <div class="choose-container">
-                <form id='select' class="select" method='get'>
-                    <select name="select_item" id="select-sort" class="select__sort" tabindex="0" style="width: 150px">
-                        <option value="0" selected='selected'>Tất cả</option>
-                        @foreach($danhSachRap as $rap)
-                            <option value="{{$rap['id']}}">{{$rap['ten_rap']}}</option>
-                        @endforeach
-                    </select>
-                </form>
+
+                <span class="label-select"><i class="fa fa-location-arrow"></i>Rạp</span>
+                <select id="chonRap" style="width: 150px">
+                    <option value="0" selected='selected'>Tất cả</option>
+                    @foreach($danhSachRap as $rap)
+                        <option value="{{$rap['id']}}">{{$rap['ten_rap']}}</option>
+                    @endforeach
+                </select>
 
                 <div class="datepicker">
-                    <span class="datepicker__marker"><i class="fa fa-calendar"></i>Ngày</span>
-                    <input type="text" id="datepicker" value='' class="datepicker__input">
+                    <span class="datepicker__marker"><i class="fa fa-calendar"></i>Ngày chiếu</span>
+                    <input type="text" id="ngayChieu" value='' class="datepicker__input">
                 </div>
 
                 <div class="clearfix"></div>
@@ -142,28 +155,28 @@
                             </div>
                             <ul class="col-sm-8 items-wrap">
                                 @foreach($danhSachGioChieu as $gioChieu)
-                                    <li class="time-select__item"
-                                        data-time='{{$gioChieu['gio_bat_dau']['thoi_gian']}}'>{{$gioChieu['gio_bat_dau']['thoi_gian']}}</li>
+                                    <li class="time-select__item" data-id="{{$gioChieu['id']}}" data-time='{{$gioChieu['gio_bat_dau']['thoi_gian']}}'>{{$gioChieu['gio_bat_dau']['thoi_gian']}}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endforeach
                 </div>
                 @endif
-    </div>
-        <input type="hidden" id="txtPhimId" value="{{$thongTinPhim['id']}}">
-@endsection
-@section('scripts')
-    <!-- jQuery UI -->
-    {{--            <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>--}}
-    <!-- Swiper slider -->
-        <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
-        <!-- Magnific-popup -->
-        <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
-        <!--*** Google map  ***-->
-        <!-- Page -->
-        <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
-        <script>
-
-        </script>
+            </div>
+            <input type="hidden" id="txtPhimId" value="{{$thongTinPhim['id']}}">
+        @endsection
+    @section('scripts')
+        <!-- jQuery UI -->
+            <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+            <script src="{{asset('js/external/jquery.ui.datepicker-vi-VN.js')}}"></script>
+            <!-- Swiper slider -->
+            <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
+            <!-- Magnific-popup -->
+            <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
+            <!-- Select 2 -->
+            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+            <!--  Moment -->
+            <script src="{{asset('js/external/moment-with-locales.min.js')}}"></script>
+            <!-- Page -->
+            <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
 @endsection

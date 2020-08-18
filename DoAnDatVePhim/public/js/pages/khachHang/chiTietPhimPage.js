@@ -151,80 +151,12 @@ $(document).ready(function () {
         });
     });
 
-    //4. Dropdown init
-
-    //5. Datepicker init
-    $(".datepicker__input").datepicker({
-        showOtherMonths: true,
-        selectOtherMonths: true,
-        showAnim: "fade",
-        dateFormat: 'dd/mm/yy'
-    }).datepicker("setDate", new Date());
-    ;
-
-    $(document).click(function (e) {
-        var ele = $(e.target);
-        if (!ele.hasClass("datepicker__input") && !ele.hasClass("ui-datepicker") && !ele.hasClass("ui-icon") && !$(ele).parent().parents(".ui-datepicker").length) {
-            $(".datepicker__input").datepicker("hide");
-        }
-    });
-
-    //6. Reply comment form
-    // button more comments
-    $('#hide-comments').hide();
-
-    $('.comment-more').click(function (e) {
-        e.preventDefault();
-        $('#hide-comments').slideDown(400);
-        $(this).hide();
-    })
-
-    //reply comment function
-    $('.comment__reply').click(function (e) {
-        e.preventDefault();
-
-        $('.comment').find('.comment-form').remove();
-        $(this).parent().append("<form id='comment-form' class='comment-form' method='post'>\
-                            <textarea class='comment-form__text' placeholder='Add you comment here'></textarea>\
-                            <label class='comment-form__info'>250 characters left</label>\
-                            <button type='submit' class='btn btn-md btn--danger comment-form__btn'>add comment</button>\
-                        </form>");
-    });
-
     //7. Timetable active element
-    $('.time-select__item').click(function () {
+    $('.time-select').on('click', '.time-select__item', function () {
         $('.time-select__item').removeClass('active');
         $(this).addClass('active');
     });
 
-    //8. Toggle between cinemas timetable and map with location
-    //change map - ticket list
-    $('#map-switch').click(function (ev) {
-        ev.preventDefault();
-
-        $('.time-select').slideToggle(500);
-        $('.map').slideToggle(500);
-
-        $('.show-map').toggle();
-        $('.show-time').toggle();
-        $(this).blur();
-    });
-
-    $(window).load(function () {
-        $('.map').addClass('hide-map');
-    })
-
-    //10. Scroll down navigation function
-    //scroll down
-    $('.comment-link').click(function (ev) {
-        ev.preventDefault();
-        $('html, body').stop().animate({'scrollTop': $('.comment-wrapper').offset().top - 90}, 900, 'swing');
-    });
-
-    //init employee sliders
-    var mySwiper = new Swiper('.swiper-container', {
-        slidesPerView: 5,
-    });
 
     $('.swiper-slide-active').css({'marginLeft': '-1px'});
 
@@ -308,29 +240,31 @@ $(document).ready(function () {
     });
 
     //select
-    $("#select-sort").selectbox({
-        onChange: function (val, inst) {
-            console.log(val);
+    $('#chonRap').select2();
 
-        }
+    $('#chonRap').on('select2:select', function (e) {
+        timSuatChieu();
     });
 
-// @foreach($danhSachSuatChieu as $rap)
-// @php $danhSachGioChieu = $rap['danh_sach_suat_chieu']; @endphp
-// <div class="time-select__group">
-//         <div class="col-sm-4">
-//         <p class="time-select__place">{{$rap['ten_rap']}}</p>
-// </div>
-// <ul class="col-sm-8 items-wrap">
-// @foreach($danhSachGioChieu as $gioChieu)
-// <li class="time-select__item" data-time='{{$gioChieu['gio_bat_dau']['thoi_gian']}}'>{{$gioChieu['gio_bat_dau']['thoi_gian']}}</li>
-// @endforeach
-// </ul>
-// </div>
-// @endforeach
+    //5. Datepicker init
+    $('#ngayChieu').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        showAnim: "fade",
+        dateFormat: 'dd/mm/yy',
+        onSelect: function (dateText) {
+            timSuatChieu();
+        }
+    }).datepicker("setDate", new Date());
 
+});
+
+function timSuatChieu() {
+    const rapId = $('#chonRap').select2('data')[0].id;
+    const ngayChieu = moment($('#ngayChieu').datepicker('getDate')).format('YYYY-MM-DD');
+    console.log(rapId, ngayChieu);
     jQuery.ajax({
-        url: 'http://bkcinema.local/api/phim/' + $('#txtPhimId').val() + '/suat_chieu?rap_id=' + 4,
+        url: 'http://bkcinema.local/api/phim/' + $('#txtPhimId').val() + '/suat_chieu?rap_id=' + rapId + '&ngay_chieu=' + ngayChieu,
         data: null,
         method: 'get',
         success: function (danhSachRap) {
@@ -339,7 +273,7 @@ $(document).ready(function () {
             danhSachRap.forEach(rap => {
                 html += '<div class="time-select__group"><div class="col-sm-4"><p class="time-select__place">' + rap.ten_rap + '</p></div><ul class="col-sm-8 items-wrap">';
                 rap.danh_sach_suat_chieu.forEach(suatChieu => {
-                    html += '<li class="time-select__item" data-time="' + suatChieu.gio_bat_dau.thoi_gian + '">' + suatChieu.gio_bat_dau.thoi_gian + '</li>';
+                    html += '<li class="time-select__item" data-id="' + suatChieu.id + '" data-time="' + suatChieu.gio_bat_dau.thoi_gian + '">' + suatChieu.gio_bat_dau.thoi_gian + '</li>';
                 });
                 html += '</ul></div>';
             });
@@ -349,4 +283,4 @@ $(document).ready(function () {
             console.log(err);
         }
     })
-});
+}

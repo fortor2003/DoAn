@@ -17,7 +17,6 @@
 <script src="{{asset('js/form.js')}}"></script>
 <!-- main -->
 <script src="{{asset('js/main.js')}}"></script>
-<!-- Vue mix app -->
 
 
 

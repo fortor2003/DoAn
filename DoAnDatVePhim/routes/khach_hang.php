@@ -24,5 +24,7 @@ Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thong
 
 
 Route::get('/test', function () {
-   return view('khachHang.pages.testPage');
+    $time = now()->addMinutes(5)->format('H:i');
+
+    return view('khachHang.pages.testPage');
 });

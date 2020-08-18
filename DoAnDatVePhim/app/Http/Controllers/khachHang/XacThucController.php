@@ -17,7 +17,6 @@ class XacThucController extends Controller
     {
         $this->middleware('guest')->only(['dangNhapPage', 'dangNhap', 'dangKyPage', 'dangKy', 'quenMatKhauPage', 'quenMatKhauPage']);
         $this->middleware('auth')->only(['dangXuat']);
-//        $this->middleware('signed')->only(['kichHoatTaiKhoan']);
         $this->middleware('signed')->only(['kichHoatTaiKhoan', 'taoLaiMatKhauPage', 'taoLaiMatKhau']);
     }
 
@@ -142,8 +141,6 @@ class XacThucController extends Controller
 
     public function taoLaiMatKhau(Request $request)
     {
-//        dump($request->query());
-//        dump($request->input());
         $params = $request->query();
         $validatedData = $request->validate([
             'matKhau' => ['required', 'min:6'],

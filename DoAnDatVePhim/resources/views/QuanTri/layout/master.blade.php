@@ -65,7 +65,9 @@
 
 <!--Script-->
 @include('QuanTri.layout._scripts')
+{{--dùng cho nhúng file , url--}}
 @yield('import_bottom_script')
+{{--code script--}}
 @yield('inside_script')
 
 <!--/end script-->

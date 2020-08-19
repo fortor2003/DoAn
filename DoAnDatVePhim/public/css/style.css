@@ -1,4 +1,5 @@
 /*! normalize.css v3.0.0 | MIT License | git.io/normalize */
+/* width */
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -6365,7 +6366,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .sits-anchor:before {
   content: '';
-  background-color: #969b9f;
+  background-color: #8991b9;
   width: 380px;
   height: 5px;
   position: absolute;
@@ -6398,14 +6399,14 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .sits .sits__checked {
   position: relative;
-  width: 50px;
+  width: 70px;
   height: 450px;
   background-color: #4c4145;
   position: absolute;
   top: 0;
   right: 0;
   margin-top: 5px;
-  padding: 50px 10px 60px;
+  padding: 50px 6px 60px;
 }
 .sits .sits__checked:before {
   content: "\f00c";
@@ -6413,7 +6414,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   color: #ffffff;
   position: absolute;
   top: 20px;
-  left: 18px;
+  left: 30px;
 }
 .sits .sits__checked:after {
   content: "=";
@@ -6421,11 +6422,11 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   color: #ffffff;
   position: absolute;
   bottom: 41px;
-  left: 20px;
+  left: 30px;
 }
 .sits .sits__checked .checked-place {
-  overflow: hidden;
-  max-height: 340px;
+  overflow-y: auto;
+  height: 340px;
 }
 .sits .sits__checked .checked-result {
   color: #ffffff;
@@ -8670,6 +8671,9 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .sits-state--not:before {
   background-color: #dbdee1;
+}
+.sits-state--available:before {
+    background-color: #ffc8cb;
 }
 .sits-state--your:before {
   background-color: #4c4145;

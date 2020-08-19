@@ -22,9 +22,12 @@ Route::get('/thanh-toan', 'PageController@thanhToanPage')->name('khachHang.thanh
 Route::get('/hien-thi-ve', 'PageController@hienThiVePage')->name('khachHang.hienThiVePage');
 Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thongDiepPage');
 
-
 Route::get('/test', function () {
-    $time = now()->addMinutes(5)->format('H:i');
-
+    dump(\App\Models\SuatChieu::with(['gioBatDau:slot,thoi_gian', 'phim:id,tieu_de_vi,url_anh_bia', 'rap:ten_rap'])->findOrFail(200)->toArray());
     return view('khachHang.pages.testPage');
+});
+
+Route::get('/trigger-event', function () {
+    broadcast(new \App\Events\khachHang\TestEvent());
+    return 'Ok';
 });

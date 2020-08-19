@@ -24,3 +24,9 @@ use Illuminate\Support\Facades\Route;
  *  }]
  */
 Route::get('phim/{phim}/suat_chieu', 'ApiController@danhSachSuatChieu');
+Route::get('thong-tin-tai-khoan', 'ApiController@thongTinTaiKhoan');
+
+Route::get('test-dang-nhap', function () {
+    $taiKhoan = \App\Models\TaiKhoan::findOrFail(1);
+    return $taiKhoan->createToken('KHACHHANG_DANGNHAP')->plainTextToken;
+});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\khachHang;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ghe;
+use App\Models\SuatChieu;
 use App\Models\TaiKhoan;
 use App\Services\khachHang\PageService;
 use App\Services\khachHang\RapService;
@@ -49,10 +50,16 @@ class PageController extends Controller
         return view('khachHang.pages.datVePage');
     }
 
-    public function datGhePage()
+    public function datGhePage(Request $request)
     {
-        $danhSachGhe = $this->pageService->danhSachGhe();
-        return view('khachHang.pages.datGhePage', compact('danhSachGhe'));
+        $suatChieuId = $request->query('suat_chieu_id');
+        if ($suatChieuId) {
+            $suatChieu = $this->suatChieuService->thongTinSuatChieu($suatChieuId);
+            dump($suatChieu);
+            return view('khachHang.pages.datGhePage', compact('suatChieu'));
+        } else {
+            return redirect()->route('khachHang.datVePage');
+        }
     }
 
     public function thanhToanPage()

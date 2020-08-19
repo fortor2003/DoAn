@@ -12,7 +12,7 @@
 <script src="{{asset('quanTri/plugins/jquery-knob/jquery.knob.min.js')}}"></script>
 <!-- daterangepicker -->
 <script src="{{asset('quanTri/plugins/moment/moment.min.js')}}"></script>
-<script src="{{asset('quanTri/plugins/daterangepicker/daterangepicker.js')}}"></script>
+{{--<script src="{{asset('quanTri/plugins/daterangepicker/daterangepicker.js')}}"></script>--}}
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('quanTri/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 <!-- Summernote -->

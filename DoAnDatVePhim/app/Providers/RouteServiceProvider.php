@@ -71,9 +71,9 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')->prefix('admin')
             ->namespace($this->namespaceQuanTri)
             ->group(base_path('routes/quan_tri.php'));
-//        Route::middleware('api')->prefix('admin/api')
-//            ->namespace($this->namespaceKhachHang)
-//            ->group(base_path('routes/khach_hang_api.php'));
+        Route::middleware('api')->prefix('admin/api')
+            ->namespace($this->namespaceQuanTri)
+            ->group(base_path('routes/quan_tri_api.php'));
     }
 
     /**

@@ -149,16 +149,17 @@
     <property name="DatabaseDriversLRU" value="oracle" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/DoAnDatVePhim/database/seeds" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DoAnDatVePhim/app/Services/quanTri" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\resources\views\QuanTri\layout" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\app\Services\quanTri" />
       <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\database\seeds" />
       <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\app\Models" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\CNTT\GitHub\DoAn\DoAnDatVePhim\resources\views\QuanTri\layout" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -174,7 +175,8 @@
       <workItem from="1597199393612" duration="10112000" />
       <workItem from="1597629235273" duration="5212000" />
       <workItem from="1597646277728" duration="12492000" />
-      <workItem from="1597713691245" duration="10034000" />
+      <workItem from="1597713691245" duration="11187000" />
+      <workItem from="1597802311643" duration="16728000" />
     </task>
     <servers />
   </component>
@@ -186,10 +188,10 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="232" y="150" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597634147844" />
-    <state x="474" y="415" key="NewPhpFileDialog" timestamp="1597655683217">
+    <state x="474" y="415" key="NewPhpFileDialog" timestamp="1597805180767">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="474" y="415" key="NewPhpFileDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597655683217" />
+    <state x="474" y="415" key="NewPhpFileDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597805180767" />
     <state x="522" y="369" width="316" height="246" key="com.intellij.database.actions.DdlActions$DeleteProvider2$1" timestamp="1597634090384">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
@@ -198,25 +200,25 @@
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="0" y="0" key="com.intellij.database.view.ui.DatabasePreviewDialog/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597633923999" />
-    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1" timestamp="1597714875441">
+    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1" timestamp="1597802867077">
       <screen x="1280" y="0" width="1280" height="984" />
     </state>
-    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597714875441" />
+    <state x="1413" y="0" width="963" height="755" maximized="true" key="dock-window-1/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597802867077" />
     <state x="1280" y="0" width="943" height="971" maximized="true" key="dock-window-2" timestamp="1597199696758">
       <screen x="1280" y="0" width="1280" height="984" />
     </state>
     <state x="1280" y="0" width="943" height="971" maximized="true" key="dock-window-2/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597199696758" />
-    <state x="347" y="91" width="585" height="801" key="find.popup" timestamp="1597714975269">
+    <state x="347" y="91" width="585" height="801" key="find.popup" timestamp="1597830612883">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="347" y="91" width="585" height="801" key="find.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597714975269" />
+    <state x="347" y="91" width="585" height="801" key="find.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597830612883" />
     <state x="296" y="226" key="run.anything.popup" timestamp="1597202922687">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
     <state x="296" y="226" key="run.anything.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597202922687" />
-    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup" timestamp="1597733033695">
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup" timestamp="1597821039818">
       <screen x="0" y="0" width="1280" height="984" />
     </state>
-    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597733033695" />
+    <state x="303" y="211" width="672" height="678" key="search.everywhere.popup/0.0.1280.984/1280.0.1280.984@0.0.1280.984" timestamp="1597821039818" />
   </component>
 </project>

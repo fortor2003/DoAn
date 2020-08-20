@@ -22,8 +22,11 @@ Route::get('/thanh-toan', 'PageController@thanhToanPage')->name('khachHang.thanh
 Route::get('/hien-thi-ve', 'PageController@hienThiVePage')->name('khachHang.hienThiVePage');
 Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thongDiepPage');
 
-
 Route::get('/test', function () {
-
     return view('khachHang.pages.testPage');
+});
+
+Route::get('/trigger-event', function () {
+    broadcast(new \App\Events\khachHang\TestEvent());
+    return 'Ok';
 });

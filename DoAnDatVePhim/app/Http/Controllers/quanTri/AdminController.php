@@ -17,7 +17,10 @@ class AdminController extends Controller
 
     public function trangChuPage()
     {
-        return view('QuanTri.pages.trangChinhPage');
+        $danhSachRap = $this->adminService->danhSachRap();
+        $danhSachPhim = $this->adminService->danhSachPhim();
+//        dump($danhSachPhim);
+        return view('QuanTri.pages.trangChinhPage',compact(['danhSachRap', 'danhSachPhim']));
     }
 
 }

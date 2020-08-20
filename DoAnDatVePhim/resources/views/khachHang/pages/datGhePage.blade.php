@@ -11,44 +11,81 @@
     <script src="{{asset('js/external/modernizr.custom.js')}}"></script>
 @endsection
 @section('stylesheets')
-
+    <style>
+        .choose-sits__info ul {
+            margin-bottom: 0;
+        }
+        .main-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .sits .sits__checked .checked-place::-webkit-scrollbar {
+            width: 5px;
+        }
+        /* Track */
+        .sits .sits__checked .checked-place::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 8px;
+        }
+        /* Handle */
+        .sits .sits__checked .checked-place::-webkit-scrollbar-thumb {
+            background: #7783be;
+            border-radius: 10px;
+        }
+    </style>
 @endsection
 @section('content')
     <div class="order-container">
         <div class="order">
             <img class="order__images" alt='' src="images/tickets.png">
-            <p class="order__title">Book a ticket <br><span class="order__descript">and have fun movie time</span></p>
+            <p class="order__title">Đặt vé <br><span class="order__descript">và trải nghiệm</span></p>
             <div class="order__control">
-                <a href="#" class="order__control-btn active">Purchase</a>
-                <a href="#" class="order__control-btn">Reserve</a>
+                <a href="#" class="order__control-btn active">Thanh toán</a>
+                <a href="#" class="order__control-btn">Quay trở lại</a>
             </div>
         </div>
     </div>
     <div class="order-step-area">
-        <div class="order-step first--step order-step--disable ">1. What &amp; Where &amp; When</div>
-        <div class="order-step second--step">2. Choose a sit</div>
+        <div class="order-step first--step order-step--disable ">1. Phim &amp; Rạp &amp; Giờ chiếu</div>
+        <div class="order-step second--step">2. Chọn ghế</div>
     </div>
 
     <div class="choose-sits">
-        <div class="choose-sits__info choose-sits__info--first">
-            <ul>
-                <li class="sits-price marker--none"><strong>Price</strong></li>
-                <li class="sits-price sits-price--cheap">$10</li>
-                <li class="sits-price sits-price--middle">$20</li>
-                <li class="sits-price sits-price--expensive">$30</li>
-            </ul>
-        </div>
-
-        <div class="choose-sits__info">
-            <ul>
-                <li class="sits-state sits-state--not">Not available</li>
-                <li class="sits-state sits-state--your">Your choice</li>
-            </ul>
+        <div class="row main-info">
+            <div class="choose-sits__info choose-sits__info--first">
+                <ul>
+                    <li class=""><strong>Phim</strong></li>
+                    <li class="">{{$suatChieu['phim']['tieu_de_vi']}}</li>
+                </ul>
+                <ul>
+                    <li class=""><strong>Rạp</strong></li>
+                    <li class="">{{$suatChieu['rap']['ten_rap']}}</li>
+                </ul>
+                <ul>
+                    <li class=""><strong>Giờ chiếu</strong></li>
+                    <li class="">{{$suatChieu['gio_bat_dau']['thoi_gian']}}</li>
+                </ul>
+            </div>
+            <div class="choose-sits__info choose-sits__info--first">
+                <ul>
+                    <li class="sits-price marker--none"><strong>Giá vé</strong></li>
+                    <li class="sits-price sits-price--middle">100,000 đ</li>
+                </ul>
+            </div>
+            <div class="choose-sits__info">
+                <ul>
+                    <li class="sits-price marker--none"><strong>Trạng thái ghế</strong></li>
+                    <li class="sits-state sits-state--not">Bận</li>
+                    <li class="sits-state sits-state--available">Có thể chọn</li>
+                    <li class="sits-state sits-state--your">Bạn đã chọn</li>
+                </ul>
+            </div>
         </div>
 
         <div class="col-sm-12 col-lg-10 col-lg-offset-1">
             <div class="sits-area hidden-xs">
-                <div class="sits-anchor">screen</div>
+                <div class="sits-anchor">Màn chiếu</div>
 
                 <div class="sits">
                     <aside class="sits__line">
@@ -328,62 +365,62 @@
             </div>
         </div>
 
-        <div class="col-sm-12 visible-xs">
-            <div class="sits-area--mobile">
-                <div class="sits-area--mobile-wrap">
-                    <div class="sits-select">
-                        <select name="sorting_item" class="sits__sort sit-row" tabindex="0">
-                            <option value="1" selected='selected'>A</option>
-                            <option value="2">B</option>
-                            <option value="3">C</option>
-                            <option value="4">D</option>
-                            <option value="5">E</option>
-                            <option value="6">F</option>
-                            <option value="7">G</option>
-                            <option value="8">I</option>
-                            <option value="9">J</option>
-                            <option value="10">K</option>
-                            <option value="11">L</option>
-                        </select>
+{{--        <div class="col-sm-12 visible-xs">--}}
+{{--            <div class="sits-area--mobile">--}}
+{{--                <div class="sits-area--mobile-wrap">--}}
+{{--                    <div class="sits-select">--}}
+{{--                        <select name="sorting_item" class="sits__sort sit-row" tabindex="0">--}}
+{{--                            <option value="1" selected='selected'>A</option>--}}
+{{--                            <option value="2">B</option>--}}
+{{--                            <option value="3">C</option>--}}
+{{--                            <option value="4">D</option>--}}
+{{--                            <option value="5">E</option>--}}
+{{--                            <option value="6">F</option>--}}
+{{--                            <option value="7">G</option>--}}
+{{--                            <option value="8">I</option>--}}
+{{--                            <option value="9">J</option>--}}
+{{--                            <option value="10">K</option>--}}
+{{--                            <option value="11">L</option>--}}
+{{--                        </select>--}}
 
-                        <select name="sorting_item" class="sits__sort sit-number" tabindex="1">
-                            <option value="1" selected='selected'>1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                        </select>
+{{--                        <select name="sorting_item" class="sits__sort sit-number" tabindex="1">--}}
+{{--                            <option value="1" selected='selected'>1</option>--}}
+{{--                            <option value="2">2</option>--}}
+{{--                            <option value="3">3</option>--}}
+{{--                            <option value="4">4</option>--}}
+{{--                            <option value="5">5</option>--}}
+{{--                            <option value="6">6</option>--}}
+{{--                            <option value="7">7</option>--}}
+{{--                            <option value="8">8</option>--}}
+{{--                            <option value="9">9</option>--}}
+{{--                            <option value="10">10</option>--}}
+{{--                            <option value="11">11</option>--}}
+{{--                            <option value="12">12</option>--}}
+{{--                            <option value="13">13</option>--}}
+{{--                            <option value="14">14</option>--}}
+{{--                            <option value="15">15</option>--}}
+{{--                            <option value="16">16</option>--}}
+{{--                            <option value="17">17</option>--}}
+{{--                            <option value="18">18</option>--}}
+{{--                        </select>--}}
 
-                        <a href="#" class="btn btn-md btn--warning toogle-sits">Choose sit</a>
-                    </div>
-                </div>
+{{--                        <a href="#" class="btn btn-md btn--warning toogle-sits">Choose sit</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
 
-                <a href="#" class="watchlist add-sits-line">Add new sit</a>
+{{--                <a href="#" class="watchlist add-sits-line">Add new sit</a>--}}
 
-                <aside class="sits__checked">
-                    <div class="checked-place">
-                        <span class="choosen-place"></span>
-                    </div>
-                    <div class="checked-result">
-                        $0
-                    </div>
-                </aside>
-                <img alt="" src="images/components/sits_mobile.png">
-            </div>
-        </div>
+{{--                <aside class="sits__checked">--}}
+{{--                    <div class="checked-place">--}}
+{{--                        <span class="choosen-place"></span>--}}
+{{--                    </div>--}}
+{{--                    <div class="checked-result">--}}
+{{--                        $0--}}
+{{--                    </div>--}}
+{{--                </aside>--}}
+{{--                <img alt="" src="images/components/sits_mobile.png">--}}
+{{--            </div>--}}
+{{--        </div>--}}
 
     </div>
 
@@ -403,12 +440,12 @@
 
         <div class="booking-pagination booking-pagination--margin">
             <a href="book1.html" class="booking-pagination__prev">
-                <span class="arrow__text arrow--prev">prev step</span>
-                <span class="arrow__info">what&amp;where&amp;when</span>
+                <span class="arrow__text arrow--prev">Bước trước</span>
+                <span class="arrow__info">phim &amp; rạp &amp; giờ chiếu</span>
             </a>
             <a href="book3-buy.html" class="booking-pagination__next">
-                <span class="arrow__text arrow--next">next step</span>
-                <span class="arrow__info">checkout</span>
+                <span class="arrow__text arrow--next">Bước kế tiếp</span>
+                <span class="arrow__info">thanh toán</span>
             </a>
         </div>
     </form>
@@ -421,7 +458,4 @@
 
     <!-- Page -->
     <script src="{{asset('js/pages/khachHang/datGhePage.js')}}"></script>
-    <script>
-
-    </script>
 @endsection

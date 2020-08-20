@@ -7,10 +7,11 @@ use App\Notifications\khachHang\TaoLaiMatKhauNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class TaiKhoan extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasApiTokens;
 
     protected $table = 'tai_khoan';
     protected $primaryKey = 'id';

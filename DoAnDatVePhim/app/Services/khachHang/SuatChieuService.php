@@ -3,6 +3,7 @@
 namespace App\Services\khachHang;
 
 use App\Models\Rap;
+use App\Models\SuatChieu;
 use App\Utils\StringUtil;
 
 class SuatChieuService
@@ -35,5 +36,10 @@ class SuatChieuService
         } else {
             return [];
         }
+    }
+
+    public function thongTinSuatChieu($suatChieuId): array
+    {
+        return SuatChieu::with(['gioBatDau:slot,thoi_gian', 'phim:id,tieu_de_vi,url_anh_bia', 'rap:ten_rap'])->findOrFail($suatChieuId)->toArray();
     }
 }

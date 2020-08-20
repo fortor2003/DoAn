@@ -19,17 +19,12 @@ class AdminService
         return Rap::select(['id', 'ten_rap'])->get()->toArray();
     }
     /**
-     * Trả về danh sách các phòng
-     **/
-    public function danhSachPhong($idRap): array
-    {
-
-        return Rap::findOrFail($idRap)->danhSachPhongChieu()->toArray();
-    }
-    /**
      * Trả về danh sách các phim
      **/
-
+    public function danhSachPhim(): array
+    {
+        return Phim::select(['id', 'tieu_de_vi'])->where('trang_thai','DANG_CHIEU')->get()->toArray();
+    }
     /**
      * Trả về danh sách các suất chiếu
      **/

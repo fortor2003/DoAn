@@ -46,7 +46,9 @@ class PageController extends Controller
 
     public function datVePage()
     {
-        return view('khachHang.pages.datVePage');
+        $danhSachPhimDangChieu = $this->pageService->danhSachPhimDangChieu();
+        $danhSachRap = $this->rapService->danhSachRap();
+        return view('khachHang.pages.datVePage', compact(['danhSachPhimDangChieu', 'danhSachRap']));
     }
 
     public function datGhePage()

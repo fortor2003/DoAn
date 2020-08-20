@@ -243,6 +243,7 @@ $(document).ready(function () {
     $('#chonRap').select2();
 
     $('#chonRap').on('select2:select', function (e) {
+
         timSuatChieu();
     });
 

@@ -21,8 +21,12 @@ class SuatChieuService
         if ($phimId && StringUtil::isValidDate($ngayChieu) && date_diff(new \DateTime($ngayChieu), now())->d <= 0) {
             $queryBuilder = Rap::whereHas('danhSachSuatChieu', function ($query) use ($phimId, $ngayChieu) {
                 $query->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu);
-            }, '>', 0)->with(['danhSachSuatChieu' => function ($query) use ($phimId, $ngayChieu) {
-                $query->with('gioBatDau:slot,thoi_gian')->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu)->orderBy('gio_bat_dau_slot', 'asc')->select(['suat_chieu.id', 'suat_chieu.gio_bat_dau_slot']);
+            })->whereHas('danhSachSuatChieu.gioBatDau', function($q) {
+                $q->where('thoi_gian', '>=', now()->format('H:i'));
+            })->with(['danhSachSuatChieu' => function ($query) use ($phimId, $ngayChieu) {
+                $query->whereHas('gioBatDau', function ($q) {
+                    $q->where('thoi_gian', '>=', now()->format('H:i'));
+                })->with('gioBatDau:slot,thoi_gian')->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu)->orderBy('gio_bat_dau_slot', 'asc')->select(['suat_chieu.id', 'suat_chieu.gio_bat_dau_slot']);
             }])->select(['id', 'ten_rap']);
             if ($rapId) {
                 $queryBuilder = $queryBuilder->where('id', $rapId);

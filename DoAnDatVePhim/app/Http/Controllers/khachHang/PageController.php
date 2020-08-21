@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Ghe;
 use App\Models\SuatChieu;
 use App\Models\TaiKhoan;
+use App\Services\khachHang\GheService;
 use App\Services\khachHang\PageService;
 use App\Services\khachHang\RapService;
 use App\Services\khachHang\SuatChieuService;
@@ -16,12 +17,15 @@ class PageController extends Controller
     private $pageService;
     private $suatChieuService;
     private $rapService;
+    private $gheService;
 
-    public function __construct(PageService $pageService, SuatChieuService $suatChieuService, RapService $rapService)
+    public function __construct(PageService $pageService, SuatChieuService $suatChieuService, RapService $rapService, GheService $gheService)
     {
         $this->pageService = $pageService;
         $this->suatChieuService = $suatChieuService;
         $this->rapService = $rapService;
+        $this->gheService = $gheService;
+        $this->middleware('auth')->only(['datGhePage']);
     }
 
     public function trangChuPage()
@@ -45,20 +49,23 @@ class PageController extends Controller
         return view('khachHang.pages.chiTietPhimPage', compact('thongTinPhim', 'danhSachRap', 'danhSachSuatChieu'));
     }
 
-    public function datVePage()
+    public function datVePage(Request $request)
     {
+        $phimId = $request->get('phim_id');
         $danhSachPhimDangChieu = $this->pageService->danhSachPhimDangChieu();
         $danhSachRap = $this->rapService->danhSachRap();
-        return view('khachHang.pages.datVePage', compact(['danhSachPhimDangChieu', 'danhSachRap']));
+        return view('khachHang.pages.datVePage', compact(['danhSachPhimDangChieu', 'danhSachRap', 'phimId']));
     }
 
     public function datGhePage(Request $request)
     {
         $suatChieuId = $request->query('suat_chieu_id');
         if ($suatChieuId) {
+            SuatChieu::findOrFail($suatChieuId);
             $suatChieu = $this->suatChieuService->thongTinSuatChieu($suatChieuId);
-            dump($suatChieu);
-            return view('khachHang.pages.datGhePage', compact('suatChieu'));
+            $giaVe = 90000;
+            $danhSachHangGhe = $this->gheService->danhSachGhe($suatChieuId);
+            return view('khachHang.pages.datGhePage', compact(['suatChieuId', 'suatChieu', 'giaVe', 'danhSachHangGhe']));
         } else {
             return redirect()->route('khachHang.datVePage');
         }

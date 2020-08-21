@@ -18,6 +18,10 @@ Broadcast::channel('App.TaiKhoan.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
+Broadcast::channel('KhachHang.DatVe', function ($user) {
+    return true;
+});
+
 //Broadcast::channel('task.created', function ($user, $id) {
 //    return true;
 //});

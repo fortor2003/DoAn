@@ -34,12 +34,17 @@ class KhoaNgoai extends Migration
             $table->foreign('gio_ket_thuc_slot')->references('slot')->on('KHUNG_THOI_GIAN');
         });
 
-        // Bảng vé
-        Schema::table('VE', function (Blueprint $table) {
+        // Bảng Đơn đặt vé
+        Schema::table('DON_DAT_VE', function (Blueprint $table) {
             $table->foreign('suat_chieu_id')->references('id')->on('SUAT_CHIEU');
-            $table->foreign('ghe_id')->references('id')->on('GHE');
             $table->foreign('khach_hang_id')->references('id')->on('TAI_KHOAN');
             $table->foreign('nhan_vien_id')->references('id')->on('TAI_KHOAN');
+        });
+
+        // Bảng vé
+        Schema::table('VE', function (Blueprint $table) {
+            $table->foreign('don_dat_ve_id')->references('id')->on('DON_DAT_VE');
+            $table->foreign('ghe_id')->references('id')->on('GHE');
         });
 
         // Bảng xác thục url

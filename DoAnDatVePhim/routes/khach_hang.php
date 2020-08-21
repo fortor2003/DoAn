@@ -27,6 +27,6 @@ Route::get('/test', function () {
 });
 
 Route::get('/trigger-event', function () {
-    broadcast(new \App\Events\khachHang\TestEvent());
+
     return 'Ok';
 });

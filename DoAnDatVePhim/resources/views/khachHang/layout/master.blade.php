@@ -5,11 +5,14 @@
     <title>@yield('title_tab', '--')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="telephone=no" name="format-detection">
+    <meta name="url_api" content="{{env('APP_URL_API_KHACH_HANG')}}">
+    <meta name="api_token" content="{{session('API_TOKEN')['token'] ?? null}}">
     @include('khachHang.layout._stylesheets')
     @yield('stylesheets')
 </head>
 <body>
-    <div id="app" class="wrapper">
+    <div class="loading">Loading&#8230;</div>
+    <div class="wrapper">
         @include('khachHang.layout._banner')
         @include('khachHang.layout._header')
         @if($isHomePage)
@@ -20,13 +23,7 @@
         <section class="container">
             @yield('content')
         </section>
-
-        @yield('content1')
-
         <div class="clearfix"></div>
-
-        @yield('pagination')
-
         @include('khachHang.layout._footer')
     </div>
     @include('khachHang.layout._sign_in_popup')

@@ -19,7 +19,7 @@ class SuatChieuService
     public function danhSachSuatChieu($phimId, $ngayChieu, $rapId): array
     {
         $ngayChieu = $ngayChieu ?? now()->format('Y-m-d');
-        if ($phimId && StringUtil::isValidDate($ngayChieu) && date_diff(new \DateTime($ngayChieu), now())->d <= 0) {
+        if ($phimId && StringUtil::isValidDate($ngayChieu) && (int)now()->diff(new \DateTime('2020-08-23'))->format('%r%a') >= 0) {
             $queryBuilder = Rap::whereHas('danhSachSuatChieu', function ($query) use ($phimId, $ngayChieu) {
                 $query->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu);
             })->whereHas('danhSachSuatChieu.gioBatDau', function($q) {

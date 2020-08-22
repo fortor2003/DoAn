@@ -51,10 +51,12 @@ class GheService
             })
             ->where('ddv.suat_chieu_id', '=', $suatChieuId)
             ->where('ddv.tinh_trang', '=', 'CHUA_THANH_TOAN')->get()->toArray();
-        $danhSachGheChoThanhToan = array_map(function ($item) {
+//        (env('TIME_WAIT_FOR_PAY', 10) * 60) - (strtotime(now()->format('Y-m-d H:i:s')) - strtotime($donDatVe->thoi_diem_tao))
+        $strTimeNow = strtotime(now()->format('Y-m-d H:i:s'));
+        $danhSachGheChoThanhToan = array_map(function ($item) use ($strTimeNow) {
             return [
                 'ghe_id' => (int)$item->ghe_id,
-                'so_giay_dem_nguoc' => 5
+                'so_giay_dem_nguoc' => (env('TIME_WAIT_FOR_PAY', 10) * 60) - ($strTimeNow - strtotime($item->thoi_diem_tao))
             ];
         }, $danhSachGheChoThanhToan);
         // Đã thanh toán

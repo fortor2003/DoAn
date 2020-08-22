@@ -17,7 +17,7 @@ class Ve extends Model
         'thoi_diem_cap_nhat' => 'datetime:Y-m-d H:i:s'
     ];
     protected $hidden = [];
-    protected $fillable = ['MA_VE', 'DON_DAT_VE_ID', 'GHE_ID'];
+    protected $fillable = ['ma_ve', 'don_dat_ve_id', 'ghe_id'];
 
     public function donDatVe()
     {

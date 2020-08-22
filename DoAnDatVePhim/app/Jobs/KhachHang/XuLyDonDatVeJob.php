@@ -2,34 +2,33 @@
 
 namespace App\Jobs\KhachHang;
 
-use App\Events\khachHang\TaoDonDatVeEvent;
+use App\Models\DonDatVe;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 
 class XuLyDonDatVeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $donDatVeId;
+
+    public function __construct($donDatVeId)
     {
-        //
+        $this->donDatVeId = $donDatVeId;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        broadcast(new TaoDonDatVeEvent());
+        $donDatVe = DonDatVe::find($this->donDatVeId);
+        if ($donDatVe && $donDatVe->tinh_trang == 'CHUA_THANH_TOAN') {
+            DB::transaction(function () use ($donDatVe) {
+                $donDatVe->danhSachVe()->delete();
+                $donDatVe->delete();
+            });
+        }
     }
 }

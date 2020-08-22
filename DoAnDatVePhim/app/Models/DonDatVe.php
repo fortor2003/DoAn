@@ -19,6 +19,11 @@ class DonDatVe extends Model
     protected $hidden = [];
     protected $fillable = ['ma_don', 'suat_chieu_id', 'khach_hang_id', 'nhan_vien_id', 'tinh_trang', 'thoi_diem_thanh_toan'];
 
+    public function suatChieu()
+    {
+        return $this->belongsTo(SuatChieu::class, 'suat_chieu_id', 'id');
+    }
+
     public function danhSachVe()
     {
         return $this->hasMany(Ve::class, 'don_dat_ve_id', 'id');

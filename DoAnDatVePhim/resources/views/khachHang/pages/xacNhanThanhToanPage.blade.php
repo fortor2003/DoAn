@@ -20,7 +20,7 @@
     </div>
     <div class="col-sm-12">
         <form id='formThanhToan' method='post' class="form contact-info"
-              action="{{route('khachHang.xacNhanThanhToanPage')}}">
+              action="{{route('khachHang.taoDonDatVe')}}">
             @csrf
             <div class="checkout-wrapper">
                 <h2 class="page-heading">Phim</h2>
@@ -80,5 +80,5 @@
     <!-- Select 2-->
     <script src="{{asset('js/external/select2.min.js')}}"></script>
     <!-- page -->
-    <script src="{{asset('js/pages/khachHang/thanhToanPage.js')}}"></script>
+    <script src="{{asset('js/pages/khachHang/xacNhanThanhToanPage.js')}}"></script>
 @endsection

@@ -125,7 +125,7 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <form id='formDatGhe' class="booking-form" method='post' action="{{route('khachHang.thanhToanPage')}}">
+    <form id='formDatGhe' class="booking-form" method='post' action="{{route('khachHang.xacNhanThanhToanPage')}}">
         @csrf
         <input type='hidden' id="suatChieuId" name="suat_chieu_id" value="{{$suatChieuId}}">
         <input type='hidden' id="danhSachGheId" name="danh_sach_ghe_id" value="[]">

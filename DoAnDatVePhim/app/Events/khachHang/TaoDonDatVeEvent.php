@@ -2,6 +2,7 @@
 
 namespace App\Events\khachHang;
 
+use App\Services\khachHang\GheService;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -13,24 +14,18 @@ class TaoDonDatVeEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    /**
-     * Create a new event instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    private $suatChieuId;
+    private $gheService;
+
+    public function __construct($suatChieuId)
     {
-        //
+        $this->suatChieuId = $suatChieuId;
+        $this->gheService = app(GheService::class);
     }
 
-    /**
-     * Get the channels the event should broadcast on.
-     *
-     * @return \Illuminate\Broadcasting\Channel|array
-     */
     public function broadcastOn()
     {
-        return new PrivateChannel('KhachHang.DatVe.302');
+        return new PrivateChannel('KhachHang.DatVe.' . $this->suatChieuId);
     }
 
     public function broadcastAs()
@@ -40,6 +35,6 @@ class TaoDonDatVeEvent implements ShouldBroadcastNow
 
     public function broadcastWith()
     {
-        return ['message' => 'Test message !'];
+        return $this->gheService->danhSachGheTheoTinhTrang($this->suatChieuId);
     }
 }

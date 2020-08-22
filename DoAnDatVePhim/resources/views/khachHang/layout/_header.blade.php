@@ -48,14 +48,13 @@
                         {{$taiKhoan['ho_ten']}}
                     </a>
                     <ul class="auth__function">
-                        <li><a href="#" class="auth__function-item">Vé đã đặt</a></li>
+                        <li><a href="{{route('khachHang.donDatVePage')}}" class="auth__function-item">Đơn đặt vé</a></li>
                         <li><a href="#" class="auth__function-item">Hồ sơ cá nhân</a></li>
                         <li><a href="#" class="auth__function-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Đăng xuất</a></li>
                         <form id="logout-form" action="{{ route('khachHang.dangXuat') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
                     </ul>
-
                 </div>
                 <a href="{{route('khachHang.datVePage')}}" class="btn btn-md btn--warning btn--book btn-control--home login-window">Đặt vé</a>
             </div>

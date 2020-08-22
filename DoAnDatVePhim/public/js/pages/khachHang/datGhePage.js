@@ -1,5 +1,6 @@
 var danhSachDongHoDemNguoc = [];
 var suatChieuId = null;
+var sum = 0;
 
 $(document).ready(function () {
     suatChieuId = $('#suatChieuId').val();
@@ -24,8 +25,6 @@ $(document).ready(function () {
     //3. Choose sits (and count price for them)
     //users choose sits
 
-    //data elements init
-    var sum = 0;
 
     $('.sits__place').click(function (e) {
         e.preventDefault();
@@ -53,133 +52,16 @@ $(document).ready(function () {
 
     $('.top-scroll').parent().find('.top-scroll').remove();
 
-    // //4. Choosing sits mobile
-    // //init select box
-    // $('.sits__sort').selectbox({
-    //     onChange: function (val, inst) {
-    //
-    //         $(inst.input[0]).children().each(function (item) {
-    //             $(this).removeAttr('selected');
-    //         })
-    //         $(inst.input[0]).find('[value="' + val + '"]').attr('selected', 'selected');
-    //     }
-    // });
-    //
-    // //add new sits line
-    // $('.add-sits-line').click(function (e) {
-    //     e.preventDefault();
-    //     var temp = $('<div class="sits-select"><select name="sorting_item" class="sits__sort sit-row" tabindex="0"><option selected="selected" value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option><option value="5">E</option><option value="6">F</option><option value="7">G</option> <option value="8">I</option><option value="9">J</option><option value="10">K</option><option value="11">L</option></select><select name="sorting_item" class="sits__sort sit-number" tabindex="1"><option selected="selected" value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option></select><a href="#" class="btn btn-md btn--warning toogle-sits">Choose sit</a></div>');
-    //     temp.find('.toogle-sits').click(ChoosePlace);
-    //     temp.find('.sits__sort').selectbox({
-    //         onChange: function (val, inst) {
-    //
-    //             $(inst.input[0]).children().each(function (item) {
-    //                 $(this).removeAttr('selected');
-    //             })
-    //             $(inst.input[0]).find('[value="' + val + '"]').attr('selected', 'selected');
-    //         }
-    //
-    //     });
-    //     $('.sits-area--mobile-wrap').append(temp);
-    //
-    //
-    //     $(this).blur();
-    // });
-    //
-    // //choose sits
-    // $('.toogle-sits').click(ChoosePlace);
-    //
-    // function ChoosePlace(e) {
-    //     e.preventDefault();
-    //
-    //     var row = $(this).parent().find('.sit-row option[selected="selected"]').text();
-    //     var number = $(this).parent().find('.sit-number option[selected="selected"]').text();
-    //     var ch_sits = row + number;
-    //     var ticketPrice = 0;
-    //
-    //     if ($('.checked-place').find(".choosen-place[data-sit='" + ch_sits + "']").length) {
-    //         alert('same place');
-    //         return 0;
-    //     }
-    //
-    //
-    //     $('.sits-area--mobile .checked-place').prepend('<span class="choosen-place" data-sit="' + ch_sits + '">' + ch_sits + '</span>');
-    //
-    //     if (row == "A" || row == "B" || row == "C" || row == "D") {
-    //         ticketPrice = 10;
-    //     } else if (row == "E" || row == "F" || row == "G" || row == "I") {
-    //         ticketPrice = 20;
-    //     } else if (row == "J" || row == "K" || row == "L") {
-    //         ticketPrice = 30;
-    //     }
-    //
-    //     switch (ticketPrice) {
-    //         case 10:
-    //             sum += 10;
-    //             break;
-    //         case 20:
-    //             sum += 20;
-    //             break;
-    //         case 30:
-    //             sum += 30;
-    //             break;
-    //     }
-    //
-    //     $('.checked-result').text('$' + sum);
-    //
-    //
-    //     $(this).removeClass('btn--warning').unbind('click', ChoosePlace);
-    //     $(this).addClass('btn--danger').text('remove sit').blur();
-    //
-    //
-    //     $(this).click(function (e) {
-    //         e.preventDefault();
-    //
-    //         var row = $(this).parent().find('.sit-row option[selected="selected"]').text();
-    //         var numbers = $(this).parent().find('.sit-number option[selected="selected"]').text();
-    //         var ch_sit = row + number;
-    //
-    //         var activeSit = $('.checked-place').find(".choosen-place[data-sit='" + ch_sits + "']");
-    //
-    //         if (activeSit.length) {
-    //             activeSit.remove();
-    //             $(this).parent().remove();
-    //
-    //             if (row == "A" || row == "B" || row == "C" || row == "D") {
-    //                 ticketPrice = 10;
-    //             } else if (row == "E" || row == "F" || row == "G" || row == "I") {
-    //                 ticketPrice = 20;
-    //             } else if (row == "J" || row == "K" || row == "L") {
-    //                 ticketPrice = 30;
-    //             }
-    //
-    //             switch (ticketPrice) {
-    //                 case 10:
-    //                     sum -= 10;
-    //                     break;
-    //                 case 20:
-    //                     sum -= 20;
-    //                     break;
-    //                 case 30:
-    //                     sum -= 30;
-    //                     break;
-    //             }
-    //
-    //             $('.checked-result').text('$' + sum);
-    //         }
-    //     })
-    // }
-
     // Lấy danh sách trạng thái của ghế
     apiCall('suat-chieu/' + suatChieuId + '/ghe?tinh_trang=DA_THANH_TOAN', 'get', null).then(data => {
-        console.log(data);
         capNhatTinhTrangGhe(data);
     });
 
     // Lắng nghe các sự kiện realtime
     Echo.private('KhachHang.DatVe.' + suatChieuId)
         .listen('.TaoDonDatVeEvent', (e) => {
-            console.log(e);
+            console.log('Da nhan trang thai ghe moi');
+            capNhatTinhTrangGhe(e);
         });
 
     //Serialize, add new data and send to next page
@@ -208,16 +90,28 @@ function capNhatTinhTrangGhe(tinhTrang) {
     danhSachGheDaThanhToan = tinhTrang.ghe_da_thanh_toan;
     // Cập nhật giao diện các ghế đã thanh toán
     $(danhSachGheDaThanhToan.map(item => '.sits__place[data-ghe-id="' + item.ghe_id + '"]').join(',')).each(function () {
-        $(this).removeClass('sits-state--sold sits-state--wait-for-pay sits-state--your').addClass('sits-state--sold');
+        let sitPlace = $(this);
+        if (sitPlace.hasClass('sits-state--your')) {
+            const price = parseInt(sitPlace.data('price'));
+            const place = sitPlace.data('place');
+            sum -= price;
+            $('.checked-place .' + place).remove();
+        }
+        sitPlace.removeClass('sits-state--sold sits-state--wait-for-pay sits-state--your').addClass('sits-state--sold');
     });
     // Cập nhật giao diện các ghế chờ thanh toán
     danhSachGheChoThanhToan.forEach(ghe => {
         let sitPlace = $('.sits__place[data-ghe-id="' + ghe.ghe_id + '"]');
+        if (sitPlace.hasClass('sits-state--your')) {
+            const price = parseInt(sitPlace.data('price'));
+            const place = sitPlace.data('place');
+            sum -= price;
+            $('.checked-place .' + place).remove();
+        }
         sitPlace.removeClass('sits-state--sold sits-state--wait-for-pay sits-state--your').addClass('sits-state--wait-for-pay').html('&nbsp;').css('text-indent', 1);
         let soGiayDemNguoc = ghe.so_giay_dem_nguoc;
         sitPlace.html(soGiayDemNguoc-- + ' s');
         let timer = setInterval(function () {
-            console.log(soGiayDemNguoc);
             if (soGiayDemNguoc > 0) {
                 sitPlace.html(soGiayDemNguoc-- + ' s');
             } else {
@@ -227,4 +121,9 @@ function capNhatTinhTrangGhe(tinhTrang) {
         }, 1000);
         danhSachDongHoDemNguoc.push(timer);
     });
+    capNhatTongTien();
+}
+
+function capNhatTongTien() {
+    $('.checked-result').text('đ ' + sum.toLocaleString());
 }

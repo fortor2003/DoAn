@@ -37,9 +37,10 @@ window.Echo = new Echo({
     wsPort: 6001,
     forceTLS: false,
     disableStats: true,
+    namespace: 'App.Events.khachHang',
     // auth: {
     //     headers: {
-    //         Authorization: 'Bearer'
+    //         Authorization: 'Bearer 10|0KU3yJfmUmQjFxQPju4Lq35y93mov3k52wCKLP3Z2d0gQj3HZ9BupRUVcYc9rgtONO1bQgScydIzozqz'
     //     },
     // },
 });

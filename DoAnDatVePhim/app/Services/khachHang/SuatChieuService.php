@@ -42,4 +42,29 @@ class SuatChieuService
     {
         return SuatChieu::with(['gioBatDau:slot,thoi_gian', 'phim:id,tieu_de_vi,url_anh_bia', 'rap:ten_rap'])->findOrFail($suatChieuId)->toArray();
     }
+
+    /**
+     * Trả về tính hợp lệ của suất chiếu
+     * @param int $suatChieuId ID ở bảng suất chiếu
+     * @return bool
+     */
+    public function kiemTraSuatChieuHopLe($suatChieuId): bool
+    {
+        $suatChieu = SuatChieu::with('gioBatDau')->findOrFail($suatChieuId)->toArray();
+        $ngayChieu = $suatChieu['ngay_chieu'];
+        $gioChieu = $suatChieu['gio_bat_dau']['thoi_gian'];
+        $ngayHienTai = now()->format('Y-m-d');
+        $gioHienTai = now()->format('H:i');
+        if ($ngayChieu < $ngayHienTai) {
+            return false;
+        } else if ($ngayChieu == $ngayHienTai) {
+            if ($gioChieu > $gioHienTai) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
 }

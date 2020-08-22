@@ -96,4 +96,33 @@ class GheService
             ];
         }, $result);
     }
+
+    /**
+     * Trả về true nếu danh sách ghế id truyền vào hợp lệ và đang ở trạng thái rảnh
+     * @param int $suatChieuId ID ở bảng suất chiếu
+     * @param array $danhSachGheId ID ở bảng ghế
+     * @return bool
+     */
+    public function kiemTraGheTrong(int $suatChieuId, array $danhSachGheId): bool
+    {
+        $danhSachGheId = array_unique($danhSachGheId);
+        $result =  DB::table('suat_chieu sc')
+            ->select('g.id')
+            ->leftJoin('phong_chieu pc', 'sc.phong_chieu_id', '=', 'pc.id')
+            ->leftJoin('ghe g', function ($join) use ($suatChieuId, $danhSachGheId) {
+                $join->on('pc.id', '=', 'g.phong_chieu_id')
+                    ->whereIn('g.id', $danhSachGheId)
+                    ->whereNotIn('g.id',
+                        DB::table('don_dat_ve ddv')
+                            ->select('v.ghe_id')
+                            ->leftJoin('ve v', 'ddv.id', '=', 'v.don_dat_ve_id')
+                            ->where('ddv.suat_chieu_id', '=', $suatChieuId)
+                    );
+            })
+            ->where('sc.id', '=', $suatChieuId)
+            ->orderBy('g.id', 'asc')
+            ->get()->toArray();
+        $result = array_map(function ($item) { return $item->id; }, $result);
+        return count(array_diff($danhSachGheId, $result)) === 0;
+    }
 }

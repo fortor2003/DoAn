@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
 
 //General function for all pages
@@ -83,7 +82,8 @@ $(document).ready(function () {
             backgroundImage: 'url("' + $(item).data('bg') + '")'
         })
     });
-    console.log($('meta[name="api_token"]').attr('content'));
+    // Gắn header token
+    window.Echo.connector.pusher.config.auth.headers['Authorization'] = 'Bearer ' + $('meta[name="api_token"]').attr('content');
 });
 
 function apiCall(url, method, data) {

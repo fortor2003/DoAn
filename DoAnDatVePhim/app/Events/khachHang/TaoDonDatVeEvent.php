@@ -30,7 +30,7 @@ class TaoDonDatVeEvent implements ShouldBroadcastNow
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('KhachHang.DatVe');
+        return new PrivateChannel('KhachHang.DatVe.302');
     }
 
     public function broadcastAs()

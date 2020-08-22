@@ -47,7 +47,7 @@
         </div>
     </div>
     <div class="order-step-area">
-        <div class="order-step first--step order-step--disable ">1. Phim &amp; Rạp &amp; Giờ chiếu</div>
+        <div class="order-step first--step order-step--disable ">1. Phim &amp; Rạp &amp; Suất chiếu</div>
         <div class="order-step second--step">2. Chọn ghế</div>
     </div>
     <div class="choose-sits">
@@ -125,14 +125,16 @@
         </div>
     </div>
     <div class="clearfix"></div>
-    <form id='formDatGhe' class="booking-form" method='get' action="#">
+    <form id='formDatGhe' class="booking-form" method='post' action="{{route('khachHang.thanhToanPage')}}">
+        @csrf
         <input type='hidden' id="suatChieuId" name="suat_chieu_id" value="{{$suatChieuId}}">
+        <input type='hidden' id="danhSachGheId" name="danh_sach_ghe_id" value="[]">
         <div class="booking-pagination booking-pagination--margin">
             <a href="{{route('khachHang.datVePage')}}" class="booking-pagination__prev">
                 <span class="arrow__text arrow--prev">Bước trước</span>
                 <span class="arrow__info">phim &amp; rạp &amp; giờ chiếu</span>
             </a>
-            <a href="#" class="booking-pagination__next">
+            <a href="#" class="booking-pagination__next" onclick="event.preventDefault(); $(this).closest('form').submit();">
                 <span class="arrow__text arrow--next">Bước kế tiếp</span>
                 <span class="arrow__info">thanh toán</span>
             </a>

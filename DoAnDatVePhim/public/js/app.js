@@ -25471,9 +25471,10 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   wsHost: window.location.hostname,
   wsPort: 6001,
   forceTLS: false,
-  disableStats: true // auth: {
+  disableStats: true,
+  namespace: 'App.Events.khachHang' // auth: {
   //     headers: {
-  //         Authorization: 'Bearer'
+  //         Authorization: 'Bearer 10|0KU3yJfmUmQjFxQPju4Lq35y93mov3k52wCKLP3Z2d0gQj3HZ9BupRUVcYc9rgtONO1bQgScydIzozqz'
   //     },
   // },
 

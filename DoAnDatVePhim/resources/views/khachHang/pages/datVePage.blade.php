@@ -8,7 +8,7 @@
     <!-- Mobile menu -->
     <link href="{{asset('css/gozha-nav.css')}}" rel="stylesheet" />
     <!-- select 2 -->
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+    <link href="{{asset('css/external/select2.min.css')}}" rel="stylesheet"/>
 @endsection
 @section('stylesheets')
     <style>
@@ -102,7 +102,7 @@
     <!-- Swiper slider -->
     <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
     <!-- Select 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="{{asset('js/external/select2.min.js')}}"></script>
     <!--  Moment -->
     <script src="{{asset('js/external/moment-with-locales.min.js')}}"></script>
     <!-- Page -->

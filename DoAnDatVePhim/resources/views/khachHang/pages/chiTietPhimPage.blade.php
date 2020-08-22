@@ -48,9 +48,11 @@
             font-weight: bold;
             padding-right: 10px;
         }
+
         .label-select .fa {
             padding-right: 5px;
         }
+
         .time-select {
             margin-top: 20px;
         }
@@ -84,7 +86,8 @@
                             tuổi: </strong>{{$thongTinPhim['gioi_han_do_tuoi'] ?? '--'}}</p>
                     @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
                         <div class="movie__btns movie__btns--full">
-                            <a href="#" class="btn btn-md btn--warning">Đặt vé</a>
+                            <a href="{{route('khachHang.datVePage', ['phim_id' => $thongTinPhim['id']])}}"
+                               class="btn btn-md btn--warning">Đặt vé</a>
                         </div>
                     @endif
                 </div>
@@ -127,56 +130,20 @@
                 </div>
             </div>
         </div>
-        @if($thongTinPhim['trang_thai'] === 'DANG_CHIEU')
-            <h2 class="page-heading">Các suất chiếu</h2>
-            <div class="choose-container">
-
-                <span class="label-select"><i class="fa fa-location-arrow"></i>Rạp</span>
-                <select id="chonRap" style="width: 150px">
-                    <option value="0" selected='selected'>Tất cả</option>
-                    @foreach($danhSachRap as $rap)
-                        <option value="{{$rap['id']}}">{{$rap['ten_rap']}}</option>
-                    @endforeach
-                </select>
-
-                <div class="datepicker">
-                    <span class="datepicker__marker"><i class="fa fa-calendar"></i>Ngày chiếu</span>
-                    <input type="text" id="ngayChieu" value='' class="datepicker__input">
-                </div>
-
-                <div class="clearfix"></div>
-
-                <div class="time-select">
-                    @foreach($danhSachSuatChieu as $rap)
-                        @php $danhSachGioChieu = $rap['danh_sach_suat_chieu']; @endphp
-                        <div class="time-select__group group--first">
-                            <div class="col-sm-4">
-                                <p class="time-select__place">{{$rap['ten_rap']}}</p>
-                            </div>
-                            <ul class="col-sm-8 items-wrap">
-                                @foreach($danhSachGioChieu as $gioChieu)
-                                    <li class="time-select__item" data-id="{{$gioChieu['id']}}" data-time='{{$gioChieu['gio_bat_dau']['thoi_gian']}}'>{{$gioChieu['gio_bat_dau']['thoi_gian']}}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endforeach
-                </div>
-                @endif
-            </div>
-            <input type="hidden" id="txtPhimId" value="{{$thongTinPhim['id']}}">
-        @endsection
-    @section('scripts')
-        <!-- jQuery UI -->
-            <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-            <script src="{{asset('js/external/jquery.ui.datepicker-vi-VN.js')}}"></script>
-            <!-- Swiper slider -->
-            <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
-            <!-- Magnific-popup -->
-            <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
-            <!-- Select 2 -->
-            <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-            <!--  Moment -->
-            <script src="{{asset('js/external/moment-with-locales.min.js')}}"></script>
-            <!-- Page -->
-            <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
+    </div>
+@endsection
+@section('scripts')
+    <!-- jQuery UI -->
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="{{asset('js/external/jquery.ui.datepicker-vi-VN.js')}}"></script>
+    <!-- Swiper slider -->
+    <script src="{{asset('js/external/idangerous.swiper.min.js')}}"></script>
+    <!-- Magnific-popup -->
+    <script src="{{asset('js/external/jquery.magnific-popup.min.js')}}"></script>
+    <!-- Select 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <!--  Moment -->
+    <script src="{{asset('js/external/moment-with-locales.min.js')}}"></script>
+    <!-- Page -->
+    <script src="{{asset('js/pages/khachHang/chiTietPhimPage.js')}}"></script>
 @endsection

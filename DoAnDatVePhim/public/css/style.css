@@ -2777,21 +2777,20 @@ input[type="button"].btn-block {
   margin-top: 80px;
 }
 .order-container {
-  margin-top: 48px;
-  margin-bottom: 78px;
+  margin-top: 15x;
+  margin-bottom: 30px;
 }
 .coloum-wrapper {
   margin-top: 60px;
 }
 .logo {
   position: absolute;
-  top: 16px;
+  top: 8px;
   left: 15px;
   z-index: 2;
 }
 .logo img {
-  width: 111px;
-  height: 17px;
+  height: 37px;
 }
 #navigation-box {
   background-color: transparent;
@@ -6327,7 +6326,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .choose-sits .choose-sits__info {
   display: inline-block;
   font-size: 13px;
-  padding: 10px 20px 0 40px;
+  padding: 10px 20px 0 0;
   margin-bottom: 52px;
 }
 .choose-sits .choose-sits__info .sits-price {
@@ -6399,7 +6398,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .sits .sits__checked {
   position: relative;
-  width: 70px;
+  width: 100px;
   height: 450px;
   background-color: #4c4145;
   position: absolute;
@@ -6414,7 +6413,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   color: #ffffff;
   position: absolute;
   top: 20px;
-  left: 30px;
+  left: 45px;
 }
 .sits .sits__checked:after {
   content: "=";
@@ -6422,7 +6421,7 @@ ul#navigation li.mega-menu__nav-item:hover:before {
   color: #ffffff;
   position: absolute;
   bottom: 41px;
-  left: 30px;
+  left: 45px;
 }
 .sits .sits__checked .checked-place {
   overflow-y: auto;
@@ -6475,9 +6474,21 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 .sits .sits__row .sits__place:hover:before {
   background-color: #4c4145;
 }
+.sits .sits__row .sits-state--sold:hover,
+.sits .sits__row .sits-state--wait-for-pay:hover,
+.sits .sits__row .sits-state--not:hover
+{
+    cursor: auto;
+}
+.sits .sits__row .sits-state--sold:hover,
 .sits .sits__row .sits-state--not:hover {
-  text-indent: -9999px;
-  cursor: auto;
+    text-indent: -9999px;
+}
+.sits .sits__row .sits-state--sold:hover:before {
+    background-color: red;
+}
+.sits .sits__row .sits-state--wait-for-pay:hover:before {
+    background-color: orange;
 }
 .sits .sits__row .sits-state--not:hover:before {
   background-color: #dbdee1;
@@ -8668,6 +8679,12 @@ ul#navigation li.mega-menu__nav-item:hover:before {
 }
 .sits-price--expensive:before {
   background-color: #cdb4bd;
+}
+.sits-state--sold:before {
+    background-color: red;
+}
+.sits-state--wait-for-pay:before {
+    background-color: orange;
 }
 .sits-state--not:before {
   background-color: #dbdee1;

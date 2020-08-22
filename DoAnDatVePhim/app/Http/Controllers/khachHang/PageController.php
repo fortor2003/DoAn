@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\khachHang;
 
 use App\Http\Controllers\Controller;
+use App\Models\DonDatVe;
 use App\Models\Ghe;
 use App\Models\SuatChieu;
 use App\Models\TaiKhoan;
+use App\Services\khachHang\GheService;
 use App\Services\khachHang\PageService;
 use App\Services\khachHang\RapService;
 use App\Services\khachHang\SuatChieuService;
@@ -16,12 +18,15 @@ class PageController extends Controller
     private $pageService;
     private $suatChieuService;
     private $rapService;
+    private $gheService;
 
-    public function __construct(PageService $pageService, SuatChieuService $suatChieuService, RapService $rapService)
+    public function __construct(PageService $pageService, SuatChieuService $suatChieuService, RapService $rapService, GheService $gheService)
     {
         $this->pageService = $pageService;
         $this->suatChieuService = $suatChieuService;
         $this->rapService = $rapService;
+        $this->gheService = $gheService;
+        $this->middleware('auth')->only(['datGhePage', 'thanhToanPage', 'xacNhanThanhToanPage']);
     }
 
     public function trangChuPage()
@@ -45,28 +50,77 @@ class PageController extends Controller
         return view('khachHang.pages.chiTietPhimPage', compact('thongTinPhim', 'danhSachRap', 'danhSachSuatChieu'));
     }
 
-    public function datVePage()
+    public function datVePage(Request $request)
     {
+        $phimId = $request->get('phim_id');
         $danhSachPhimDangChieu = $this->pageService->danhSachPhimDangChieu();
         $danhSachRap = $this->rapService->danhSachRap();
-        return view('khachHang.pages.datVePage', compact(['danhSachPhimDangChieu', 'danhSachRap']));
+        return view('khachHang.pages.datVePage', compact(['danhSachPhimDangChieu', 'danhSachRap', 'phimId']));
     }
 
     public function datGhePage(Request $request)
     {
         $suatChieuId = $request->query('suat_chieu_id');
-        if ($suatChieuId) {
+        if ($this->suatChieuService->kiemTraSuatChieuHopLe($suatChieuId)) {
             $suatChieu = $this->suatChieuService->thongTinSuatChieu($suatChieuId);
-            dump($suatChieu);
-            return view('khachHang.pages.datGhePage', compact('suatChieu'));
+            $giaVe = env('DON_GIA_VE', 90000);
+            $danhSachHangGhe = $this->gheService->danhSachGhe($suatChieuId);
+            return view('khachHang.pages.datGhePage', compact(['suatChieuId', 'suatChieu', 'giaVe', 'danhSachHangGhe']));
         } else {
             return redirect()->route('khachHang.datVePage');
         }
     }
 
-    public function thanhToanPage()
+    public function thanhToanPage(Request $request)
     {
-        return view('khachHang.pages.thanhToanPage');
+        $suatChieuId = $request->input('suat_chieu_id');
+        $danhSachGheId = array_unique(json_decode($request->input('danh_sach_ghe_id')));
+        if ($this->suatChieuService->kiemTraSuatChieuHopLe($suatChieuId)) {
+            if (count($danhSachGheId) > 0 && $this->suatChieuService->kiemTraSuatChieuHopLe($suatChieuId)) {
+                if ($this->gheService->kiemTraGheTrong($suatChieuId, $danhSachGheId)) {
+                    $suatChieu = $this->suatChieuService->thongTinSuatChieu($suatChieuId);
+                    $giaVe = env('DON_GIA_VE', 90000);
+                    return view('khachHang.pages.thanhToanPage', compact(['suatChieuId', 'danhSachGheId', 'suatChieu', 'giaVe']));
+                } else {
+                    return redirect()->route('khachHang.datGhePage', ['suat_chieu_id' => $suatChieuId]);
+                }
+            } else {
+                return redirect()->route('khachHang.datVePage');
+            }
+        } else {
+            return redirect()->route('khachHang.datVePage');
+        }
+    }
+
+    public function xacNhanThanhToanPage(Request $request)
+    {
+        $suatChieuId = $request->input('suat_chieu_id');
+        $danhSachGheId = array_unique(json_decode($request->input('danh_sach_ghe_id')));
+        if ($this->suatChieuService->kiemTraSuatChieuHopLe($suatChieuId)) {
+            if (count($danhSachGheId) > 0 && $this->suatChieuService->kiemTraSuatChieuHopLe($suatChieuId)) {
+                if ($this->gheService->kiemTraGheTrong($suatChieuId, $danhSachGheId)) {
+                    // Tạo đơn đặt vé
+                    $donDatVe = new DonDatVe();
+                    $donDatVe->ma_don = strtoupper(uniqid('DV.'));
+                    $donDatVe->suat_chieu_id = $suatChieuId;
+                    $donDatVe->khach_hang_id = auth()->user()->id;
+                    $donDatVe->nhan_vien_id = null;
+                    $donDatVe->tinh_trang = 'CHUA_THANH_TOAN';
+
+
+                    $suatChieu = $this->suatChieuService->thongTinSuatChieu($suatChieuId);
+                    $giaVe = env('DON_GIA_VE', 90000);
+                    dump($suatChieu);
+                    return view('khachHang.pages.thanhToanPage', compact(['suatChieuId', 'danhSachGheId', 'suatChieu', 'giaVe']));
+                } else {
+                    return redirect()->route('khachHang.datGhePage', ['suat_chieu_id' => $suatChieuId]);
+                }
+            } else {
+                return redirect()->route('khachHang.datVePage');
+            }
+        } else {
+            return redirect()->route('khachHang.datVePage');
+        }
     }
 
     public function hienThiVePage()

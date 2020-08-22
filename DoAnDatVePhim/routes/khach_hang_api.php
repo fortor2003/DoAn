@@ -23,8 +23,11 @@ use Illuminate\Support\Facades\Route;
  *      ]
  *  }]
  */
-Route::get('phim/{phim}/suat_chieu', 'ApiController@danhSachSuatChieu');
-Route::get('thong-tin-tai-khoan', 'ApiController@thongTinTaiKhoan');
+Route::get('phim/{phim}/suat-chieu', 'ApiController@danhSachSuatChieu');
+Route::get('suat-chieu/{suatChieu}/ghe', 'ApiController@danhSachGheTheoSuatChieu');
+
+
+
 
 Route::get('test-dang-nhap', function () {
     $taiKhoan = \App\Models\TaiKhoan::findOrFail(1);

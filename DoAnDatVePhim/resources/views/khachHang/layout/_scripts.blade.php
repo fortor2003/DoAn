@@ -13,6 +13,8 @@
 <script src="{{asset('js/external/jquery.raty.js')}}"></script>
 <!-- Form element -->
 <script src="{{asset('js/external/form-element.js')}}"></script>
+<!-- Sweet alert 2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <!-- Form validation -->
 <script src="{{asset('js/form.js')}}"></script>
 <!-- main -->

@@ -33,10 +33,13 @@
                     <div class="movie-poster set-bg" data-bg="{{$phim['url_anh_bia']}}"></div>
                     <span class="best-rate">{{$phim['diem_danh_gia']}}</span>
                     <ul class="movie-beta__info">
-                        <li><span class="best-voted">100 lượt bình chọn hôm nay</span></li>
+{{--                        <li><span class="best-voted">100 lượt bình chọn hôm nay</span></li>--}}
                         <li>
                             <p class="movie__time">{{$phim['thoi_luong_chieu']}} phút</p>
                             <p>{{join(' | ', array_map(function ($theLoai) { return $theLoai['ten_the_loai']; }, $phim['danh_sach_the_loai']))}}</p>
+                        </li>
+                        <li>
+                            <a href="{{route('khachHang.datVePage', ['phim_id' => $phim['id']])}}" class="slide__link">Đặt vé</a>
                         </li>
                         <li class="last-block">
                             <a href="{{route('khachHang.chiTietPhimPage', ['id' => $phim['id']])}}" class="slide__link">Chi tiết</a>
@@ -206,7 +209,4 @@
     <script type="text/javascript" src="{{asset('rs-plugin/js/jquery.themepunch.revolution.min.js')}}"></script>
     <!-- Page -->
     <script src="{{asset('js/pages/khachHang/trangChuPage.js')}}"></script>
-    <script>
-
-    </script>
 @endsection

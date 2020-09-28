@@ -3,6 +3,7 @@
 namespace App\Services\khachHang;
 
 use App\Models\Rap;
+use App\Models\SuatChieu;
 use App\Utils\StringUtil;
 
 class SuatChieuService
@@ -18,11 +19,15 @@ class SuatChieuService
     public function danhSachSuatChieu($phimId, $ngayChieu, $rapId): array
     {
         $ngayChieu = $ngayChieu ?? now()->format('Y-m-d');
-        if ($phimId && StringUtil::isValidDate($ngayChieu) && date_diff(new \DateTime($ngayChieu), now())->d <= 0) {
+        if ($phimId && StringUtil::isValidDate($ngayChieu) && (int)now()->diff(new \DateTime('2020-08-23'))->format('%r%a') >= 0) {
             $queryBuilder = Rap::whereHas('danhSachSuatChieu', function ($query) use ($phimId, $ngayChieu) {
                 $query->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu);
-            }, '>', 0)->with(['danhSachSuatChieu' => function ($query) use ($phimId, $ngayChieu) {
-                $query->with('gioBatDau:slot,thoi_gian')->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu)->orderBy('gio_bat_dau_slot', 'asc')->select(['suat_chieu.id', 'suat_chieu.gio_bat_dau_slot']);
+            })->whereHas('danhSachSuatChieu.gioBatDau', function($q) {
+                $q->where('thoi_gian', '>=', now()->format('H:i'));
+            })->with(['danhSachSuatChieu' => function ($query) use ($phimId, $ngayChieu) {
+                $query->whereHas('gioBatDau', function ($q) {
+                    $q->where('thoi_gian', '>=', now()->format('H:i'));
+                })->with('gioBatDau:slot,thoi_gian')->where('phim_id', $phimId)->whereDate('ngay_chieu', $ngayChieu)->orderBy('gio_bat_dau_slot', 'asc')->select(['suat_chieu.id', 'suat_chieu.gio_bat_dau_slot']);
             }])->select(['id', 'ten_rap']);
             if ($rapId) {
                 $queryBuilder = $queryBuilder->where('id', $rapId);
@@ -30,6 +35,36 @@ class SuatChieuService
             return $queryBuilder->get()->toArray();
         } else {
             return [];
+        }
+    }
+
+    public function thongTinSuatChieu($suatChieuId): array
+    {
+        return SuatChieu::with(['gioBatDau:slot,thoi_gian', 'phim:id,tieu_de_vi,url_anh_bia', 'rap:ten_rap'])->findOrFail($suatChieuId)->toArray();
+    }
+
+    /**
+     * Trả về tính hợp lệ của suất chiếu
+     * @param int $suatChieuId ID ở bảng suất chiếu
+     * @return bool
+     */
+    public function kiemTraSuatChieuHopLe($suatChieuId): bool
+    {
+        $suatChieu = SuatChieu::with('gioBatDau')->findOrFail($suatChieuId)->toArray();
+        $ngayChieu = $suatChieu['ngay_chieu'];
+        $gioChieu = $suatChieu['gio_bat_dau']['thoi_gian'];
+        $ngayHienTai = now()->format('Y-m-d');
+        $gioHienTai = now()->format('H:i');
+        if ($ngayChieu < $ngayHienTai) {
+            return false;
+        } else if ($ngayChieu == $ngayHienTai) {
+            if ($gioChieu > $gioHienTai) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return true;
         }
     }
 }

@@ -432,7 +432,6 @@
 
         });
 
-
         function danhSachSuatChieu(){
             jQuery.ajax({
                 url: 'http://bkcinema.local/admin/api/suat_chieu?phim_id=' + $('#slPhim').val() + '&rap_id=' + $('#slRap').val() + '&ngay_chieu=' + $('#dtNgayChieu').datetimepicker('viewDate').format('YYYY-MM-DD'),

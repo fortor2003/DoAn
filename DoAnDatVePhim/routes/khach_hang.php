@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\DonDatVe;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /** XacThucController  */
@@ -18,13 +20,22 @@ Route::get('/', 'PageController@trangChuPage')->name('khachHang.trangChuPage');
 Route::get('/thong-tin-chi-tiet-phim/{id}', 'PageController@chiTietPhimPage')->name('khachHang.chiTietPhimPage');
 Route::get('/dat-ve', 'PageController@datVePage')->name('khachHang.datVePage');
 Route::get('/dat-ghe', 'PageController@datGhePage')->name('khachHang.datGhePage');
-Route::get('/thanh-toan', 'PageController@thanhToanPage')->name('khachHang.thanhToanPage');
+Route::post('/xac-nhan-thanh-toan', 'PageController@xacNhanThanhToanPage')->name('khachHang.xacNhanThanhToanPage');
+Route::post('/tao-don-dat-ve', 'PageController@taoDonDatVe')->name('khachHang.taoDonDatVe');
+Route::get('/don-dat-ve', 'PageController@donDatVePage')->name('khachHang.donDatVePage');
+Route::get('/don-dat-ve/{donDatVe}', 'PageController@chiTietDonDatVePage')->name('khachHang.chiTietDonDatVePage');
+
+
 Route::get('/hien-thi-ve', 'PageController@hienThiVePage')->name('khachHang.hienThiVePage');
 Route::get('/thong-diep', 'PageController@thongDiepPage')->name('khachHang.thongDiepPage');
 
-
 Route::get('/test', function () {
-    $time = now()->addMinutes(5)->format('H:i');
-
+    broadcast(new \App\Events\khachHang\TaoDonDatVeEvent(457));
     return view('khachHang.pages.testPage');
+});
+
+Route::get('/trigger-event', function () {
+//    broadcast(new \App\Events\khachHang\TaoDonDatVeEvent());
+    \App\Jobs\KhachHang\XuLyDonDatVeJob::dispatch()->delay(now()->addSeconds(10));
+    return 'Ok';
 });

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Exceptions\InvalidSignatureException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class XacThucController extends Controller
@@ -39,6 +40,8 @@ class XacThucController extends Controller
         if (Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['matKhau'], 'loai_vai_tro' => 'KHACH_HANG'], isset($validatedData['duyTriDangNhap']))) {
             $taiKhoan = Auth::user();
             if ($taiKhoan->hasVerifiedEmail()) {
+                $token = $taiKhoan->createToken('KHACHHANG_DANGNHAP');
+                Session::put('API_TOKEN', ['id' => $token->accessToken->id, 'token' => $token->plainTextToken]);
                 return redirect()->intended(route('khachHang.trangChuPage'));
             } else {
                 $taiKhoan->sendEmailVerificationNotification();
@@ -51,7 +54,9 @@ class XacThucController extends Controller
 
     public function dangXuat()
     {
+        Auth::user()->tokens()->where('id', Session::get('API_TOKEN')['id'])->delete();
         Auth::logout();
+        Session::remove('API_TOKEN');
         return redirect()->route('khachHang.trangChuPage');
     }
 

@@ -12,7 +12,17 @@ use Illuminate\Support\Facades\Broadcast;
 | used to check if an authenticated user can listen to the channel.
 |
 */
+Broadcast::routes(['middleware' => ['auth:sanctum']]);
 
 Broadcast::channel('App.TaiKhoan.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('KhachHang.DatVe.{suatChieuId}', function ($user, $suatChieuId) {
+    $suatChieu = \App\Models\SuatChieu::find($suatChieuId);
+    return $suatChieu;
+});
+
+//Broadcast::channel('task.created', function ($user, $id) {
+//    return true;
+//});

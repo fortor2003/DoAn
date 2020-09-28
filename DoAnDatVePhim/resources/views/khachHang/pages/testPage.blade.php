@@ -10,5 +10,11 @@
         <example-component></example-component>
     </div>
     <script src="{{asset('js/app.js')}}"></script>
+    <script>
+        window.Echo.channel('task.created')
+            .listen('.myEvent', (e) => {
+                console.log(e);
+            });
+    </script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-package pl.banhangtichluy.controller;
+package pl.banhangtichluy.controller.page;
 import java.security.Principal;
 
 import org.springframework.security.authentication.AnonymousAuthenticationToken;

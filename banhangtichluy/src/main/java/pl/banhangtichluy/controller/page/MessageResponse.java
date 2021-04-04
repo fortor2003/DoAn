@@ -1,4 +1,4 @@
-package pl.banhangtichluy.controller;
+package pl.banhangtichluy.controller.page;
 
 public class MessageResponse {
     private String code;

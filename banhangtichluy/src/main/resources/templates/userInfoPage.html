@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manager</title>
+    <th:block th:include="/userControl/_head"></th:block>
+</head>
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<!--view-->
+<section>
+    <div class="col-md-12" style="text-align: center">
+        <button type="button" style="font-size: 10em; " id="btnPoint" class="btn btn-primary ">Point</button>
+        <button type="button" style="font-size: 10em;  padding-left: 50px;padding-right: 50px;"  id="btnGift"class="btn btn-secondary ">Gift</button>
+    </div>
+</section>
+
+<!--modal-->
+<section>
+<!--    Gift-->
+    <div class="modal fade bd-example-modal-lg" id="mdGift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Gift Card Transaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form">
+                    <div class="modal-body">
+                        <div class="form-group row" >
+                            <label for="txtGiftCard">Gift Card No.</label>
+                            <input type="text" class="form-control" id="txtGiftCard"  readonly>
+                        </div>
+                        <div class="row">
+                            <h1>Balance:<spant>$</spant><spant id="spMoney">0</spant></h1>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="btnAdd" id="btnAddGift" class="btn btn-info"  value="Add Money">
+                        <input type="btnAdd" id="btnPayGift" class="btn btn-warning"  value="Pay with Card">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!--    Point-->
+    <div class="modal fade bd-example-modal-lg" id="mdPoint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Point Card Transaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form" id="frmPoint">
+                    <div class="modal-body">
+                        <div class="form-group row" >
+                            <label for="txtNamePoint">Name</label>
+                            <input type="text" class="form-control" id="txtNamePoint"  readonly>
+                        </div>
+                        <div class="form-group row" >
+                            <label for="txtPhonePoint">Phone</label>
+                            <input type="number" class="form-control" id="txtPhonePoint" >
+                        </div>
+                        <div class="row">
+                            <h1>Points:<spant id="spPoint">0</spant></h1>
+                        </div>
+                    </div>
+                    <input type="text" id="idThe" hidden>
+                </form>
+                    <div class="modal-footer">
+                        <input type="btnAdd" id="btnSearchPoint" class="btn btn-default"  value="Search">
+                        <input type="btnAdd" id="btnAddPoint" class="btn btn-info"  value="Add Point">
+                        <input type="btnAdd" id="btnRedeemPoint" class="btn btn-warning"  value="Reddem">
+                    </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<th:block th:include="/userControl/_script"></th:block>
+<script th:src="@{/js/UserInfoPage.js}"></script>
+</body>
+
+</html>

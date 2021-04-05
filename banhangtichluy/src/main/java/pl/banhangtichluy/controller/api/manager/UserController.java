@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.UserDto;
 import pl.banhangtichluy.entity.User;
 import pl.banhangtichluy.reponsitory.UserRepository;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public User createUser(@Valid @RequestBody UserDto userDto) {
+    public User createUser(@Valid @RequestBody AmountDto userDto) {
         return new User();
     }
 }

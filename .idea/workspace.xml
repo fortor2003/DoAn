@@ -28,6 +28,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="e345f44c-ce64-4000-8627-53991ee7eb6e" name="Default Changelist" comment="" />
@@ -36,10 +39,11 @@
       <option name="presentableId" value="Default" />
       <updated>1617503384831</updated>
       <workItem from="1617503388297" duration="9000" />
+      <workItem from="1617697865874" duration="14000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+    <option name="version" value="2" />
   </component>
 </project>

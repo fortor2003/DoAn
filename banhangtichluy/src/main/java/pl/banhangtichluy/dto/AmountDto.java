@@ -8,9 +8,6 @@ import javax.validation.constraints.*;
 
 public class AmountDto {
 
-    @JsonProperty("id")
-    private String id;
-
     @NotNull(message = "type is required")
     @ValidateEnum(targetClassType = AmountType.class, message = "Value must in [\"POINT\", \"GIFT\"]")
     @JsonProperty("type")

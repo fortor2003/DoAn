@@ -29,7 +29,7 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd")
     @Setter(AccessLevel.NONE)
-    @JsonProperty(value = "created_at")
+    @JsonProperty(value = "createdAt")
     private Date createdAt;
 
     @Column(name = "updated_at", nullable = false, updatable = true)
@@ -37,7 +37,7 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern="yyyy-MM-dd")
     @Setter(AccessLevel.NONE)
-    @JsonProperty(value = "updated_at")
+    @JsonProperty(value = "updatedAt")
     private Date updatedAt;
 
 }

@@ -3,6 +3,11 @@
 <head>
     <title>Admin</title>
     <th:block th:include="/userControl/_head"></th:block>
+    <style>
+        .full{
+            width: 100% !important;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
 <!-- Include _menu.html -->
@@ -59,10 +64,10 @@
                         </a>
                     </li>
                     <li class="nav-item" >
-                        <a href="#" class="nav-link" id="allpoint">
+                        <a href="#" class="nav-link" id="setbalance">
                             <i class="nav-icon bi bi-circle"></i>
                             <p>
-                               All Point
+                               Set Banlance
                             </p>
                         </a>
                     </li>
@@ -71,14 +76,6 @@
                             <i class="nav-icon bi bi-circle"></i>
                             <p>
                                 Set Point
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link" id="addredeem">
-                            <i class="nav-icon bi bi-circle"></i>
-                            <p>
-                                ( + - ) Point & Banlance
                             </p>
                         </a>
                     </li>
@@ -137,22 +134,22 @@
                 </div>
             </section>
             <!--all Point-->
-            <section data-name="allpoint">
+            <section data-name="setbalance">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Point</h3>
+                        <h3 class="card-title">Set Balance</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table>
+                        <table class="table table-striped table-bordered table-hover full" id="tbSetBanlance">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Name</th>
-                                    <th>Phone</th>
-                                    <th>Point</th>
+                                    <th>Code</th>
+                                    <th>amount</th>
                                 </tr>
                             </thead>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -181,15 +178,17 @@
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table>
+                        <table class="table table-striped table-bordered table-hover full"   id="tbSetPoint">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Add point/per</th>
-                                    <th>Redeem/per</th>
-                                    <th>Apply</th>
+                                    <th>name</th>
+                                    <th>phone</th>
+                                    <th>value</th>
+                                    <th>email</th>
                                 </tr>
                             </thead>
+                            <tbody></tbody>
                         </table>
                     </div>
                     <!-- /.card-body -->
@@ -198,20 +197,7 @@
 
 
             </section>
-            <!--History-->
-            <section data-name="addredeem">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Tăng giảm Point and Gift</h3>
-                    </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
 
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
-            </section>
 
         </section>
         <!-- /.content -->

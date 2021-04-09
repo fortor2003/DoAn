@@ -1,16 +1,24 @@
 package pl.banhangtichluy.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import pl.banhangtichluy.annotaions.ValidateEnum;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Getter;
+import pl.banhangtichluy.deserializers.WhiteSpaceRemovalDeserializer;
 import pl.banhangtichluy.enums.AmountType;
+import pl.banhangtichluy.validators.annotaions.ValidEnum;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+@Getter
 public class AmountDto {
 
     @NotNull(message = "type is required")
-    @ValidateEnum(targetClassType = AmountType.class, message = "Value must in [\"POINT\", \"GIFT\"]")
+    @ValidEnum(targetClassType = AmountType.class, message = "Value must in [\"POINT\", \"GIFT\"]")
     @JsonProperty("type")
+    @JsonDeserialize(using = WhiteSpaceRemovalDeserializer.class)
     private String type;
 
     @NotBlank(message = "code is required")
@@ -38,6 +46,7 @@ public class AmountDto {
     private String phone;
 
     @JsonProperty("note")
+    @JsonDeserialize(using = WhiteSpaceRemovalDeserializer.class)
     private String note;
 
 }

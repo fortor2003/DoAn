@@ -26,6 +26,15 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(ex.getAllErrors(), HttpStatus.BAD_REQUEST);
     }
 
+//    @ExceptionHandler(DataIntegrityViolationException.class)
+//    public ResponseEntity<Object> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
+//        if (ex.getCause().getCause() instanceof ConstraintViolationException) {
+//            ConstraintViolationException violationException = (ConstraintViolationException) ex.getCause().getCause();
+//            if ()
+//        }
+//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
+
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<Object> handleException(Exception ex) {
 //        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

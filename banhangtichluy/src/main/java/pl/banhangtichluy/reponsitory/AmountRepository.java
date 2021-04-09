@@ -2,18 +2,38 @@ package pl.banhangtichluy.reponsitory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import pl.banhangtichluy.dto.views.AmountBaseView;
+import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.entity.Amount;
+import pl.banhangtichluy.enums.AmountType;
 
-public interface AmountRepository extends JpaRepository<Amount, Long> {
+import java.util.List;
+import java.util.Optional;
 
-    Page<Amount> findByTypeContaining(String type, Pageable pageable);
-    Page<Amount> findByCodeContaining(String code, Pageable pageable);
-    Page<Amount> findByValue(Integer value, Pageable pageable);
-    Page<Amount> findByFirstNameContaining(String firstName, Pageable pageable);
-    Page<Amount> findByLastNameContaining(String lastName, Pageable pageable);
-    Page<Amount> findByEmailContaining(String email, Pageable pageable);
-    Page<Amount> findByPhoneContaining(String phone, Pageable pageable);
-    Page<Amount> findByNoteContaining(String node, Pageable pageable);
+public interface AmountRepository extends JpaRepository<Amount, Long>, JpaSpecificationExecutor<Amount> {
+
+    <T> Page<T> findBy(Class<T> type, Pageable pageable);
+    <T> Page<T> findByTypeEquals(String type, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByCodeContaining(String code, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByValueEquals(Integer value, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByFirstNameContaining(String lastName, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByLastNameContaining(String lastName, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByEmailContaining(String email, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByPhoneContaining(String phone, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByNoteContaining(String note, Class<T> clazz, Pageable pageable);
+
+    <T> Optional<T> findById(Long id, Class<T> clazz);
+    <T> Optional<T> findByTypeEqualsAndCodeEquals(String type, String code, Class<T> clazz);
+
+    @Query("select count(a) from Amount a where a.type = ?1 and a.code = ?2")
+    int countByTypeAndCode(String type, String code);
+    @Query("select count(a) from Amount a where a.type = ?1 and a.code = ?2 and a.id <> ?3")
+    int countByTypeAndCodeExceptId(String type, String code, Long id);
+
 
 }

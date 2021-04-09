@@ -1,21 +1,16 @@
 package pl.banhangtichluy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import pl.banhangtichluy.annotaions.ValidateEnum;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import pl.banhangtichluy.enums.AmountType;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "amounts")
@@ -53,16 +48,22 @@ public class Amount extends BaseEntity{
     @JsonProperty("phone")
     private String phone;
 
-    @Column(name = "note")
-    @JsonProperty("note")
-    private String note;
-
-    @Column(name = "created_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonIgnoreProperties("createdAmounts")
     @JsonProperty("createdBy")
-    private Long createdBy;
+    private User createdBy;
 
-    @Column(name = "updated_by")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonProperty("updatedBy")
-    private Long updatedBy;
+    private User updatedBy;
+
+    @OneToMany(mappedBy = Transaction_.AMOUNT, fetch = FetchType.LAZY)
+    private List<Transaction> transactions;
 
 }

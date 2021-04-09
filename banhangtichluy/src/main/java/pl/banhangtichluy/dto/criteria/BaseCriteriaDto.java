@@ -34,17 +34,16 @@ public class BaseCriteriaDto {
         return result;
     }
 
-    public Sort getSortChain(String[] allowFields) {
+    public Sort getSortChain(List<String> allowFields) {
         List<Order> orders = new ArrayList<>();
         String[] list = sort.split(",");
         Pattern patternField = Pattern.compile("\\w+");
         Pattern patternDirection = Pattern.compile("[\\+\\-]");
-        List<String> allows = Arrays.asList(allowFields);
         for (String s : list) {
             SortResource sr = new SortResource();
             Matcher matcherField = patternField.matcher(s);
             Matcher matcherDirection = patternDirection.matcher(s);
-            if (matcherField.find() && allows.contains(matcherField.group())) {
+            if (matcherField.find() && allowFields.contains(matcherField.group())) {
                 orders.add(new Order(matcherDirection.find() ? (matcherDirection.group().equals("-") ? Sort.Direction.DESC : Sort.Direction.ASC) : Sort.Direction.ASC, matcherField.group()));
             }
         }

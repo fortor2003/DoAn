@@ -3,6 +3,7 @@ package pl.banhangtichluy.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
@@ -19,15 +20,16 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
+    @JsonProperty(value = "id")
     private Long id;
 
     @Column(name = "note", nullable = true, updatable = true)
+    @JsonProperty(value = "note")
     private String note;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern="yyyy-MM-dd")
     @Setter(AccessLevel.NONE)
     @JsonProperty(value = "createdAt")
     private Date createdAt;
@@ -35,7 +37,6 @@ public class BaseEntity {
     @Column(name = "updated_at", nullable = false, updatable = true)
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern="yyyy-MM-dd")
     @Setter(AccessLevel.NONE)
     @JsonProperty(value = "updatedAt")
     private Date updatedAt;

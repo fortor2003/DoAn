@@ -1,4 +1,4 @@
-package pl.banhangtichluy.annotaions;
+package pl.banhangtichluy.validators.annotaions;
 
 import pl.banhangtichluy.validators.EnumValidator;
 
@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD) //METHOD, CONSTRUCTOR, etc.
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = EnumValidator.class)
-public @interface ValidateEnum {
+public @interface ValidEnum {
     String message() default "Value not valid";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

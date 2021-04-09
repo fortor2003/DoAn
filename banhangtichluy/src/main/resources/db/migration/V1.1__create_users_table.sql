@@ -1,7 +1,7 @@
 CREATE TABLE users (
     `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `username` VARCHAR(25) NOT NULL,
-    `password` VARCHAR(25) NOT NULL,
+    `password` VARCHAR(150) NOT NULL,
     `first_name` VARCHAR(25) DEFAULT NULL,
     `last_name` VARCHAR(25) DEFAULT NULL,
     `email` VARCHAR(25) DEFAULT NULL,

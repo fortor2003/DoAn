@@ -1,16 +1,15 @@
 package pl.banhangtichluy.controller.api.manager;
 
+import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import pl.banhangtichluy.dto.AmountDto;
-import pl.banhangtichluy.dto.UserDto;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pl.banhangtichluy.entity.User;
 import pl.banhangtichluy.reponsitory.UserRepository;
 
-import javax.validation.Valid;
-import java.util.List;
+import java.util.Locale;
+import java.util.Random;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/users")
@@ -19,18 +18,24 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-    @GetMapping("")
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+//    @GetMapping("/create-example-data")
+//    public String createDataExample() throws Exception {
+//        Faker faker = new Faker(new Locale("vi"));
+//        Random random = new Random();
+//        for (int i = 0; i < 10; i++) {
+//            User user = new User();
+//            String username = faker.name().username();
+//            user.setUsername(username);
+//            user.setPassword(faker.crypto().md5());
+//            user.setFirstName(faker.name().firstName());
+//            user.setLastName(faker.name().lastName());
+//            user.setEmail(username + "@example.com");
+//            user.setPhone(faker.phoneNumber().phoneNumber());
+//            user.setNote(faker.lorem().characters(5, 50, true));
+//            userRepository.save(user);
+//        }
+//        return "OK";
+//    }
 
-    @GetMapping("/{id}")
-    public User findById(@PathVariable("id") Long id) throws Exception {
-        return userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User not found"));
-    }
 
-    @PostMapping("")
-    public User createUser(@Valid @RequestBody AmountDto userDto) {
-        return new User();
-    }
 }

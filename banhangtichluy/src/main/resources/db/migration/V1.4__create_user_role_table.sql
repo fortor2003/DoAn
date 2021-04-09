@@ -4,6 +4,6 @@ CREATE TABLE user_role (
     `role_id` BIGINT UNSIGNED NOT NULL,
     `note` VARCHAR(150) DEFAULT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     UNIQUE INDEX `ui_userid_roleid` (`user_id` ASC, `role_id` ASC)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;

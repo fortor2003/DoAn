@@ -18,8 +18,10 @@ import pl.banhangtichluy.reponsitory.TransactionRepository;
 import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.AmountService;
 import pl.banhangtichluy.service.TransactionService;
+import pl.banhangtichluy.utils.WebUtils;
 
 import javax.validation.Valid;
+import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Random;
 
@@ -74,26 +76,26 @@ public class TransactionController {
 ////        return amountRepository.findByTypeEqualsAndCodeEquals("POINT", "496825560132459", AmountView.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
 //    }
 
-//    @GetMapping("/create-example-data")
-//    public String createDataExample() throws Exception {
-//        Faker faker = new Faker(new Locale("vi"));
-//        Random random = new Random();
-//        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
-//        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
-//        Amount amount = amountRepository.findById(1L).orElse(null);
-//        for (int i = 0; i < 199; i++) {
-//            Transaction transaction = new Transaction();
-//            transaction.setCode(faker.code().imei());
-//            transaction.setBeforeValue(faker.random().nextInt(0, 8000));
-//            transaction.setPlusValue(faker.random().nextInt(0, 8000));
-//            transaction.setAfterValue(faker.random().nextInt(0, 8000));
-//            transaction.setNote(faker.lorem().characters(5, 30));
-//            transaction.setAmount(amount);
-//            transaction.setCreatedBy(i % 2 == 0 ? u1 : u2);
-//            transaction.setUpdatedBy(i % 2 == 0 ? u1 : u2);
-//            transactionRepository.save(transaction);
-//        }
-//        return "OK";
-//    }
+    @GetMapping("/create-example-data")
+    public String createDataExample() throws Exception {
+        Faker faker = new Faker(new Locale("vi"));
+        Random random = new Random();
+        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
+        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
+        Amount amount = amountRepository.findById(1L).orElse(null);
+        for (int i = 0; i < 199; i++) {
+            Transaction transaction = new Transaction();
+            transaction.setCode(faker.code().imei());
+            transaction.setBeforeValue(faker.random().nextInt(0, 8000));
+            transaction.setPlusValue(faker.random().nextInt(0, 8000));
+            transaction.setAfterValue(faker.random().nextInt(0, 8000));
+            transaction.setNote(faker.lorem().characters(5, 30));
+            transaction.setAmount(amount);
+            transaction.setCreatedBy(i % 2 == 0 ? u1 : u2);
+            Long id = transactionRepository.save(transaction).getId();
+            transaction.setCode(WebUtils.genCodeTransactionById(id));
+        }
+        return "OK";
+    }
 
 }

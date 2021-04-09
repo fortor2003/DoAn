@@ -1,4 +1,5 @@
 package pl.banhangtichluy.utils;
+import java.text.DecimalFormat;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -25,5 +26,9 @@ public class WebUtils {
             sb.append(")");
         }
         return sb.toString();
+    }
+
+    public static String genCodeTransactionById(Long id) {
+        return new DecimalFormat("TR0000000000").format(id);
     }
 }

@@ -27,14 +27,14 @@ public class BaseEntity {
     @JsonProperty(value = "note")
     private String note;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)
     @JsonProperty(value = "createdAt")
     private Date createdAt;
 
-    @Column(name = "updated_at", nullable = false, updatable = true)
+    @Column(name = "updated_at", nullable = true, updatable = false, insertable = false)
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.NONE)

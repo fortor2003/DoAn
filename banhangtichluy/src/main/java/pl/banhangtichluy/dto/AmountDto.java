@@ -2,6 +2,7 @@ package pl.banhangtichluy.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.Data;
 import lombok.Getter;
 import pl.banhangtichluy.deserializers.WhiteSpaceRemovalDeserializer;
 import pl.banhangtichluy.enums.AmountType;
@@ -12,7 +13,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Getter
+@Data
 public class AmountDto {
 
     @NotNull(message = "type is required")

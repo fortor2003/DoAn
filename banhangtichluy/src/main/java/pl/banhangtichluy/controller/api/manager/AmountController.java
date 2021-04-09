@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.dto.AddValueAmountDto;
 import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.views.AmountView;
@@ -58,39 +59,44 @@ public class AmountController {
         return ammountService.update(id, amountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
+    @PutMapping("{id}/add-value")
+    public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
+        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+        return ammountService.addValue(id, addValueAmountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+    }
+
     @DeleteMapping("{id}")
     public boolean delete(@PathVariable("id") Long id) {
         return ammountService.delete(id);
     }
 
-    @GetMapping("/test")
-    public int test() {
-        return amountRepository.countByTypeAndCodeExceptId("GIFT", "914885456727758", 234L);
-//        return amountRepository.findByLastNameContaining("minh", AmountView.class, PageRequest.of(0,10));
-//        return amountRepository.findByTypeEqualsAndCodeEquals("POINT", "496825560132459", AmountView.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-    }
-
-//    @GetMapping("/create-example-data")
-//    public String createDataExample() throws Exception {
-//        Faker faker = new Faker(new Locale("vi"));
-//        Random random = new Random();
-//        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
-//        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
-//        for (int i = 0; i < 200; i++) {
-//            Amount amount = new Amount();
-//            amount.setType(AmountType.values()[random.nextInt(AmountType.values().length)].name());
-//            amount.setCode(faker.code().imei());
-//            amount.setValue(faker.random().nextInt(0, 8000));
-//            amount.setFirstName(faker.name().firstName());
-//            amount.setLastName(faker.name().lastName());
-//            amount.setPhone(faker.phoneNumber().phoneNumber());
-//            amount.setEmail(faker.bothify("????##@example.com"));
-//            amount.setNote(faker.lorem().characters(5, 30));
-//            amount.setCreatedBy(i % 2 == 0 ? u1 : u2);
-//            amount.setUpdatedBy(i % 2 == 0 ? u1 : u2);
-//            amountRepository.save(amount);
-//        }
-//        return "OK";
+//    @GetMapping("/test")
+//    public int test() {
+//        return amountRepository.countByTypeAndCodeExceptId("GIFT", "914885456727758", 234L);
+////        return amountRepository.findByLastNameContaining("minh", AmountView.class, PageRequest.of(0,10));
+////        return amountRepository.findByTypeEqualsAndCodeEquals("POINT", "496825560132459", AmountView.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
 //    }
+
+    @GetMapping("/create-example-data")
+    public String createDataExample() throws Exception {
+        Faker faker = new Faker(new Locale("vi"));
+        Random random = new Random();
+        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
+        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
+        for (int i = 0; i < 200; i++) {
+            Amount amount = new Amount();
+            amount.setType(AmountType.values()[random.nextInt(AmountType.values().length)].name());
+            amount.setCode(faker.code().imei());
+            amount.setValue(faker.random().nextInt(0, 8000));
+            amount.setFirstName(faker.name().firstName());
+            amount.setLastName(faker.name().lastName());
+            amount.setPhone(faker.phoneNumber().phoneNumber());
+            amount.setEmail(faker.bothify("????##@example.com"));
+            amount.setNote(faker.lorem().characters(5, 30));
+            amount.setCreatedBy(i % 2 == 0 ? u1 : u2);
+            amountRepository.save(amount);
+        }
+        return "OK";
+    }
 
 }

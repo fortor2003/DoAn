@@ -9,8 +9,8 @@ CREATE TABLE amounts (
     `phone` VARCHAR(25) DEFAULT NULL,
     `note` VARCHAR(150) DEFAULT NULL,
     `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL ON UPDATE CURRENT_TIMESTAMP,
     `created_by` BIGINT NOT NULL,
-    `updated_by` BIGINT NOT NULL,
+    `updated_by` BIGINT DEFAULT NULL,
     UNIQUE INDEX `ui_type_code` (`type` ASC, `code` ASC)
 ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci;

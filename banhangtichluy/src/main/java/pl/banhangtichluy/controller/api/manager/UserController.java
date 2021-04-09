@@ -18,24 +18,24 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
-//    @GetMapping("/create-example-data")
-//    public String createDataExample() throws Exception {
-//        Faker faker = new Faker(new Locale("vi"));
-//        Random random = new Random();
-//        for (int i = 0; i < 10; i++) {
-//            User user = new User();
-//            String username = faker.name().username();
-//            user.setUsername(username);
-//            user.setPassword(faker.crypto().md5());
-//            user.setFirstName(faker.name().firstName());
-//            user.setLastName(faker.name().lastName());
-//            user.setEmail(username + "@example.com");
-//            user.setPhone(faker.phoneNumber().phoneNumber());
-//            user.setNote(faker.lorem().characters(5, 50, true));
-//            userRepository.save(user);
-//        }
-//        return "OK";
-//    }
+    @GetMapping("/create-example-data")
+    public String createDataExample() throws Exception {
+        Faker faker = new Faker(new Locale("vi"));
+        Random random = new Random();
+        for (int i = 0; i < 10; i++) {
+            User user = new User();
+            String username = faker.name().username();
+            user.setUsername(username);
+            user.setPassword(faker.crypto().md5());
+            user.setFirstName(faker.name().firstName());
+            user.setLastName(faker.name().lastName());
+            user.setEmail(username + "@example.com");
+            user.setPhone(faker.phoneNumber().phoneNumber());
+            user.setNote(faker.lorem().characters(5, 50, true));
+            userRepository.save(user);
+        }
+        return "OK";
+    }
 
 
 }

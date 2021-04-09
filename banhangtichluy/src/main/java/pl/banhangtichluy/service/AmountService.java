@@ -6,19 +6,20 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.dto.AddValueAmountDto;
 import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.criteria.FilterResource;
 import pl.banhangtichluy.dto.views.AmountView;
-import pl.banhangtichluy.entity.Amount;
-import pl.banhangtichluy.entity.Amount_;
-import pl.banhangtichluy.entity.User;
-import pl.banhangtichluy.entity.User_;
+import pl.banhangtichluy.entity.*;
 import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
+import pl.banhangtichluy.reponsitory.TransactionRepository;
 import pl.banhangtichluy.specifications.AmountSpec;
 import pl.banhangtichluy.utils.ClassUtils;
+import pl.banhangtichluy.utils.WebUtils;
 
 import javax.persistence.metamodel.SingularAttribute;
 import java.util.List;
@@ -29,6 +30,8 @@ public class AmountService {
 
     @Autowired
     AmountRepository amountRepository;
+    @Autowired
+    TransactionRepository transactionRepository;
 
     public Page<AmountView> list(BaseCriteriaDto criteria) {
         Class view = AmountView.class;
@@ -99,7 +102,6 @@ public class AmountService {
         amount.setPhone(amountDto.getPhone());
         amount.setNote(amountDto.getNote());
         amount.setCreatedBy(createdBy);
-        amount.setUpdatedBy(createdBy);
         Long id = amountRepository.save(amount).getId();
         return detailById(id);
     }
@@ -126,5 +128,29 @@ public class AmountService {
         Amount amount = amountRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
         amountRepository.delete(amount);
         return true;
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    public Optional<AmountView> addValue(Long id, AddValueAmountDto addValueAmountDto, User manipulatedBy) {
+        Amount amount = amountRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+        Integer beforeValue = amount.getValue();
+        Integer plusValue = addValueAmountDto.getValue();
+        Integer afterValue = beforeValue + plusValue;
+        if (afterValue < 0) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Current value of amount is not enough");
+        }
+        Transaction transaction = new Transaction();
+        transaction.setBeforeValue(beforeValue);
+        transaction.setPlusValue(plusValue);
+        transaction.setAfterValue(afterValue);
+        transaction.setNote(addValueAmountDto.getNote());
+        transaction.setAmount(amount);
+        transaction.setCreatedBy(manipulatedBy);
+        Long transactionId = transactionRepository.save(transaction).getId();
+        transaction.setCode(WebUtils.genCodeTransactionById(transactionId));
+        amount.setValue(afterValue);
+        amount.setUpdatedBy(manipulatedBy);
+        amountRepository.save(amount);
+        return detailById(id);
     }
 }

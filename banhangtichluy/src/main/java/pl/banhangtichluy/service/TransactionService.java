@@ -12,10 +12,7 @@ import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.criteria.FilterResource;
 import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.dto.views.TransactionView;
-import pl.banhangtichluy.entity.Amount;
-import pl.banhangtichluy.entity.Transaction_;
-import pl.banhangtichluy.entity.User;
-import pl.banhangtichluy.entity.User_;
+import pl.banhangtichluy.entity.*;
 import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
@@ -31,7 +28,7 @@ public class TransactionService {
     @Autowired
     TransactionRepository transactionRepository;
 
-    private final Class VIEW= TransactionView.class;
+    private final Class VIEW = TransactionView.class;
 
     public Page<TransactionView> list(BaseCriteriaDto criteria) {
         List<String> fields = ClassUtils.getFieldNameOfClassHasType(Transaction_.class, SingularAttribute.class);
@@ -80,47 +77,4 @@ public class TransactionService {
     public Optional<TransactionView> detailByCode(String code) {
         return transactionRepository.findByCodeEquals(code, VIEW);
     }
-
-//    public Optional<TransactionView> create(AmountDto amountDto, User createdBy) {
-//        if (transactionRepository.countByTypeAndCode(amountDto.getType(), amountDto.getCode()) > 0) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Type and code of amount already exists");
-//        }
-//        Amount amount = new Amount();
-//        amount.setType(amountDto.getType());
-//        amount.setCode(amountDto.getCode());
-//        amount.setValue(amountDto.getValue());
-//        amount.setFirstName(amountDto.getFirstName());
-//        amount.setLastName(amountDto.getLastName());
-//        amount.setEmail(amountDto.getEmail());
-//        amount.setPhone(amountDto.getPhone());
-//        amount.setNote(amountDto.getNote());
-//        amount.setCreatedBy(createdBy);
-//        amount.setUpdatedBy(createdBy);
-//        Long id = transactionRepository.save(amount).getId();
-//        return detailById(id);
-//    }
-//
-//    public Optional<TransactionView> update(Long id, AmountDto amountDto, User updatedBy) {
-//        if (transactionRepository.countByTypeAndCodeExceptId(amountDto.getType(), amountDto.getCode(), id) > 0) {
-//            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Type and code of amount already exists");
-//        }
-//        Amount amount = transactionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-//        amount.setType(amountDto.getType());
-//        amount.setCode(amountDto.getCode());
-//        amount.setValue(amountDto.getValue());
-//        amount.setFirstName(amountDto.getFirstName());
-//        amount.setLastName(amountDto.getLastName());
-//        amount.setEmail(amountDto.getEmail());
-//        amount.setPhone(amountDto.getPhone());
-//        amount.setNote(amountDto.getNote());
-//        amount.setUpdatedBy(updatedBy);
-//        transactionRepository.save(amount);
-//        return detailById(id);
-//    }
-//
-//    public boolean delete(Long id) {
-//        Amount amount = transactionRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-//        transactionRepository.delete(amount);
-//        return true;
-//    }
 }

@@ -13,6 +13,7 @@ import pl.banhangtichluy.dto.views.TransactionView;
 import pl.banhangtichluy.entity.Amount;
 import pl.banhangtichluy.entity.Transaction;
 import pl.banhangtichluy.entity.User;
+import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
 import pl.banhangtichluy.reponsitory.UserRepository;
@@ -78,24 +79,30 @@ public class TransactionController {
 
     @GetMapping("/create-example-data")
     public String createDataExample() throws Exception {
+        String str = "";
         Faker faker = new Faker(new Locale("vi"));
         Random random = new Random();
-        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
-        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
-        Amount amount = amountRepository.findById(1L).orElse(null);
-        for (int i = 0; i < 199; i++) {
-            Transaction transaction = new Transaction();
-            transaction.setCode(faker.code().imei());
-            transaction.setBeforeValue(faker.random().nextInt(0, 8000));
-            transaction.setPlusValue(faker.random().nextInt(0, 8000));
-            transaction.setAfterValue(faker.random().nextInt(0, 8000));
-            transaction.setNote(faker.lorem().characters(5, 30));
-            transaction.setAmount(amount);
-            transaction.setCreatedBy(i % 2 == 0 ? u1 : u2);
-            Long id = transactionRepository.save(transaction).getId();
-            transaction.setCode(WebUtils.genCodeTransactionById(id));
+//        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
+//        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
+//        Amount amount = amountRepository.findById(1L).orElse(null);
+        for (int i = 0; i < 200; i++) {
+            Integer before = faker.random().nextInt(0, 8000);
+            Integer plus = faker.random().nextInt(0, 2000);
+
+//            Transaction transaction = new Transaction();
+//            transaction.setCode(faker.code().imei());
+//            transaction.setBeforeValue(faker.random().nextInt(0, 8000));
+//            transaction.setPlusValue(faker.random().nextInt(0, 8000));
+//            transaction.setAfterValue(faker.random().nextInt(0, 8000));
+//            transaction.setNote(faker.lorem().characters(5, 30));
+//            transaction.setAmount(amount);
+//            transaction.setCreatedBy(i % 2 == 0 ? u1 : u2);
+            str += String.format(
+                    "INSERT INTO `transactions` (`code`, `amount_id`, `before_value`, `plus_value`, `after_value`, `note`, `created_by`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');\n",
+                    faker.code().imei(), i + 1, before, plus, before + plus, faker.lorem().characters(5, 30), 1
+            );
         }
-        return "OK";
+        return str;
     }
 
 }

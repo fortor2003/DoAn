@@ -40,10 +40,24 @@ public class User extends BaseEntity{
     @JsonProperty(value = "phone")
     private String phone;
 
+    @OneToMany(mappedBy = UserRole_.USER, fetch = FetchType.LAZY)
+    @JsonProperty(value = "userRoles")
+    private List<UserRole> userRoles;
+
     @OneToMany(mappedBy = Amount_.CREATED_BY, fetch = FetchType.LAZY)
+    @JsonProperty(value = "createdAmounts")
     private List<Amount> createdAmounts;
 
     @OneToMany(mappedBy = Amount_.UPDATED_AT, fetch = FetchType.LAZY)
+    @JsonProperty(value = "updatedAmounts")
     private List<Amount> updatedAmounts;
+
+    @OneToMany(mappedBy = Transaction_.CREATED_BY, fetch = FetchType.LAZY)
+    @JsonProperty(value = "createdTransactions")
+    private List<Transaction> createdTransactions;
+
+    @OneToMany(mappedBy = Transaction_.UPDATED_BY, fetch = FetchType.LAZY)
+    @JsonProperty(value = "updatedTransactions")
+    private List<Transaction> updatedTransactions;
 
 }

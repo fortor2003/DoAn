@@ -2,26 +2,19 @@ package pl.banhangtichluy.reponsitory;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import pl.banhangtichluy.dto.views.AmountBaseView;
-import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.entity.Amount;
-import pl.banhangtichluy.enums.AmountType;
 
-import java.util.List;
 import java.util.Optional;
 
-public interface AmountRepository extends JpaRepository<Amount, Long>, JpaSpecificationExecutor<Amount> {
+public interface AmountRepository extends JpaRepository<Amount, Long> {
 
     <T> Page<T> findBy(Class<T> type, Pageable pageable);
     <T> Page<T> findByTypeEquals(String type, Class<T> clazz, Pageable pageable);
     <T> Page<T> findByCodeContaining(String code, Class<T> clazz, Pageable pageable);
     <T> Page<T> findByValueEquals(Integer value, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByFirstNameContaining(String lastName, Class<T> clazz, Pageable pageable);
+    <T> Page<T> findByFirstNameContaining(String firstName, Class<T> clazz, Pageable pageable);
     <T> Page<T> findByLastNameContaining(String lastName, Class<T> clazz, Pageable pageable);
     <T> Page<T> findByEmailContaining(String email, Class<T> clazz, Pageable pageable);
     <T> Page<T> findByPhoneContaining(String phone, Class<T> clazz, Pageable pageable);

@@ -1,6 +1,7 @@
 package pl.banhangtichluy.controller.api.manager;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -79,24 +80,30 @@ public class AmountController {
 
     @GetMapping("/create-example-data")
     public String createDataExample() throws Exception {
-        Faker faker = new Faker(new Locale("vi"));
+        String str = "";
+        Faker faker = new Faker(new Locale("en"));
         Random random = new Random();
-        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
-        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
+//        User u1 = userRepository.findById(1L).orElseThrow(() -> new Exception("U1 not found"));
+//        User u2 = userRepository.findById(2L).orElseThrow(() -> new Exception("U2 not found"));
         for (int i = 0; i < 200; i++) {
-            Amount amount = new Amount();
-            amount.setType(AmountType.values()[random.nextInt(AmountType.values().length)].name());
-            amount.setCode(faker.code().imei());
-            amount.setValue(faker.random().nextInt(0, 8000));
-            amount.setFirstName(faker.name().firstName());
-            amount.setLastName(faker.name().lastName());
-            amount.setPhone(faker.phoneNumber().phoneNumber());
-            amount.setEmail(faker.bothify("????##@example.com"));
-            amount.setNote(faker.lorem().characters(5, 30));
-            amount.setCreatedBy(i % 2 == 0 ? u1 : u2);
-            amountRepository.save(amount);
+            Name name = faker.name();
+            String username = name.username().replace(".", "");
+//            Amount amount = new Amount();
+//            amount.setType(AmountType.values()[random.nextInt(AmountType.values().length)].name());
+//            amount.setCode(faker.code().imei());
+//            amount.setValue(faker.random().nextInt(0, 8000));
+//            amount.setFirstName(faker.name().firstName());
+//            amount.setLastName(faker.name().lastName());
+//            amount.setPhone(faker.phoneNumber().phoneNumber());
+//            amount.setEmail(faker.bothify("????##@example.com"));
+//            amount.setNote(faker.lorem().characters(5, 30));
+//            amount.setCreatedBy(i % 2 == 0 ? u1 : u2);
+            str += String.format(
+                    "INSERT INTO `amounts` (`type`, `code`, `value`, `first_name`, `last_name`, `email`, `phone`, `note`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');\n",
+                    AmountType.values()[random.nextInt(AmountType.values().length)].name(), faker.code().imei(), faker.random().nextInt(0, 8000), name.firstName().replace("'", ""), name.lastName().replace("'", ""), name.firstName()+"@example.com",faker.phoneNumber().phoneNumber(),faker.lorem().characters(5, 30), 1
+            );
         }
-        return "OK";
+        return str;
     }
 
 }

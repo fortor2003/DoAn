@@ -34,7 +34,7 @@ public class Transaction extends BaseEntity{
     @JoinColumn(name = "amount_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIgnoreProperties("transactions")
+    @JsonIgnoreProperties(Amount_.TRANSACTIONS)
     @JsonProperty("amount")
     private Amount amount;
 
@@ -42,7 +42,7 @@ public class Transaction extends BaseEntity{
     @JoinColumn(name = "created_by")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIgnoreProperties("createdAmounts")
+    @JsonIgnoreProperties(User_.CREATED_TRANSACTIONS)
     @JsonProperty("createdBy")
     private User createdBy;
 
@@ -50,6 +50,7 @@ public class Transaction extends BaseEntity{
     @JoinColumn(name = "updated_by")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonIgnoreProperties(User_.UPDATED_TRANSACTIONS)
     @JsonProperty("updatedBy")
     private User updatedBy;
 

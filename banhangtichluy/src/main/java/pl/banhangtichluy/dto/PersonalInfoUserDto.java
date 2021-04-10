@@ -11,19 +11,7 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Data
-public class UserDto {
-
-    @NotBlank(message = "username is required")
-    @Size(min = 4, max = 20, message = "length of username must be greater or equal 4 and less than or equal 20")
-    @Pattern(regexp = "^[A-Za-z]+([A-Za-z0-9_])+$", message = "username only contain [A-Za-z0-9_] and start with a letter")
-    @JsonProperty("username")
-    @JsonDeserialize(using = WhiteSpaceRemovalDeserializer.class)
-    private String username;
-
-    @NotBlank(message = "password is required")
-    @Size(min = 6, max = 30, message = "length of password must be greater or equal 8 and less than or equal 20")
-    @JsonProperty("password")
-    private String password;
+public class PersonalInfoUserDto {
 
     @NotBlank(message = "firstName is required")
     @JsonProperty("firstName")

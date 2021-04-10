@@ -52,7 +52,7 @@ public class Amount extends BaseEntity{
     @JoinColumn(name = "created_by")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @JsonIgnoreProperties("createdAmounts")
+    @JsonIgnoreProperties(User_.CREATED_AMOUNTS)
     @JsonProperty("createdBy")
     private User createdBy;
 
@@ -60,10 +60,12 @@ public class Amount extends BaseEntity{
     @JoinColumn(name = "updated_by")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @JsonIgnoreProperties(User_.UPDATED_AMOUNTS)
     @JsonProperty("updatedBy")
     private User updatedBy;
 
     @OneToMany(mappedBy = Transaction_.AMOUNT, fetch = FetchType.LAZY)
+    @JsonProperty("transactions")
     private List<Transaction> transactions;
 
 }

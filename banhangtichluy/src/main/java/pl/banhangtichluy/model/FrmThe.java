@@ -1,4 +1,4 @@
-package pl.banhangtichluy.modal;
+package pl.banhangtichluy.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

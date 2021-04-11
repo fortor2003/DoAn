@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.banhangtichluy.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -19,7 +20,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> Page<T> findByNoteContaining(String note, Class<T> clazz, Pageable pageable);
 
     <T> Optional<T> findById(Long id, Class<T> clazz);
-    <T> Optional<T> findByUsernameEquals(String username, Class<T> clazz);
+    <T> Optional<T> findByUsername(String username, Class<T> clazz);
+
+    @Query("select distinct p.name from User u left join u.userRoles ur left join ur.role r left join r.rolePermissions rp left join rp.permission p where u.id = ?1")
+    List<String> permissionNamesById(Long id);
+
+    @Query("select distinct p.name from User u left join u.userRoles ur left join ur.role r left join r.rolePermissions rp left join rp.permission p where u.username = ?1")
+    List<String> permissionNamesByUsername(String username);
 
     @Query("select count(u) from User u where u.username = ?1")
     int countByUsername(String username);

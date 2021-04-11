@@ -18,6 +18,7 @@ import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -32,6 +33,10 @@ public class TestController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @GetMapping("user/{id}")
+    public List<String> permissionNames(@PathVariable("id") String id) throws Exception {
+        return userRepository.permissionNamesByUsername(id);
+    }
 
     @GetMapping("/create-example-data")
     public String createDataExample() throws Exception {

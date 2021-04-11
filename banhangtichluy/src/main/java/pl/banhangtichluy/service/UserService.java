@@ -67,7 +67,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<UserView> detailByUsername(String username) {
-        return userRepository.findByUsernameEquals(username, VIEW);
+        return userRepository.findByUsername(username, VIEW);
     }
 
 

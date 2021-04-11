@@ -1,8 +1,6 @@
 package pl.banhangtichluy.controller.page;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import pl.banhangtichluy.modal.FrmThe;
 
 @RestController
 @RequestMapping("api/")

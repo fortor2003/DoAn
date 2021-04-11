@@ -5,6 +5,7 @@ import com.github.javafaker.Name;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.AddValueAmountDto;
@@ -33,6 +34,7 @@ public class AmountController {
     @Autowired
     UserRepository userRepository;
 
+    @PreAuthorize("hasAuthority('AMOUNT.READ')")
     @GetMapping("")
     public Page<AmountView> list(@Valid BaseCriteriaDto criteriaDto) {
         return ammountService.list(criteriaDto);

@@ -22,9 +22,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     <T> Optional<T> findById(Long id, Class<T> clazz);
     <T> Optional<T> findByUsername(String username, Class<T> clazz);
 
+    @Query("select distinct r.name from User u left join u.userRoles ur left join ur.role r where u.id = ?1")
+    List<String> roleNamesById(Long id);
+    @Query("select distinct r.name from User u left join u.userRoles ur left join ur.role r where u.username = ?1")
+    List<String> roleNamesByUsername(String username);
+
     @Query("select distinct p.name from User u left join u.userRoles ur left join ur.role r left join r.rolePermissions rp left join rp.permission p where u.id = ?1")
     List<String> permissionNamesById(Long id);
-
     @Query("select distinct p.name from User u left join u.userRoles ur left join ur.role r left join r.rolePermissions rp left join rp.permission p where u.username = ?1")
     List<String> permissionNamesByUsername(String username);
 

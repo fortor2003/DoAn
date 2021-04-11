@@ -1,10 +1,15 @@
 package pl.banhangtichluy.controller.page;
 import java.security.Principal;
+import java.util.Collection;
+import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,14 +33,11 @@ public class MainController {
         return "welcomePage";
     }
 
+    @PreAuthorize("hasAuthority('USER.CREATE')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(Model model, Principal principal) {
-
-//        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-//
-//        String userInfo = WebUtils.toString(loginedUser);
-//        model.addAttribute("userInfo", userInfo);
-
+    public String adminPage(Authentication auth) {
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        System.out.println(userDetails.getAuthorities());
         return "adminPage";
     }
 
@@ -70,19 +72,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
-    public String accessDenied(Model model, Principal principal) {
-
-        if (principal != null) {
-            User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-            String userInfo = WebUtils.toString(loginedUser);
-
-
-            String message =  "Contact administrator!!!";
-            model.addAttribute("message", message);
-
-        }
-
+    public String accessDenied() {
         return "403Page";
     }
 }

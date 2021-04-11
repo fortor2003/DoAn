@@ -15,12 +15,11 @@ import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.views.UserView;
 import pl.banhangtichluy.entity.User;
 import pl.banhangtichluy.reponsitory.UserRepository;
+import pl.banhangtichluy.service.JwtService;
 import pl.banhangtichluy.service.UserService;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
+import java.util.*;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/tests")
@@ -32,31 +31,41 @@ public class TestController {
     UserService userService;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    JwtService jwtService;
 
     @GetMapping("user/{id}")
     public List<String> permissionNames(@PathVariable("id") String id) throws Exception {
         return userRepository.permissionNamesByUsername(id);
     }
 
-    @GetMapping("/create-example-data")
-    public String createDataExample() throws Exception {
-        String str = "";
-        for (int i = 1; i <= 2; i++) {
-            for (int j = 1; j <= 20; j++) {
-                str += String.format(
-                        "INSERT INTO `role_permission` (`role_id`, `permission_id`) VALUES ('%s', '%s');\n",
-                        i, j
-                );
-            }
-        }
-        for (int j = 13; j <= 20; j++) {
-            str += String.format(
-                    "INSERT INTO `role_permission` (`role_id`, `permission_id`) VALUES ('%s', '%s');\n",
-                    3, j
-            );
-        }
-        return str;
+    @GetMapping("/change-pass")
+    public String changePass() throws Exception {
+        User user = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        user.setPassword(passwordEncoder.encode("howardrolfson"));
+        return "OK";
     }
 
+    @GetMapping("/encode-pass/{pass}")
+    public String encodePass(@PathVariable("pass") String pass) throws Exception {
+        return passwordEncoder.encode(pass);
+    }
 
+    @GetMapping("gen-token/{username}")
+    public String genToken(@PathVariable("username") String username) throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("key1", "value1");
+        return jwtService.createToken(map, username);
+    }
+
+    @GetMapping("extract-token/{token}")
+    public String extractJws(
+            @PathVariable("token") String token,
+            @RequestParam(name = "part", required = false, defaultValue = "username") String part
+    ) {
+        if (part.equals("expiration")) {
+            return jwtService.extractExpiration(token).toString();
+        }
+        return jwtService.extractUsername(token);
+    }
 }

@@ -1,4 +1,4 @@
-ALTER TABLE `user_role`
+ ALTER TABLE `user_role`
     ADD CONSTRAINT `fk__user_role__users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION,
     ADD CONSTRAINT `fk__user_role__roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE NO ACTION ON DELETE NO ACTION;
 

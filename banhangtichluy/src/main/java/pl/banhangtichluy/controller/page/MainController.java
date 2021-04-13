@@ -33,11 +33,11 @@ public class MainController {
         return "welcomePage";
     }
 
-    @PreAuthorize("hasAuthority('USER.CREATE')")
+//    @PreAuthorize("hasAuthority('USER.CREATE')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String adminPage(Authentication auth) {
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        System.out.println(userDetails.getAuthorities());
+//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//        System.out.println(userDetails.getAuthorities());
         return "adminPage";
     }
 

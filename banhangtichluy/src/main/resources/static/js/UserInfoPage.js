@@ -6,6 +6,15 @@ $( document ).ready(function() {
     $('#btnPoint').on("click",function () {
         $('#mdPoint').modal('show');
     });
+     //region point
+    $('#mdPoint').on('hidden.bs.modal', function () {
+        $("#idThe").val(0);
+        $("#txtFirstNamePoint").val("");
+        $("#txtLastNamePoint").val("");
+        $("#txtEmailPoint").val("");
+        $("#txtPhonePoint").val("");
+        $("#spPoint").html(0);
+    });
     $("#btnSearchPoint").on("click",function () {
         if($("#txtPhonePoint").val()){
             $.get(`api/manager/amounts/POINT/${$('#txtPhonePoint').val()}`, function(data){
@@ -16,46 +25,57 @@ $( document ).ready(function() {
                 $("#spPoint").html(data.value);
             }).fail(function( jqXHR) { //ko tìm thấy dử liệu
                 if(parseInt(jqXHR.status)===404){
-                    let data = {
-                        "type":"POINT",
-                        "code":$("#txtPhonePoint").val(),
-                        "value":0,
-                        "firstName": $("#txtFirstNamePoint").val()?$("#txtFirstNamePoint").val():"null",
-                        "lastName": $("#txtLastNamePoint").val()?$("#txtLastNamePoint").val():"null",
-                        "email":$("#txtEmailPoint").val()?$("#txtEmailPoint").val():"null@null.null",
-                        "phone":$("#txtPhonePoint").val(),
-                        "note":""
-                    };
-                    $.ajax({
-                        url:"api/manager/amounts",
-                        type:"POST",
-                        headers: {
-                            "Accept" : "application/json; charset=utf-8;",
-                            "Content-Type":"application/json;"
-                        },
-                        contentType:"application/json; charset=utf-8",
-                        data:JSON.stringify(data),
-                        dataType:"json",
-                        success: function (result) {//tạo mới
-                            $("#idThe").val(result.id);
-                            $("#txtFirstNamePoint").val(result.firstName);
-                            $("#txtLastNamePoint").val(result.lastName);
-                            $("#txtEmailPoint").val(result.email);
-                            $("#txtPhonePoint").val(result.code);
-                            $("#spPoint").html(result.value);
-                        },
-                        error: function (xhr) {
-                            let aa='';
-                            $.each(xhr.responseJSON, function( index, value ) {
-                                aa+=' '+value.defaultMessage;
+                    Swal.fire({
+                        title: 'New user',
+                        text:'Do you want to create user ?',
+                        showCancelButton: true,
+                        confirmButtonText: `Save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            let data = {
+                                "type":"POINT",
+                                "code":$("#txtPhonePoint").val(),
+                                "value":0,
+                                "firstName": $("#txtFirstNamePoint").val()?$("#txtFirstNamePoint").val():"null",
+                                "lastName": $("#txtLastNamePoint").val()?$("#txtLastNamePoint").val():"null",
+                                "email":$("#txtEmailPoint").val()?$("#txtEmailPoint").val():"null@null.null",
+                                "phone":$("#txtPhonePoint").val(),
+                                "note":""
+                            };
+                            $.ajax({
+                                url:"api/manager/amounts",
+                                type:"POST",
+                                headers: {
+                                    "Accept" : "application/json; charset=utf-8;",
+                                    "Content-Type":"application/json;"
+                                },
+                                contentType:"application/json; charset=utf-8",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function (result) {//tạo mới
+                                    $("#idThe").val(result.id);
+                                    $("#txtFirstNamePoint").val(result.firstName);
+                                    $("#txtLastNamePoint").val(result.lastName);
+                                    $("#txtEmailPoint").val(result.email);
+                                    $("#txtPhonePoint").val(result.code);
+                                    $("#spPoint").html(result.value);
+                                },
+                                error: function (xhr) {
+                                    let aa='';
+                                    $.each(xhr.responseJSON, function( index, value ) {
+                                        aa+=' '+value.defaultMessage;
+                                    });
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: xhr.status,
+                                        text: aa
+                                    })
+                                }
                             });
-                            Swal.fire({
-                                icon: 'error',
-                                title: xhr.status,
-                                text: aa
-                            })
+                            Swal.fire('Saved!', '', 'success')
                         }
-                    });
+                    })
                 }
             });
         }else{ /// search value null
@@ -182,5 +202,11 @@ $( document ).ready(function() {
             })
         }
     });
+    //endregion point
+    /***
+     *
+     ***/
+    //region Gift
 
+    //endregion Gift
 });

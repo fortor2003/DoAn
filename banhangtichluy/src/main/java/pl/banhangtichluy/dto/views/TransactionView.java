@@ -6,6 +6,7 @@ public interface TransactionView extends TransactionBaseView{
     String getNote();
     Date getCreatedAt();
     Date getUpdatedAt();
+    AmountBaseView getAmount();
     UserBaseView getCreatedBy();
     UserBaseView getUpdatedBy();
 }

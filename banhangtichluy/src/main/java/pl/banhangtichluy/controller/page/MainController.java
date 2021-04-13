@@ -1,20 +1,17 @@
 package pl.banhangtichluy.controller.page;
 import java.security.Principal;
-import java.util.Collection;
-import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import pl.banhangtichluy.utils.WebUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class MainController {
@@ -33,21 +30,15 @@ public class MainController {
         return "welcomePage";
     }
 
-    @PreAuthorize("hasAuthority('USER.CREATE')")
+//    @PreAuthorize("hasAuthority('USER.CREATE')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(Authentication auth) {
-        UserDetails userDetails = (UserDetails) auth.getPrincipal();
-        System.out.println(userDetails.getAuthorities());
+    public String adminPage(HttpServletRequest request) {
         return "adminPage";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(Model model) {
-        if (isAuthenticated()) {
-            return "redirect:welcome";
-        }
-            return "TrangDangNhap";
-//        return "loginPage";
+            return "loginPage";
     }
 
     @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)

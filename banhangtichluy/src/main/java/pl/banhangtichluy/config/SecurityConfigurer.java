@@ -17,8 +17,8 @@ import pl.banhangtichluy.filters.JwtFilter;
 import pl.banhangtichluy.service.UserDetailsServiceImpl;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableWebSecurity
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -28,7 +28,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.csrf().disable()
+        http.csrf().disable()
 //                .authorizeRequests()
 //                .antMatchers("/api/manager/tests/**").permitAll()
 //                .antMatchers("/api/manager/auth/**").permitAll()

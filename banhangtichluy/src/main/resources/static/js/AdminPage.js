@@ -116,9 +116,9 @@ $( document ).ready(function() {
 
 
     // "api/manager/amounts?page=0&size=10&filter=code:eq:012146571827523"
-    // $.get( "api/manager/amounts?page=0&size=10&filter=type:eq:POINT", function( data ) {
-    //     console.log(data);
-    // });
+    $.get( "api/manager/transactions?page=0&size=10", function( data ) {
+        console.log(data);
+    });
     // $.get( "api/manager/amounts/create-example-data", function( data ) {
     //     console.log(data);
     // });

@@ -32,7 +32,9 @@ public class MainController {
 
 //    @PreAuthorize("hasAuthority('USER.CREATE')")
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String adminPage(HttpServletRequest request) {
+    public String adminPage(Authentication auth) {
+//        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+//        System.out.println(userDetails.getAuthorities());
         return "adminPage";
     }
 
@@ -54,10 +56,10 @@ public class MainController {
 //        String userName = principal.getName();
 //        System.out.println("User Name: " + userName);
 
-        User loginedUser = (User) ((Authentication) principal).getPrincipal();
-
-        String userInfo = WebUtils.toString(loginedUser);
-        model.addAttribute("userInfo", userInfo);
+//        User loginedUser = (User) ((Authentication) principal).getPrincipal();
+//
+//        String userInfo = WebUtils.toString(loginedUser);
+//        model.addAttribute("userInfo", userInfo);
 
         return "userInfoPage";
     }

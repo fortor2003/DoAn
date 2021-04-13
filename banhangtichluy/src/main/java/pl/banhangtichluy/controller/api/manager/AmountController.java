@@ -34,7 +34,7 @@ public class AmountController {
     @Autowired
     UserRepository userRepository;
 
-    @PreAuthorize("hasAuthority('AMOUNT.READ')")
+//    @PreAuthorize("hasAuthority('AMOUNT.READ')")
     @GetMapping("")
     public Page<AmountView> list(@Valid BaseCriteriaDto criteriaDto) {
         return ammountService.list(criteriaDto);

@@ -3,6 +3,11 @@
 <head>
     <title>Manager</title>
     <th:block th:include="/userControl/_head"></th:block>
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
 </head>
 <body>
 <!-- Include _menu.html -->
@@ -23,16 +28,16 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" >Gift Card Transaction</h5>
+                    <h5 class="modal-title" >Gift Card Search</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="form">
+                <form class="form" id="frmSearchG">
                     <div class="modal-body">
                         <div class="form-group row" >
                             <label for="txtGiftCard">Gift Card No.</label>
-                            <input type="text" class="form-control" id="" >
+                            <input type="number" class="form-control" id="txtSearchG" name="txtSearchG" >
                         </div>
                     </div>
                 </form>
@@ -42,7 +47,7 @@
             </div>
         </div>
     </div>
-
+    <!--thông tin-->
     <div class="modal fade bd-example-modal-lg" id="mdGift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -59,7 +64,7 @@
                             <input type="text" class="form-control" id="txtGiftCard" readonly>
                         </div>
                         <div class="row">
-                            <h1>Balance:<spant>$</spant><spant id="spMoney">0</spant></h1>
+                            <h1>Balance:<span>$</span><span id="spMoney">0</span></h1>
                         </div>
                         <input type="text" id="idTheGift" hidden>
                     </div>
@@ -67,6 +72,30 @@
                 <div class="modal-footer">
                     <input type="button" id="btnAddGift" class="btn btn-info"  value="Add Money">
                     <input type="button" id="btnPayGift" class="btn btn-warning"  value="Pay with Card">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- thêm  bớt -->
+    <div class="modal fade bd-example-modal-lg" id="mdChangeGift" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Gift <span id="spStatusG"></span></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form">
+                    <div class="modal-body">
+                        <div class="form-group row" >
+                            <label for="txtGiftCard">Value change</label>
+                            <input type="number" class="form-control" id="txtValueGift" value="0" min="0">
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <input type="button" id="btnChangeGift" class="btn btn-info"  value="Apply">
                 </div>
             </div>
         </div>
@@ -105,12 +134,12 @@
                             <div class="col-6 col-md-12">
                                 <div class="form-group " >
                                     <label for="txtPhonePoint">Phone</label>
-                                    <input type="number" class="form-control" onmouseover="this.focus();" id="txtPhonePoint" placeholder="Search Phone">
+                                    <input type="number" class="form-control"  id="txtPhonePoint" placeholder="Search Phone">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <h1>Points:<spant id="spPoint">0</spant></h1>
+                            <h1>Points:<span id="spPoint">0</span></h1>
                         </div>
                     </div>
                     <input type="text" id="idThe" hidden>

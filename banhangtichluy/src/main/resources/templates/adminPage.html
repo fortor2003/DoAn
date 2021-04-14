@@ -7,6 +7,12 @@
         .full{
             width: 100% !important;
         }
+        .pull-left{
+            float: left;
+        }
+        .pull-right{
+            float: right;
+        }
     </style>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -45,7 +51,7 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="info">
-                    <a href="#" class="d-block">Alexander Pierce</a>
+                    <a href="#" class="d-block">Admin</a>
                 </div>
             </div>
 
@@ -156,50 +162,50 @@
                 </div>
                 <!-- /.card -->
             </section>
-            <!--History-->
+            <!--set Point -->
             <section data-name="setpoint">
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Set Point</h3>
                     </div>
                     <!-- /.card-header -->
-                    <form>
+                    <form id="frmSetPoint">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="txtFistNameP">Fist Name</label>
-                                        <input type="text" class="form-control" id="txtFistNameP" placeholder="Họ và tên đệm">
+                                        <input type="text" class="form-control" id="txtFistNameP" name="txtFistNameP"  placeholder="Họ và tên đệm">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="txtLastNameP">Last Name</label>
-                                        <input type="text" class="form-control" id="txtLastNameP" placeholder="Tên">
+                                        <input type="text" class="form-control" id="txtLastNameP" name="txtLastNameP" placeholder="Tên">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="txtEmailP">Email</label>
-                                        <input type="email" class="form-control" id="txtEmailP" placeholder="Email">
+                                        <input type="email" class="form-control" id="txtEmailP" name="txtEmailP" placeholder="Email">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="txtPhoneP">Phone</label>
-                                        <input type="number" class="form-control" id="txtPhoneP" placeholder="Sđt">
+                                        <input type="number" class="form-control" id="txtPhoneP" name="txtPhoneP" placeholder="Sđt">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="txtValueP">Value</label>
-                                        <input type="number" class="form-control" id="txtValueP" placeholder="Điểm">
+                                        <input type="number" class="form-control" id="txtValueP" name="txtValueP" placeholder="Điểm">
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="txtAddressP">Address</label>
-                                        <input type="number" class="form-control" id="txtAddressP" placeholder="Địa chỉ">
+                                        <input type="number" class="form-control" id="txtAddressP" name="txtAddressP" placeholder="Địa chỉ">
                                     </div>
                                 </div>
                             </div>
@@ -207,7 +213,10 @@
                     </form>
                     <!-- /.card-body -->
                     <div class="card-footer">
-
+                        <input type="button" id="btnResetP" style="margin-right: 1%" class="btn btn-default pull-left" value="Reset">
+                        <input type="button" id="btnSearchP" class="btn btn-info pull-left" value="Search">
+                        <input type="button" id="btnUpdateP" style="display: none;" class="btn btn-primary pull-right" value="Update">
+                        <input type="button" id="btnCreateP"  class="btn btn-success pull-right" value="Create">
                     </div>
                 </div>
 

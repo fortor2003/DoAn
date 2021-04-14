@@ -7,7 +7,7 @@ import pl.banhangtichluy.enums.AmountType;
 
 public final class AmountSpec {
 
-    public static final Specification<Amount> hasTypeEqual(AmountType type) {
+    public static final Specification<Amount> hasTypeEqual(String type) {
         if (type == null)
             return null;
         return (root, query, criteriaBuilder) -> {

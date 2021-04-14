@@ -13,15 +13,19 @@ import pl.banhangtichluy.dto.PasswordUserDto;
 import pl.banhangtichluy.dto.PersonalInfoUserDto;
 import pl.banhangtichluy.dto.UserDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
+import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.dto.views.TransactionView;
 import pl.banhangtichluy.dto.views.UserView;
+import pl.banhangtichluy.entity.Amount;
 import pl.banhangtichluy.entity.User;
+import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
 import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.JwtService;
 import pl.banhangtichluy.service.TransactionService;
 import pl.banhangtichluy.service.UserService;
+import pl.banhangtichluy.specifications.AmountSpec;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -87,4 +91,5 @@ public class TestController {
     public Page<TransactionView> listTransaction2() {
         return transactionRepository.findByAmount_Type2("POINT", PageRequest.of(0,10));
     }
+
 }

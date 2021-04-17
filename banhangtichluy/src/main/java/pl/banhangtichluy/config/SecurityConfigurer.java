@@ -14,26 +14,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.banhangtichluy.filters.JwtFilter;
+import pl.banhangtichluy.handler.RedirectAuthenticationSucessHandler;
 import pl.banhangtichluy.service.UserDetailsServiceImpl;
 
 @Configuration
-//@EnableWebSecurity
+@EnableWebSecurity
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
-    @Autowired
-    JwtFilter jwtFilter;
+//    @Autowired
+//    RedirectAuthenticationSucessHandler redirectAuthenticationSucessHandler;
+//    @Autowired
+//    JwtFilter jwtFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-//                .authorizeRequests()
+                .authorizeRequests()
+                .antMatchers("/css/**", "/js/**").permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/login").permitAll()
+                .and().logout().logoutSuccessUrl("/login")
+//                .successHandler(new RedirectAuthenticationSucessHandler())
 //                .antMatchers("/api/manager/tests/**").permitAll()
 //                .antMatchers("/api/manager/auth/**").permitAll()
 //                .anyRequest().authenticated()
-//                .and().formLogin()
+
 //                .and().exceptionHandling().accessDeniedPage("/403")
 //                .and()
 //                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

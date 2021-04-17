@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,8 @@ public class MainController {
         return authentication.isAuthenticated();
     }
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
-    public String welcomePage(Model model) {
+    public String welcomePage(Model model, Authentication authentication) {
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         model.addAttribute("title", "Welcome");
         model.addAttribute("message", "This is welcome page!");
         return "welcomePage";
@@ -36,17 +38,6 @@ public class MainController {
 //        UserDetails userDetails = (UserDetails) auth.getPrincipal();
 //        System.out.println(userDetails.getAuthorities());
         return "adminPage";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(Model model) {
-            return "loginPage";
-    }
-
-    @RequestMapping(value = "/logoutSuccessful", method = RequestMethod.GET)
-    public String logoutSuccessfulPage(Model model) {
-        model.addAttribute("title", "Logout");
-        return "logoutSuccessfulPage";
     }
 
     @RequestMapping(value = "/userInfo", method = RequestMethod.GET)

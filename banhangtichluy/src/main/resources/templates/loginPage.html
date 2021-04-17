@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,13 @@
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
-
-            <form name='f' th:action="@{/j_spring_security_check}" method='POST'>
+            <div th:if="${param.error}" class="alert alert-warning">
+                Incorrect username or password
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logout
+            </div>
+            <form name='f' th:action="@{/login}" method='POST'>
                 <div class=" mb-3">
                     <input type="text" name='username' class="form-control" placeholder="Username">
                 </div>
@@ -34,12 +39,12 @@
                 </div>
                 <div class="row">
                     <div class="col-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="remember" name="remember-me" >
-                            <label for="remember">
-                                Remember Me
-                            </label>
-                        </div>
+<!--                        <div class="icheck-primary">-->
+<!--                            <input type="checkbox" id="remember" name="remember-me" >-->
+<!--                            <label for="remember">-->
+<!--                                Remember Me-->
+<!--                            </label>-->
+<!--                        </div>-->
                     </div>
                     <!-- /.col -->
                     <div class="col-4">

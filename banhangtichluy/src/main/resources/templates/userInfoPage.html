@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Manager</title>
-    <th:block th:include="/userControl/_head"></th:block>
+    <th:block th:include="userControl/_head"></th:block>
     <style>
         .error {
             color: red;
@@ -11,7 +11,7 @@
 </head>
 <body>
 <!-- Include _menu.html -->
-<th:block th:include="/_menu"></th:block>
+<th:block th:include="_menu"></th:block>
 
 <!--view-->
 <section>
@@ -156,7 +156,7 @@
 </section>
 
 
-<th:block th:include="/userControl/_script"></th:block>
+<th:block th:include="userControl/_script"></th:block>
 <script th:src="@{/js/UserInfoPage.js}"></script>
 </body>
 

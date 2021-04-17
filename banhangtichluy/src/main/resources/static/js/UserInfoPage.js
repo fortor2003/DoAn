@@ -120,6 +120,12 @@ $( document ).ready(function() {
                             $("#txtEmailPoint").val(result.email);
                             $("#txtPhonePoint").val(result.code);
                             $("#spPoint").html(result.value);
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Lưu thành công',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         },
                         error: function (xhr) {
                             let aa='';
@@ -133,7 +139,7 @@ $( document ).ready(function() {
                             })
                         }
                     });
-                    Swal.fire('Saved!', '', 'success')
+
                 }
             })
         }else {
@@ -174,6 +180,13 @@ $( document ).ready(function() {
                             $("#txtEmailPoint").val(result.email);
                             $("#txtPhonePoint").val(result.code);
                             $("#spPoint").html(result.value);
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Lưu thành công',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         },
                         error: function (xhr) {
                             if(xhr.status==500){
@@ -195,7 +208,6 @@ $( document ).ready(function() {
                             }
                         }
                     });
-                    Swal.fire('Saved!', '', 'success')
                 }
             })
         }else {
@@ -232,7 +244,7 @@ $( document ).ready(function() {
 
         },
         messages: {
-            txtSearchG: 'code is not empty'
+            txtSearchG: 'vùng nhập bị trống'
 
         },
     });
@@ -293,7 +305,13 @@ $( document ).ready(function() {
                                 });
                             }
                         });
-                        Swal.fire('Saved!', '', 'success')
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Lưu thành công',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
                     }
                 })
             }
@@ -334,12 +352,8 @@ $( document ).ready(function() {
                         data:JSON.stringify(data),
                         dataType:"json",
                         success: function (result) {//cập nhật thành công
-                            $("#idThe").val(result.id);
-                            $("#txtFirstNamePoint").val(result.firstName);
-                            $("#txtLastNamePoint").val(result.lastName);
-                            $("#txtEmailPoint").val(result.email);
-                            $("#txtPhonePoint").val(result.code);
-                            $("#spPoint").html(result.value);
+                            $('#txtGiftCard').val(result.code);
+                            $('#spMoney').html(result.value);
                         },
                         error: function (xhr) {
                             if(xhr.status==500){
@@ -361,7 +375,13 @@ $( document ).ready(function() {
                             }
                         }
                     });
-                    Swal.fire('Saved!', '', 'success')
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Lưu thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $('#mdChangeGift').modal("hide");
                 }
             })
         }else {

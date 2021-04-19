@@ -10,12 +10,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import pl.banhangtichluy.enums.AtrributeNameSession;
 import pl.banhangtichluy.filters.JwtFilter;
 import pl.banhangtichluy.handler.RedirectAuthenticationSucessHandler;
+import pl.banhangtichluy.service.JwtService;
 import pl.banhangtichluy.service.UserDetailsServiceImpl;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -24,6 +35,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    JwtService jwtService;
 //    @Autowired
 //    RedirectAuthenticationSucessHandler redirectAuthenticationSucessHandler;
 //    @Autowired
@@ -36,7 +49,23 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**", "/js/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll()
+                .successHandler(new AuthenticationSuccessHandler() {
+                    @Override
+                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+                        String token = jwtService.generateToken(userDetails);
+                        request.getSession().setAttribute(AtrributeNameSession.TOKEN_API.name(), token);
+                        response.sendRedirect(request.getContextPath());
+                    }
+                })
                 .and().logout().logoutSuccessUrl("/login")
+                .logoutSuccessHandler(new LogoutSuccessHandler() {
+                    @Override
+                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                        request.getSession().invalidate();
+                        response.sendRedirect(request.getContextPath());
+                    }
+                })
 //                .successHandler(new RedirectAuthenticationSucessHandler())
 //                .antMatchers("/api/manager/tests/**").permitAll()
 //                .antMatchers("/api/manager/auth/**").permitAll()

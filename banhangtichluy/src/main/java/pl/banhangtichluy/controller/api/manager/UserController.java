@@ -39,6 +39,7 @@ public class UserController {
         return userService.list(criteriaDto);
     }
 
+    @PreAuthorize("hasAuthority('USER.READ')")
     @GetMapping("/{id}")
     public UserView detail(@PathVariable("id") String id, @RequestParam(name = "mode", required = false, defaultValue = "id") String mode) {
         if (mode.trim().toLowerCase().equals("username")) {
@@ -47,24 +48,28 @@ public class UserController {
         return userService.detailById(Long.parseLong(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
     }
 
+    @PreAuthorize("hasAuthority('USER.CREATE')")
     @PostMapping("")
     public UserView create(@Valid @RequestBody UserDto userDto) {
         User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return userService.create(userDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
     }
 
+    @PreAuthorize("hasAuthority('USER.UPDATE')")
     @PutMapping("{id}/personal-info")
     public UserView updatePersonalInfo(@PathVariable("id") Long id, @Valid @RequestBody PersonalInfoUserDto dto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return userService.updatePersonalInfo(id, dto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
     }
 
+    @PreAuthorize("hasAuthority('USER.UPDATE')")
     @PutMapping("{id}/password")
     public UserView updatePassword(@PathVariable("id") Long id, @Valid @RequestBody PasswordUserDto dto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return userService.updatePassword(id, dto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
     }
 
+    @PreAuthorize("hasAuthority('USER.DELETE')")
     @DeleteMapping("{id}")
     public boolean delete(@PathVariable("id") Long id) {
         return userService.delete(id);
@@ -79,13 +84,6 @@ public class UserController {
         for (int i = 0; i < 20; i++) {
             Name name = faker.name();
             String username = name.username().replace(".", "");
-//            user.setUsername(username);
-//            user.setPassword(faker.crypto().md5());
-//            user.setFirstName(faker.name().firstName());
-//            user.setLastName(faker.name().lastName());
-//            user.setEmail(username + "@example.com");
-//            user.setPhone(faker.phoneNumber().phoneNumber());
-//            user.setNote(faker.lorem().characters(5, 50, true));
             str += String.format(
                     "INSERT INTO `points`.`users` (`username`, `password`, `first_name`, `last_name`, `email`, `phone`, `note`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');\n",
                     username, passwordEncoder.encode(username), name.firstName(), name.lastName(), username+"@example.com", faker.phoneNumber().phoneNumber(), faker.lorem().characters(5, 50, true)

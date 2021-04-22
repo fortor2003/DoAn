@@ -42,7 +42,7 @@ public class AmountService {
     private final QAmount qAmount = QAmount.amount;
 
     public Page<AmountView> list(BaseCriteriaDto criteria) {
-        PathBuilder<Amount> pathBuilder = new PathBuilder<Amount>(Amount.class, QAmount.amount.getMetadata().getName(), QuerydslConstant.PATH_BUILDER_VALIDATOR);
+        PathBuilder<Amount> pathBuilder = new PathBuilder<Amount>(Amount.class, qAmount.getMetadata().getName(), QuerydslConstant.PATH_BUILDER_VALIDATOR);
         JPQLQuery<AmountView> jpql = query
                 .from(qAmount)
                 .leftJoin(qAmount.createdBy, QUser.user)
@@ -54,11 +54,23 @@ public class AmountService {
     }
 
     public Optional<AmountView> detailById(Long id) {
-        return amountRepository.findById(id, AmountView.class);
+        JPQLQuery<AmountView> jpql = query
+                .from(qAmount)
+                .leftJoin(qAmount.createdBy, QUser.user)
+                .leftJoin(qAmount.updatedBy, QUser.user)
+                .where(qAmount.id.eq(id))
+                .select(AmountView.PROJECTIONS);
+        return amountRepository.findOne(jpql);
     }
 
     public Optional<AmountView> detailByTypeAndCode(String type, String code) {
-        return amountRepository.findByTypeEqualsAndCodeEquals(type.toUpperCase().equals(AmountType.GIFT.name().toUpperCase()) ? AmountType.GIFT.name() : AmountType.POINT.name(), code, AmountView.class);
+        JPQLQuery<AmountView> jpql = query
+                .from(qAmount)
+                .leftJoin(qAmount.createdBy, QUser.user)
+                .leftJoin(qAmount.updatedBy, QUser.user)
+                .where(qAmount.type.eq(type).and(qAmount.code.eq(code)))
+                .select(AmountView.PROJECTIONS);
+        return amountRepository.findOne(jpql);
     }
 
     public Optional<AmountView> create(AmountDto amountDto, User createdBy) {

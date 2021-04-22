@@ -81,15 +81,15 @@ public class TestController {
         }
         return jwtService.extractUsername(token);
     }
-
-    @GetMapping("transactions")
-    public Page<TransactionView> listTransaction() {
-        return transactionRepository.findByAmount_Type("POINT", TransactionView.class, PageRequest.of(0,50));
-    }
-
-    @GetMapping("transactions2")
-    public Page<TransactionView> listTransaction2() {
-        return transactionRepository.findByAmount_Type2("POINT", PageRequest.of(0,10));
-    }
+//
+//    @GetMapping("transactions")
+//    public Page<TransactionView> listTransaction() {
+//        return transactionRepository.findByAmount_Type("POINT", TransactionView.class, PageRequest.of(0,50));
+//    }
+//
+//    @GetMapping("transactions2")
+//    public Page<TransactionView> listTransaction2() {
+//        return transactionRepository.findByAmount_Type2("POINT", PageRequest.of(0,10));
+//    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.querydsl.QSort;
 import pl.banhangtichluy.dto.criteria.SortCriteria;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class SortCriteriaUtils {
 
     public static <T> List<OrderSpecifier> getOrderSpecifiers(PathBuilder<T> entityPath, List<SortCriteria> criterias) {
         if (criterias.size() == 0) {
-            return null;
+            return new ArrayList<>();
         }
         List<OrderSpecifier> result = criterias.stream().map(criteria -> getOrderSpecifier(entityPath, criteria)).filter(Objects::nonNull).collect(Collectors.toList());
         return result;

@@ -2,6 +2,7 @@ package pl.banhangtichluy.controller.api.manager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.views.PermissionView;
@@ -17,11 +18,13 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
+    @PreAuthorize("hasAuthority('PERMISSION.READ')")
     @GetMapping("")
     public List<PermissionView> list() {
         return permissionService.list();
     }
 
+    @PreAuthorize("hasAuthority('PERMISSION.READ')")
     @GetMapping("/{id}")
     public PermissionView detail(@PathVariable("id") String id, @RequestParam(name = "mode", required = false, defaultValue = "id") String mode) {
         if (mode.trim().toLowerCase().equals("name")) {

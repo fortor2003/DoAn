@@ -9,11 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.entity.Amount;
+import pl.banhangtichluy.querydsl.ExtendedQuerydslPredicateExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface AmountRepository extends JpaRepository<Amount, Long> {
+public interface AmountRepository extends JpaRepository<Amount, Long>, ExtendedQuerydslPredicateExecutor<Amount> {
 
     <T> Page<T> findBy(Class<T> type, Pageable pageable);
     <T> Page<T> findByTypeEquals(String type, Class<T> clazz, Pageable pageable);

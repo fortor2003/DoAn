@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.*;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.criteria.FilterResource;
+import pl.banhangtichluy.dto.criteria.SearchCriteria;
 import pl.banhangtichluy.dto.views.UserView;
 import pl.banhangtichluy.entity.*;
 import pl.banhangtichluy.reponsitory.UserRepository;
@@ -34,30 +34,31 @@ public class UserService {
     @Transactional(readOnly = true)
     public Page<UserView> list(BaseCriteriaDto criteria) {
         List<String> fields = ClassUtils.getFieldNameOfClassHasType(User_.class, SingularAttribute.class);
-        List<FilterResource> filters = criteria.getListFilterResource();
+        List<SearchCriteria> filters = criteria.getSearchCriterias();
         if (filters.size() > 0) {
-            FilterResource fr = filters.get(0);
-            String field = fr.getField();
-            String value = fr.getValue();
+            SearchCriteria fr = filters.get(0);
+            String field = fr.getKey();
+            Object value = fr.getValue();
             if (fields.contains(field)) {
-                Specification condition = null;
-                switch (field) {
-                    case User_.USERNAME:
-                        return userRepository.findByUsernameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case User_.FIRST_NAME:
-                        return userRepository.findByFirstNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case User_.LAST_NAME:
-                        return userRepository.findByLastNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case User_.EMAIL:
-                        return userRepository.findByEmailContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case User_.PHONE:
-                        return userRepository.findByPhoneContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case User_.NOTE:
-                        return userRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                }
+//                Specification condition = null;
+//                switch (field) {
+//                    case User_.USERNAME:
+//                        return userRepository.findByUsernameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case User_.FIRST_NAME:
+//                        return userRepository.findByFirstNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case User_.LAST_NAME:
+//                        return userRepository.findByLastNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case User_.EMAIL:
+//                        return userRepository.findByEmailContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case User_.PHONE:
+//                        return userRepository.findByPhoneContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case User_.NOTE:
+//                        return userRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                }
             }
         }
-        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize()));
+//        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
     }
 
     @Transactional(readOnly = true)

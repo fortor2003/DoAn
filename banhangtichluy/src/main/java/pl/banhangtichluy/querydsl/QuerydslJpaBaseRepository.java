@@ -45,7 +45,7 @@ public class QuerydslJpaBaseRepository<T, ID extends Serializable> extends Simpl
 
     @Override
     @NonNull
-    public <P> Optional<P> findOne(@NonNull FactoryExpression<P> factoryExpression, @NonNull Predicate predicate) {
+    public <P> Optional<P> findOne(@NonNull FactoryExpression<P> factoryExpression, Predicate predicate) {
         JPQLQuery<P> query = createQuery(factoryExpression, predicate);
         return findOne(query);
     }
@@ -64,14 +64,14 @@ public class QuerydslJpaBaseRepository<T, ID extends Serializable> extends Simpl
 
     @Override
     @NonNull
-    public <P> List<P> findAll(@NonNull FactoryExpression<P> factoryExpression, @NonNull Predicate predicate) {
+    public <P> List<P> findAll(@NonNull FactoryExpression<P> factoryExpression, Predicate predicate) {
         JPQLQuery<P> query = createQuery(factoryExpression, predicate);
         return findAll(query);
     }
 
     @Override
     @NonNull
-    public <P> Page<P> findAll(@NonNull FactoryExpression<P> factoryExpression, @NonNull Predicate predicate, @NonNull Pageable pageable) {
+    public <P> Page<P> findAll(@NonNull FactoryExpression<P> factoryExpression, Predicate predicate, @NonNull Pageable pageable) {
         JPQLQuery<P> query = createQuery(factoryExpression, predicate);
         JPQLQuery<?> countQuery = querydslPredicateExecutor.createCountQuery(predicate);
         return getPage(query, countQuery, pageable);
@@ -79,26 +79,26 @@ public class QuerydslJpaBaseRepository<T, ID extends Serializable> extends Simpl
 
     @Override
     @NonNull
-    public Optional<T> findOne(@NonNull Predicate predicate) {
+    public Optional<T> findOne(Predicate predicate) {
         return querydslPredicateExecutor.findOne(predicate);
     }
 
     @Override
     @NonNull
-    public Iterable<T> findAll(@NonNull Predicate predicate) {
+    public Iterable<T> findAll(Predicate predicate) {
         return querydslPredicateExecutor.findAll(predicate);
     }
 
     @Override
     @NonNull
-    public Iterable<T> findAll(@NonNull Predicate predicate, @NonNull Sort sort) {
+    public Iterable<T> findAll(Predicate predicate, @NonNull Sort sort) {
         return querydslPredicateExecutor.findAll(predicate, sort);
     }
 
 
     @Override
     @NonNull
-    public Iterable<T> findAll(@NonNull Predicate predicate, @NonNull OrderSpecifier<?>... orders) {
+    public Iterable<T> findAll(Predicate predicate, @NonNull OrderSpecifier<?>... orders) {
         return querydslPredicateExecutor.findAll(predicate, orders);
     }
 
@@ -110,17 +110,17 @@ public class QuerydslJpaBaseRepository<T, ID extends Serializable> extends Simpl
 
     @Override
     @NonNull
-    public Page<T> findAll(@NonNull Predicate predicate, @NonNull Pageable pageable) {
+    public Page<T> findAll(Predicate predicate, @NonNull Pageable pageable) {
         return querydslPredicateExecutor.findAll(predicate, pageable);
     }
 
     @Override
-    public long count(@NonNull Predicate predicate) {
+    public long count(Predicate predicate) {
         return querydslPredicateExecutor.count(predicate);
     }
 
     @Override
-    public boolean exists(@NonNull Predicate predicate) {
+    public boolean exists(Predicate predicate) {
         return querydslPredicateExecutor.exists(predicate);
     }
 

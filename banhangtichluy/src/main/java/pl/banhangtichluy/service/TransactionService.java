@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.criteria.FilterResource;
+import pl.banhangtichluy.dto.criteria.SearchCriteria;
 import pl.banhangtichluy.dto.views.AmountView;
 import pl.banhangtichluy.dto.views.TransactionView;
 import pl.banhangtichluy.entity.*;
@@ -46,28 +46,29 @@ public class TransactionService {
         fields.add(updatedBy_lastNameField);
         fields.add(Transaction_.createdBy + "." + User_.firstName);
         fields.add(Transaction_.createdBy + "." + User_.lastName);
-        List<FilterResource> filters = criteria.getListFilterResource();
+        List<SearchCriteria> filters = criteria.getSearchCriterias();
         if (filters.size() > 0) {
-            FilterResource fr = filters.get(0);
-            String field = fr.getField();
-            String value = fr.getValue();
-            if (fields.contains(field)) {
-                Specification condition = null;
-                switch (field) {
-                    case Transaction_.CODE:
-                        return transactionRepository.findByCodeContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case Transaction_.BEFORE_VALUE:
-                        return transactionRepository.findByBeforeValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case Transaction_.PLUS_VALUE:
-                        return transactionRepository.findByPlusValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case Transaction_.AFTER_VALUE:
-                        return transactionRepository.findByAfterValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                    case Transaction_.NOTE:
-                        return transactionRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-                }
-            }
+            SearchCriteria fr = filters.get(0);
+            String field = fr.getKey();
+            Object value = fr.getValue();
+//            if (fields.contains(field)) {
+//                Specification condition = null;
+//                switch (field) {
+//                    case Transaction_.CODE:
+//                        return transactionRepository.findByCodeContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case Transaction_.BEFORE_VALUE:
+//                        return transactionRepository.findByBeforeValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case Transaction_.PLUS_VALUE:
+//                        return transactionRepository.findByPlusValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case Transaction_.AFTER_VALUE:
+//                        return transactionRepository.findByAfterValueEquals(Integer.parseInt(value), VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                    case Transaction_.NOTE:
+//                        return transactionRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+//                }
+//            }
         }
-        return transactionRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+        return transactionRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize()));
+//        return transactionRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
     }
 
     public Optional<TransactionView> detailById(Long id) {

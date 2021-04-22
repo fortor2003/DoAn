@@ -45,35 +45,35 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/css/**", "/js/**").permitAll()
-                .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").permitAll()
-                .successHandler(new AuthenticationSuccessHandler() {
-                    @Override
-                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-                        String token = jwtService.generateToken(userDetails);
-                        request.getSession().setAttribute(AtrributeNameSession.TOKEN_API.name(), token);
-                        response.sendRedirect(request.getContextPath());
-                    }
-                })
-                .and().logout().logoutSuccessUrl("/login")
-                .logoutSuccessHandler(new LogoutSuccessHandler() {
-                    @Override
-                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                        request.getSession().invalidate();
-                        response.sendRedirect(request.getContextPath());
-                    }
-                })
-//                .successHandler(new RedirectAuthenticationSucessHandler())
-//                .antMatchers("/api/manager/tests/**").permitAll()
-//                .antMatchers("/api/manager/auth/**").permitAll()
+//                .authorizeRequests()
+//                .antMatchers("/css/**", "/js/**").permitAll()
 //                .anyRequest().authenticated()
-
-//                .and().exceptionHandling().accessDeniedPage("/403")
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and().formLogin().loginPage("/login").permitAll()
+//                .successHandler(new AuthenticationSuccessHandler() {
+//                    @Override
+//                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//                        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//                        String token = jwtService.generateToken(userDetails);
+//                        request.getSession().setAttribute(AtrributeNameSession.TOKEN_API.name(), token);
+//                        response.sendRedirect(request.getContextPath());
+//                    }
+//                })
+//                .and().logout().logoutSuccessUrl("/login")
+//                .logoutSuccessHandler(new LogoutSuccessHandler() {
+//                    @Override
+//                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+//                        request.getSession().invalidate();
+//                        response.sendRedirect(request.getContextPath());
+//                    }
+//                })
+////                .successHandler(new RedirectAuthenticationSucessHandler())
+////                .antMatchers("/api/manager/tests/**").permitAll()
+////                .antMatchers("/api/manager/auth/**").permitAll()
+////                .anyRequest().authenticated()
+//
+////                .and().exceptionHandling().accessDeniedPage("/403")
+////                .and()
+////                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         ;
 //        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }

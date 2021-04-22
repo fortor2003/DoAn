@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.AddValueAmountDto;
 import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.views.AmountView;
+import pl.banhangtichluy.dto.views.v2.AmountView;
 import pl.banhangtichluy.entity.Amount;
 import pl.banhangtichluy.entity.User;
 import pl.banhangtichluy.enums.AmountType;
@@ -40,38 +40,38 @@ public class AmountController {
         return ammountService.list(criteriaDto);
     }
 
-    @GetMapping("/{id}")
-    public AmountView detail(@PathVariable("id") Long id) {
-        return ammountService.detailById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-    }
-
-    @GetMapping("/{type}/{code}")
-    public AmountView detailByTypeAndCode(@PathVariable("type") String type, @PathVariable("code") String code) {
-        return ammountService.detailByTypeAndCode(type, code).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Type and code of Amount do not exist"));
-    }
-
-    @PostMapping("")
-    public AmountView create(@Valid @RequestBody AmountDto amountDto) {
-        User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
-        return ammountService.create(amountDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-    }
-
-    @PutMapping("{id}") // admin update
-    public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto) {
-        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
-        return ammountService.update(id, amountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-    }
-
-    @PutMapping("{id}/add-value") //user update value point
-    public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
-        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
-        return ammountService.addValue(id, addValueAmountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
-    }
-
-    @DeleteMapping("{id}")
-    public boolean delete(@PathVariable("id") Long id) {
-        return ammountService.delete(id);
-    }
+//    @GetMapping("/{id}")
+//    public AmountView detail(@PathVariable("id") Long id) {
+//        return ammountService.detailById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+//    }
+//
+//    @GetMapping("/{type}/{code}")
+//    public AmountView detailByTypeAndCode(@PathVariable("type") String type, @PathVariable("code") String code) {
+//        return ammountService.detailByTypeAndCode(type, code).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Type and code of Amount do not exist"));
+//    }
+//
+//    @PostMapping("")
+//    public AmountView create(@Valid @RequestBody AmountDto amountDto) {
+//        User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+//        return ammountService.create(amountDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+//    }
+//
+//    @PutMapping("{id}") // admin update
+//    public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto) {
+//        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+//        return ammountService.update(id, amountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+//    }
+//
+//    @PutMapping("{id}/add-value") //user update value point
+//    public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
+//        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+//        return ammountService.addValue(id, addValueAmountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
+//    }
+//
+//    @DeleteMapping("{id}")
+//    public boolean delete(@PathVariable("id") Long id) {
+//        return ammountService.delete(id);
+//    }
 
 //    @GetMapping("/test")
 //    public int test() {

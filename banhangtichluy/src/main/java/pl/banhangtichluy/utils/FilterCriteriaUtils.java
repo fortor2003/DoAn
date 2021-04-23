@@ -1,15 +1,33 @@
 package pl.banhangtichluy.utils;
 
 import com.querydsl.core.types.dsl.*;
-import pl.banhangtichluy.dto.criteria.SearchCriteria;
+import pl.banhangtichluy.dto.criteria.FilterCriteria;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class SearchCriteriaUtils {
+public class FilterCriteriaUtils {
 
-    private static BooleanExpression getPredicate(PathBuilder entityPath, SearchCriteria criteria) {
+    public static List<FilterCriteria> getFilterCriterias(String filterCriteria) {
+        List<FilterCriteria> result = new ArrayList<>();
+        if (filterCriteria != null) {
+            String[] list = filterCriteria.split(",");
+            for (String s : list) {
+                String[] ingredients = s.split(":");
+                FilterCriteria fr = FilterCriteria.builder()
+                        .key(ingredients.length > 0 ? ingredients[0] : null)
+                        .operation(ingredients.length > 1 ? ingredients[1] : null)
+                        .value(ingredients.length > 2 ? ingredients[2] : null)
+                        .build();
+                result.add(fr);
+            }
+        }
+        return result;
+    }
+
+    private static BooleanExpression getPredicate(PathBuilder entityPath, FilterCriteria criteria) {
 
         String key = criteria.getKey();
         String operation = criteria.getOperation().toLowerCase();
@@ -75,7 +93,11 @@ public class SearchCriteriaUtils {
         }
     }
 
-    public static <T> BooleanExpression getPredicates(PathBuilder<T> entityPath, List<SearchCriteria> criterias) {
+    public static <T> BooleanExpression getPredicates(PathBuilder<T> entityPath, String filterCriteria) {
+        return  getPredicates(entityPath, getFilterCriterias(filterCriteria));
+    }
+    
+    public static <T> BooleanExpression getPredicates(PathBuilder<T> entityPath, List<FilterCriteria> criterias) {
         if (criterias.size() == 0) {
             return null;
         }

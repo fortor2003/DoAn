@@ -3,8 +3,11 @@ package pl.banhangtichluy.dto.views.v2;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.annotations.QueryProjection;
 import com.querydsl.core.types.*;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
 import pl.banhangtichluy.entity.QAmount;
 import pl.banhangtichluy.entity.QUser;
 import pl.banhangtichluy.entity.User;
@@ -15,16 +18,32 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@ApiModel(value = "AmountView", description = "Detailed information of amount")
 public class AmountView extends AmountBaseView {
 
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "Laurence")
     private String firstName;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "Aufderhar")
     private String lastName;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "aurence@example.com")
     private String email;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "(698) 800-0063")
     private String phone;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "Example note")
     private String note;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "2020-08-13 14:30:00")
     private Date createdAt;
+
+    @ApiModelProperty(name = "firstName", notes = EntityPropsDescriptionConstant.AmountProps.FIRST_NAME, example = "2020-10-20 08:10:50")
     private Date updatedAt;
+
     private UserBaseView createdBy;
+
     private UserBaseView updatedBy;
 
     private static final QAmount qAmount = QAmount.amount;

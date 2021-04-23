@@ -3,7 +3,6 @@ package pl.banhangtichluy.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.dto.*;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.criteria.SearchCriteria;
+import pl.banhangtichluy.dto.criteria.FilterCriteria;
 import pl.banhangtichluy.dto.views.UserView;
 import pl.banhangtichluy.entity.*;
 import pl.banhangtichluy.reponsitory.UserRepository;
@@ -33,13 +32,13 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<UserView> list(BaseCriteriaDto criteria) {
-        List<String> fields = ClassUtils.getFieldNameOfClassHasType(User_.class, SingularAttribute.class);
-        List<SearchCriteria> filters = criteria.getSearchCriterias();
-        if (filters.size() > 0) {
-            SearchCriteria fr = filters.get(0);
-            String field = fr.getKey();
-            Object value = fr.getValue();
-            if (fields.contains(field)) {
+//        List<String> fields = ClassUtils.getFieldNameOfClassHasType(User_.class, SingularAttribute.class);
+//        List<FilterCriteria> filters = criteria.getFilter();
+//        if (filters.size() > 0) {
+//            FilterCriteria fr = filters.get(0);
+//            String field = fr.getKey();
+//            Object value = fr.getValue();
+//            if (fields.contains(field)) {
 //                Specification condition = null;
 //                switch (field) {
 //                    case User_.USERNAME:
@@ -54,11 +53,12 @@ public class UserService {
 //                        return userRepository.findByPhoneContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
 //                    case User_.NOTE:
 //                        return userRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                }
-            }
-        }
-        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize()));
-//        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+////                }
+//            }
+//        }
+//        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize()));
+////        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
+        return null;
     }
 
     @Transactional(readOnly = true)

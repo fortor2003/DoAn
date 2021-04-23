@@ -17,16 +17,12 @@ import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.views.v2.AmountView;
 import pl.banhangtichluy.entity.*;
-import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
-import pl.banhangtichluy.utils.ClassUtils;
-import pl.banhangtichluy.utils.SearchCriteriaUtils;
+import pl.banhangtichluy.utils.FilterCriteriaUtils;
 import pl.banhangtichluy.utils.SortCriteriaUtils;
 import pl.banhangtichluy.utils.WebUtils;
 
-import javax.persistence.metamodel.SingularAttribute;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,9 +43,9 @@ public class AmountService {
                 .from(qAmount)
                 .leftJoin(qAmount.createdBy, QUser.user)
                 .leftJoin(qAmount.updatedBy, QUser.user)
-                .where(SearchCriteriaUtils.getPredicates(pathBuilder, criteria.getSearchCriterias()))
+                .where(FilterCriteriaUtils.getPredicates(pathBuilder, criteria.getFilter()))
                 .select(AmountView.PROJECTIONS)
-                .orderBy(SortCriteriaUtils.getOrderSpecifiers(pathBuilder, criteria.getSortCriterias()).toArray(new OrderSpecifier[0]));
+                .orderBy(SortCriteriaUtils.getOrderSpecifiers(pathBuilder, criteria.getSort()).toArray(new OrderSpecifier[0]));
         return amountRepository.findAll(jpql, PageRequest.of(criteria.getPage(), criteria.getSize()));
     }
 

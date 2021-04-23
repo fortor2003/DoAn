@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class SearchCriteria {
+public class FilterCriteria {
     private String key;
     private String operation;
     private Object value;

@@ -2,12 +2,15 @@ package pl.banhangtichluy.controller.api.manager;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
 import pl.banhangtichluy.dto.AddValueAmountDto;
 import pl.banhangtichluy.dto.AmountDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
@@ -24,6 +27,16 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/amounts")
+@Api(tags = "Amounts", description = "Amounts Resource API")
+@ApiOperation(value = "${spring.data.rest.base-path.manager}/amounts", tags = "Amount Resource")
+@ApiResponses(value = {
+        @ApiResponse(code = 200, message = "SUCCESS"),
+        @ApiResponse(code = 400, message = "BAD REQUEST"),
+        @ApiResponse(code = 401, message = "UNAUTHORIZE"),
+        @ApiResponse(code = 403, message = "ACCESS DENIED"),
+        @ApiResponse(code = 404, message = "NOT FOUND"),
+        @ApiResponse(code = 500, message = "UNDEFINED ERROR"),
+})
 public class AmountController {
 
     @Autowired
@@ -35,50 +48,61 @@ public class AmountController {
 
     @PreAuthorize("hasAuthority('AMOUNT.READ')")
     @GetMapping("")
+    @ApiOperation(value = "List of amounts")
     public Page<AmountView> list(@Valid BaseCriteriaDto criteriaDto) {
         return ammountService.list(criteriaDto);
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.READ')")
     @GetMapping("/{id}")
-    public AmountView detail(@PathVariable("id") Long id) {
+    @ApiOperation(value = "Get detailed information of amount by id")
+    public AmountView detail(@ApiParam(name = "id", value = EntityPropsDescriptionConstant.AmountProps.ID, example = "100", required = true) @PathVariable("id") Long id) {
         return ammountService.detailById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.READ')")
     @GetMapping("/{type}/{code}")
-    public AmountView detailByTypeAndCode(@PathVariable("type") String type, @PathVariable("code") String code) {
+    @ApiOperation(value = "Get detailed information of amount by type and code")
+    public AmountView detailByTypeAndCode(
+            @ApiParam(name = "type", value = EntityPropsDescriptionConstant.AmountProps.TYPE, example = "POINT", required = true) @PathVariable("type") String type,
+            @ApiParam(name = "code", value = EntityPropsDescriptionConstant.AmountProps.CODE, example = "ABCDEF123456", required = true) @PathVariable("code") String code) {
         return ammountService.detailByTypeAndCode(type, code).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Type and code of Amount do not exist"));
     }
 
-    @PreAuthorize("hasAuthority('AMOUNT.CREATE')")
+//    @PreAuthorize("hasAuthority('AMOUNT.CREATE')")
     @PostMapping("")
+//    @ApiOperation(value = "Create new amount")
     public AmountView create(@Valid @RequestBody AmountDto amountDto) {
         User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return ammountService.create(amountDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
-    @PutMapping("{id}") // admin update
+    @PutMapping("/{id}") // admin update
+    @ApiOperation(value = "Update information of amount")
     public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return ammountService.update(id, amountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
-    @PatchMapping("{id}/add-value") //user update value point
+    @PatchMapping("/{id}/add-value") //user update value point
+    @ApiOperation(value = "Add value for amount")
     public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return ammountService.addValue(id, addValueAmountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.DELETE')")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete amount")
     public boolean delete(@PathVariable("id") Long id) {
         return ammountService.delete(id);
     }
 
-    @GetMapping("/create-example-data")
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/generate-sql-example-data")
+    @ApiOperation(value = "Generate SQL insert statement examle data")
     public String createDataExample() throws Exception {
         String str = "";
         Faker faker = new Faker(new Locale("en"));
@@ -88,7 +112,7 @@ public class AmountController {
             String username = name.username().replace(".", "");
             str += String.format(
                     "INSERT INTO `amounts` (`type`, `code`, `value`, `first_name`, `last_name`, `email`, `phone`, `note`) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');\n",
-                    AmountType.values()[random.nextInt(AmountType.values().length)].name(), faker.code().imei(), faker.random().nextInt(0, 8000), name.firstName().replace("'", ""), name.lastName().replace("'", ""), name.firstName()+"@example.com",faker.phoneNumber().phoneNumber(),faker.lorem().characters(5, 30), 1
+                    AmountType.values()[random.nextInt(AmountType.values().length)].name(), faker.code().imei(), faker.random().nextInt(0, 8000), name.firstName().replace("'", ""), name.lastName().replace("'", ""), name.firstName() + "@example.com", faker.phoneNumber().phoneNumber(), faker.lorem().characters(5, 30), 1
             );
         }
         return str;

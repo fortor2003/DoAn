@@ -16,7 +16,7 @@ import pl.banhangtichluy.entity.QTransaction;
 import pl.banhangtichluy.entity.QUser;
 import pl.banhangtichluy.entity.Transaction;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
-import pl.banhangtichluy.utils.SearchCriteriaUtils;
+import pl.banhangtichluy.utils.FilterCriteriaUtils;
 import pl.banhangtichluy.utils.SortCriteriaUtils;
 
 import java.util.Optional;
@@ -38,9 +38,9 @@ public class TransactionService {
                 .leftJoin(qTransaction.amount, QAmount.amount)
                 .leftJoin(qTransaction.createdBy, QUser.user)
                 .leftJoin(qTransaction.updatedBy, QUser.user)
-                .where(SearchCriteriaUtils.getPredicates(pathBuilder, criteria.getSearchCriterias()))
+                .where(FilterCriteriaUtils.getPredicates(pathBuilder, criteria.getFilter()))
                 .select(TransactionView.PROJECTIONS)
-                .orderBy(SortCriteriaUtils.getOrderSpecifiers(pathBuilder, criteria.getSortCriterias()).toArray(new OrderSpecifier[0]));
+                .orderBy(SortCriteriaUtils.getOrderSpecifiers(pathBuilder, criteria.getSort()).toArray(new OrderSpecifier[0]));
         return transactionRepository.findAll(jpql, PageRequest.of(criteria.getPage(), criteria.getSize()));
     }
 

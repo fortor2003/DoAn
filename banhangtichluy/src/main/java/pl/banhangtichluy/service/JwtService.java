@@ -1,6 +1,7 @@
 package pl.banhangtichluy.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -26,7 +27,7 @@ public class JwtService {
 
     final SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-    public String extractUsername(String token) {
+    public String extractUsername(String token) throws ExpiredJwtException, SignatureException {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -34,13 +35,13 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) throws SignatureException {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     public Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder().setSigningKey(SECRET_KEY).build().parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {

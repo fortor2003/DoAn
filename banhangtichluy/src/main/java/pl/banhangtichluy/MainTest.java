@@ -1,20 +1,11 @@
 package pl.banhangtichluy;
 
-import com.querydsl.core.types.Predicate;
-
 import com.querydsl.core.types.dsl.*;
-import org.springframework.data.domain.Sort;
 import pl.banhangtichluy.constants.QuerydslConstant;
-import pl.banhangtichluy.dto.criteria.SortCriteria;
-import pl.banhangtichluy.utils.SearchCriteriaUtils;
-import pl.banhangtichluy.dto.criteria.SearchCriteria;
 import pl.banhangtichluy.entity.Amount;
 import pl.banhangtichluy.entity.QAmount;
-import pl.banhangtichluy.utils.SortCriteriaUtils;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class MainTest {
     public static void main(String[] args) {

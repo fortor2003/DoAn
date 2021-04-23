@@ -32,29 +32,24 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(ex.getAllErrors(), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(SignatureException.class)
-    public ResponseEntity<Object> handleSignatureException(SignatureException ex) {
-        return new ResponseEntity<>("JWT signature is not valid", HttpStatus.UNAUTHORIZED);
-    }
-
-    @ExceptionHandler(ExpiredJwtException.class)
+    @ExceptionHandler({SignatureException.class, ExpiredJwtException.class})
     public ResponseEntity<Object> handleExpiredJwtException(ExpiredJwtException ex) {
-        return new ResponseEntity<>("JWT expired", HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED.name(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<Object> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException ex) {
-        return new ResponseEntity<>("Method Not Allowed", HttpStatus.METHOD_NOT_ALLOWED);
+        return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED.name(), HttpStatus.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex) {
-        return new ResponseEntity<>("Access denied", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN.name(), HttpStatus.FORBIDDEN);
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Object> handleException(Exception ex) {
-//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException(Exception ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 
 }

@@ -18,6 +18,17 @@ public class EntityPropsDescriptionConstant {
         public static final String UPDATED_AT = "Last updated time of amount";
     }
 
+    public static class TransactionProps {
+        public static final String ID = "ID of transaction";
+        public static final String CODE = "Code of transaction";
+        public static final String BEFORE_VALUE = "Value before execute add value of transaction";
+        public static final String PLUS_VALUE = "Value will be add for amount which owns this transaction";
+        public static final String AFTER_VALUE = "Value after execute add value of transaction";
+        public static final String NOTE = "Note of user";
+        public static final String CREATED_AT = "Created time of transaction";
+        public static final String UPDATED_AT = "Last updated time of transaction";
+    }
+
     public static class UserProps {
         public static final String ID = "ID of user";
         public static final String USERNAME = "Username of user";

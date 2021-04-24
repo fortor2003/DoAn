@@ -1,12 +1,18 @@
 package pl.banhangtichluy.controller.api.manager;
 
 import com.github.javafaker.Faker;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
 import pl.banhangtichluy.dto.views.v2.TransactionView;
 import pl.banhangtichluy.reponsitory.AmountRepository;
@@ -20,6 +26,8 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/transactions")
+@Api(tags = "Transaction", description = "Transaction Resource API")
+@ApiOperation(value = "${spring.data.rest.base-path.manager}/transactions", tags = "Transaction Resource")
 public class TransactionController {
 
     @Autowired
@@ -33,20 +41,27 @@ public class TransactionController {
 
     @PreAuthorize("hasAuthority('TRANSACTION.READ')")
     @GetMapping("")
+    @ApiOperation(value = "List of transaction")
     public Page<TransactionView> list(@Valid BaseCriteriaDto criteriaDto) {
         return transactionService.list(criteriaDto);
     }
 
     @PreAuthorize("hasAuthority('TRANSACTION.READ')")
     @GetMapping("/{id}")
-    public TransactionView detail(@PathVariable("id") String id, @RequestParam(name = "mode", required = false, defaultValue = "id") String mode) {
+    @ApiOperation(value = "Get detailed information of transaction by id or code")
+    public TransactionView detail(
+            @ApiParam(name = "id", value = EntityPropsDescriptionConstant.TransactionProps.ID, required = true) @PathVariable("id") String id,
+            @ApiParam(name = "mode", value = "Specify find by id or code (allow 2 value 'id' or 'code')") @RequestParam(name = "mode", required = false, defaultValue = "id") String mode
+    ) {
         if (mode.trim().toLowerCase().equals("code")) {
             return transactionService.detailByCode(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Code Transaction does not exist"));
         }
         return transactionService.detailById(Long.parseLong(id)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Transaction does not exist"));
     }
 
-    @GetMapping("/create-example-data")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("generate-sql-example-data")
+    @ApiOperation(value = "Generate SQL insert statement example data", hidden = true)
     public String createDataExample() throws Exception {
         String str = "";
         Faker faker = new Faker(new Locale("vi"));

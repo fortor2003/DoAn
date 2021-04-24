@@ -2,7 +2,6 @@ package pl.banhangtichluy.handler;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,8 +11,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.server.ResponseStatusException;
+import pl.banhangtichluy.dto.response.BadRequestDto;
 
-import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 @ControllerAdvice
@@ -26,7 +26,12 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        return new ResponseEntity<>(ex.getAllErrors(), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(
+                ex.getAllErrors().stream().map(err ->
+                        BadRequestDto.builder().field(err.getObjectName()).message(err.getDefaultMessage()).build()).collect(Collectors.toList()
+                ),
+                HttpStatus.BAD_REQUEST
+        );
     }
 
     @ExceptionHandler(BindException.class)

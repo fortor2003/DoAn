@@ -2,13 +2,13 @@ package pl.banhangtichluy.controller.api.manager;
 
 import com.github.javafaker.Faker;
 import com.github.javafaker.Name;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
@@ -23,22 +23,13 @@ import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.AmountService;
 
 import javax.validation.Valid;
-import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/amounts")
-@Api(tags = "Amounts", description = "Amount Resource API")
+@Api(tags = "Amount", description = "Amount Resource API")
 @ApiOperation(value = "${spring.data.rest.base-path.manager}/amounts", tags = "Amount Resource")
-//@ApiResponses(value = {
-//        @ApiResponse(code = 200, message = "OK"),
-//        @ApiResponse(code = 400, message = "Bad Request", response = List<ObjectError>),
-//        @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
-//        @ApiResponse(code = 403, message = "Forbidden", response = String.class),
-//        @ApiResponse(code = 404, message = "Not Found", response = String.class),
-//        @ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
-//})
 public class AmountController {
 
     @Autowired
@@ -104,7 +95,7 @@ public class AmountController {
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping("generate-sql-example-data")
-    @ApiOperation(value = "Generate SQL insert statement examle data", hidden = true)
+    @ApiOperation(value = "Generate SQL insert statement example data", hidden = true)
     public String createDataExample() {
         String str = "";
         Faker faker = new Faker(new Locale("en"));

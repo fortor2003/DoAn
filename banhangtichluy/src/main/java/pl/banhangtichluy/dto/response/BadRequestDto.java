@@ -8,8 +8,8 @@ import lombok.Data;
 
 @Data
 @Builder
-@ApiModel(value = "FormErrorDto", description = "Information used to response fields is not valid of form")
-public class FormErrorDto {
+@ApiModel(value = "BadRequestDto", description = "Information used to response fields is not valid of form")
+public class BadRequestDto {
 
     @JsonProperty("field")
     @ApiModelProperty(name = "field", notes = "name of field", example = "email")

@@ -20,9 +20,8 @@ import java.io.Serializable;
 
 @Data
 @ApiModel(value = "AmountDto", description = "Information used to create or update amount")
-public class AmountDto implements Serializable {
+public class AmountDto {
 
-    private static final Long serialVersionUID = 1L;
 
     @NotNull(message = "type is required")
     @ValidEnum(targetClassType = AmountType.class, message = "Value must in [\"POINT\", \"GIFT\"]")

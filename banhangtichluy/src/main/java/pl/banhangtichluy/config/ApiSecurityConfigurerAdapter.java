@@ -1,6 +1,7 @@
 package pl.banhangtichluy.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -22,28 +23,33 @@ import java.io.IOException;
 @Order(1)
 public class ApiSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
+    @Value("${spring.data.rest.base-path.manager}")
+    private String basePath;
     @Autowired
     private JwtFilter jwtFilter;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.antMatcher("/api/**")
-                .authorizeRequests().anyRequest().authenticated()
+        http.csrf().disable()
+                .antMatcher(basePath + "/**")
+                .authorizeRequests()
+                .antMatchers(basePath + "/auth/login").permitAll()
+                .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
             @Override
             public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
                 response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().println("Unauthorized");
+                response.getWriter().println(HttpStatus.UNAUTHORIZED.name());
             }
         });
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers(
-//                "/v2/api-docs"
-//        );
-//    }
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(
+                "/v2/api-docs"
+        );
+    }
 
 }

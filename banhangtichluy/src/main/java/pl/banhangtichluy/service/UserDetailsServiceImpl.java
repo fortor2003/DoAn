@@ -29,7 +29,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
                 List<GrantedAuthority> authorities = new ArrayList<>();
+                List<String> roleNames = userRepository.roleNamesById(user.getId());
                 List<String> permissionNames = userRepository.permissionNamesById(user.getId());
+                for (String name : roleNames) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + name));
+                }
                 for (String name : permissionNames) {
                     authorities.add(new SimpleGrantedAuthority(name));
                 }

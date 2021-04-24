@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
@@ -22,21 +23,22 @@ import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.AmountService;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/amounts")
-@Api(tags = "Amounts", description = "Amounts Resource API")
+@Api(tags = "Amounts", description = "Amount Resource API")
 @ApiOperation(value = "${spring.data.rest.base-path.manager}/amounts", tags = "Amount Resource")
-@ApiResponses(value = {
-        @ApiResponse(code = 200, message = "SUCCESS"),
-        @ApiResponse(code = 400, message = "BAD REQUEST"),
-        @ApiResponse(code = 401, message = "UNAUTHORIZE"),
-        @ApiResponse(code = 403, message = "ACCESS DENIED"),
-        @ApiResponse(code = 404, message = "NOT FOUND"),
-        @ApiResponse(code = 500, message = "UNDEFINED ERROR"),
-})
+//@ApiResponses(value = {
+//        @ApiResponse(code = 200, message = "OK"),
+//        @ApiResponse(code = 400, message = "Bad Request", response = List<ObjectError>),
+//        @ApiResponse(code = 401, message = "Unauthorized", response = String.class),
+//        @ApiResponse(code = 403, message = "Forbidden", response = String.class),
+//        @ApiResponse(code = 404, message = "Not Found", response = String.class),
+//        @ApiResponse(code = 500, message = "Internal Server Error", response = String.class),
+//})
 public class AmountController {
 
     @Autowired
@@ -54,14 +56,14 @@ public class AmountController {
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.READ')")
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     @ApiOperation(value = "Get detailed information of amount by id")
     public AmountView detail(@ApiParam(name = "id", value = EntityPropsDescriptionConstant.AmountProps.ID, example = "100", required = true) @PathVariable("id") Long id) {
         return ammountService.detailById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.READ')")
-    @GetMapping("/{type}/{code}")
+    @GetMapping("{type}/{code}")
     @ApiOperation(value = "Get detailed information of amount by type and code")
     public AmountView detailByTypeAndCode(
             @ApiParam(name = "type", value = EntityPropsDescriptionConstant.AmountProps.TYPE, example = "POINT", required = true) @PathVariable("type") String type,
@@ -78,7 +80,7 @@ public class AmountController {
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
-    @PutMapping("/{id}") // admin update
+    @PutMapping("{id}") // admin update
     @ApiOperation(value = "Update information of amount")
     public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
@@ -86,7 +88,7 @@ public class AmountController {
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
-    @PatchMapping("/{id}/add-value") //user update value point
+    @PatchMapping("{id}/add-value") //user update value point
     @ApiOperation(value = "Add value for amount")
     public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
         User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
@@ -94,16 +96,16 @@ public class AmountController {
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.DELETE')")
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @ApiOperation(value = "Delete amount")
     public boolean delete(@PathVariable("id") Long id) {
         return ammountService.delete(id);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/generate-sql-example-data")
-    @ApiOperation(value = "Generate SQL insert statement examle data")
-    public String createDataExample() throws Exception {
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @GetMapping("generate-sql-example-data")
+    @ApiOperation(value = "Generate SQL insert statement examle data", hidden = true)
+    public String createDataExample() {
         String str = "";
         Faker faker = new Faker(new Locale("en"));
         Random random = new Random();

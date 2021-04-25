@@ -1,5 +1,9 @@
 package pl.banhangtichluy.service;
 
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -8,67 +12,59 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import pl.banhangtichluy.dto.*;
+import pl.banhangtichluy.constants.QuerydslConstant;
+import pl.banhangtichluy.dto.PasswordUserDto;
+import pl.banhangtichluy.dto.PersonalInfoUserDto;
+import pl.banhangtichluy.dto.UserDto;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.criteria.FilterCriteria;
-import pl.banhangtichluy.dto.views.UserView;
-import pl.banhangtichluy.entity.*;
+import pl.banhangtichluy.dto.views.v2.UserView;
+import pl.banhangtichluy.entity.QUser;
+import pl.banhangtichluy.entity.User;
 import pl.banhangtichluy.reponsitory.UserRepository;
-import pl.banhangtichluy.utils.ClassUtils;
+import pl.banhangtichluy.utils.FilterCriteriaUtils;
+import pl.banhangtichluy.utils.SortCriteriaUtils;
 
-import javax.persistence.metamodel.SingularAttribute;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
 
     @Autowired
+    JPAQueryFactory query;
+    @Autowired
     UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private final Class VIEW = UserView.class;
+    private final QUser user = QUser.user;
 
     @Transactional(readOnly = true)
     public Page<UserView> list(BaseCriteriaDto criteria) {
-//        List<String> fields = ClassUtils.getFieldNameOfClassHasType(User_.class, SingularAttribute.class);
-//        List<FilterCriteria> filters = criteria.getFilter();
-//        if (filters.size() > 0) {
-//            FilterCriteria fr = filters.get(0);
-//            String field = fr.getKey();
-//            Object value = fr.getValue();
-//            if (fields.contains(field)) {
-//                Specification condition = null;
-//                switch (field) {
-//                    case User_.USERNAME:
-//                        return userRepository.findByUsernameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                    case User_.FIRST_NAME:
-//                        return userRepository.findByFirstNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                    case User_.LAST_NAME:
-//                        return userRepository.findByLastNameContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                    case User_.EMAIL:
-//                        return userRepository.findByEmailContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                    case User_.PHONE:
-//                        return userRepository.findByPhoneContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-//                    case User_.NOTE:
-//                        return userRepository.findByNoteContaining(value, VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-////                }
-//            }
-//        }
-//        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize()));
-////        return userRepository.findBy(VIEW, PageRequest.of(criteria.getPage(), criteria.getSize(), criteria.getSortChain(fields)));
-        return null;
+        PathBuilder<User> pathBuilder = new PathBuilder<User>(User.class, user.getMetadata().getName(), QuerydslConstant.PATH_BUILDER_VALIDATOR);
+        JPQLQuery<UserView> jpql = query
+                .from(user)
+                .where(FilterCriteriaUtils.getPredicates(pathBuilder, criteria.getFilter()))
+                .select(UserView.PROJECTIONS)
+                .orderBy(SortCriteriaUtils.getOrderSpecifiers(pathBuilder, criteria.getSort()).toArray(new OrderSpecifier[0]));
+        return userRepository.findAll(jpql, PageRequest.of(criteria.getPage(), criteria.getSize()));
     }
 
     @Transactional(readOnly = true)
     public Optional<UserView> detailById(Long id) {
-        return userRepository.findById(id, VIEW);
+        JPQLQuery<UserView> jpql = query
+                .from(user)
+                .where(user.id.eq(id))
+                .select(UserView.PROJECTIONS);
+        return userRepository.findOne(jpql);
     }
 
     @Transactional(readOnly = true)
     public Optional<UserView> detailByUsername(String username) {
-        return userRepository.findByUsername(username, VIEW);
+        JPQLQuery<UserView> jpql = query
+                .from(user)
+                .where(user.username.eq(username))
+                .select(UserView.PROJECTIONS);
+        return userRepository.findOne(jpql);
     }
 
 

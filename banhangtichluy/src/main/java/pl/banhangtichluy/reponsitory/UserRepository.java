@@ -5,21 +5,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import pl.banhangtichluy.entity.User;
+import pl.banhangtichluy.querydsl.ExtendedQuerydslPredicateExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, ExtendedQuerydslPredicateExecutor<User> {
 
-    <T> Page<T> findBy(Class<T> type, Pageable pageable);
-    <T> Page<T> findByUsernameContaining(String username, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByFirstNameContaining(String firstName, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByLastNameContaining(String lastName, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByEmailContaining(String email, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByPhoneContaining(String phone, Class<T> clazz, Pageable pageable);
-    <T> Page<T> findByNoteContaining(String note, Class<T> clazz, Pageable pageable);
 
-    <T> Optional<T> findById(Long id, Class<T> clazz);
     <T> Optional<T> findByUsername(String username, Class<T> clazz);
 
     @Query("select distinct r.name from User u left join u.userRoles ur left join ur.role r where u.id = ?1")

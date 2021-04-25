@@ -3,6 +3,7 @@ package pl.banhangtichluy.dto.views.v2;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.MappingProjection;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import pl.banhangtichluy.entity.QAmount;
@@ -11,6 +12,7 @@ import pl.banhangtichluy.entity.QTransaction;
 @Data
 @SuperBuilder
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper=false)
 public class TransactionBaseView {
     private Long id;
     private String code;

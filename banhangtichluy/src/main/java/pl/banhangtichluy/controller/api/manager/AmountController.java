@@ -62,9 +62,9 @@ public class AmountController {
         return ammountService.detailByTypeAndCode(type, code).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Type and code of Amount do not exist"));
     }
 
-//    @PreAuthorize("hasAuthority('AMOUNT.CREATE')")
+    @PreAuthorize("hasAuthority('AMOUNT.CREATE')")
     @PostMapping("")
-//    @ApiOperation(value = "Create new amount")
+    @ApiOperation(value = "Create new amount")
     public AmountView create(@Valid @RequestBody AmountDto amountDto) {
         User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
         return ammountService.create(amountDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));

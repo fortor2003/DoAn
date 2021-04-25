@@ -64,7 +64,11 @@ public class SwaggerConfig {
     private Predicate<String> paths() {
         return Predicates.or(
                 PathSelectors.regex(basePath + "/amounts(/*|/*.*)$"),
-                PathSelectors.regex(basePath + "/transaction(/*|/*.*)$")
+                PathSelectors.regex(basePath + "/transactions(/*|/*.*)$"),
+                PathSelectors.regex(basePath + "/roles(/*|/*.*)$"),
+                PathSelectors.regex(basePath + "/permissions(/*|/*.*)$"),
+                PathSelectors.regex(basePath + "/users(/*|/*.*)$"),
+                PathSelectors.regex(basePath + "/auth(/*|/*.*)$")
         );
     }
 

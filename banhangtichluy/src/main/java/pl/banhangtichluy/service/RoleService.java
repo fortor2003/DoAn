@@ -1,8 +1,14 @@
 package pl.banhangtichluy.service;
 
+import com.querydsl.core.types.dsl.PathBuilder;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.banhangtichluy.dto.views.RoleView;
+import pl.banhangtichluy.constants.QuerydslConstant;
+import pl.banhangtichluy.dto.views.v2.RoleView;
+import pl.banhangtichluy.entity.QRole;
+import pl.banhangtichluy.entity.Role;
 import pl.banhangtichluy.reponsitory.RoleRepository;
 
 import java.util.List;
@@ -12,19 +18,33 @@ import java.util.Optional;
 public class RoleService {
 
     @Autowired
+    JPAQueryFactory query;
+    @Autowired
     RoleRepository roleRepository;
 
-    private final Class VIEW = RoleView.class;
+    private final QRole role = QRole.role;
 
     public List<RoleView> list() {
-        return roleRepository.findBy(VIEW);
+        PathBuilder<Role> pathBuilder = new PathBuilder<Role>(Role.class, role.getMetadata().getName(), QuerydslConstant.PATH_BUILDER_VALIDATOR);
+        JPQLQuery<RoleView> jpql = query
+                .from(role)
+                .select(RoleView.PROJECTIONS);
+        return roleRepository.findAll(jpql);
     }
 
     public Optional<RoleView> detailById(Long id) {
-        return roleRepository.findById(id, VIEW);
+        JPQLQuery<RoleView> jpql = query
+                .from(role)
+                .where(role.id.eq(id))
+                .select(RoleView.PROJECTIONS);
+        return roleRepository.findOne(jpql);
     }
 
     public Optional<RoleView> detailByName(String name) {
-        return roleRepository.findByName(name, VIEW);
+        JPQLQuery<RoleView> jpql = query
+                .from(role)
+                .where(role.name.equalsIgnoreCase(name))
+                .select(RoleView.PROJECTIONS);
+        return roleRepository.findOne(jpql);
     }
 }

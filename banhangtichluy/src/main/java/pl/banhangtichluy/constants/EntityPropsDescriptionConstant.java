@@ -42,4 +42,20 @@ public class EntityPropsDescriptionConstant {
         public static final String UPDATED_AT = "Last updated time of user";
     }
 
+    public static class RoleProps {
+        public static final String ID = "ID of role";
+        public static final String NAME = "name of role";
+        public static final String NOTE = "Note of role";
+        public static final String CREATED_AT = "Created time of role";
+        public static final String UPDATED_AT = "Last updated time of role";
+    }
+
+    public static class PermissionProps {
+        public static final String ID = "ID of permission";
+        public static final String NAME = "name of permission";
+        public static final String NOTE = "Note of permission";
+        public static final String CREATED_AT = "Created time of permission";
+        public static final String UPDATED_AT = "Last updated time of permission";
+    }
+
 }

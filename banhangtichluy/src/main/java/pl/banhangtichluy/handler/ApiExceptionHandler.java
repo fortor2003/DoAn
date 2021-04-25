@@ -2,6 +2,7 @@ package pl.banhangtichluy.handler;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -54,9 +55,14 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN.name(), HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleException(Exception ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
+        return new ResponseEntity<>("Cannot delete or update resource because constraint violation", HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Object> handleException(Exception ex) {
+//        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 
 }

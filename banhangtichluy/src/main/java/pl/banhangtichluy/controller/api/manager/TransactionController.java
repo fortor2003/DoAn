@@ -41,7 +41,7 @@ public class TransactionController {
 
     @PreAuthorize("hasAuthority('TRANSACTION.READ')")
     @GetMapping("")
-    @ApiOperation(value = "List of transaction")
+    @ApiOperation(value = "List of transactions")
     public Page<TransactionView> list(@Valid BaseCriteriaDto criteriaDto) {
         return transactionService.list(criteriaDto);
     }

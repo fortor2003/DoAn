@@ -3,6 +3,16 @@ INSERT INTO `permissions` (`name`, `note`) VALUES ('USER.READ', null );
 INSERT INTO `permissions` (`name`, `note`) VALUES ('USER.UPDATE', null );
 INSERT INTO `permissions` (`name`, `note`) VALUES ('USER.DELETE', null );
 
+INSERT INTO `permissions` (`name`, `note`) VALUES ('ROLE.CREATE', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('ROLE.READ', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('ROLE.UPDATE', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('ROLE.DELETE', null );
+
+INSERT INTO `permissions` (`name`, `note`) VALUES ('PERMISSION.CREATE', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('PERMISSION.READ', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('PERMISSION.UPDATE', null );
+INSERT INTO `permissions` (`name`, `note`) VALUES ('PERMISSION.DELETE', null );
+
 INSERT INTO `permissions` (`name`, `note`) VALUES ('USER_ROLE.CREATE', null );
 INSERT INTO `permissions` (`name`, `note`) VALUES ('USER_ROLE.READ', null );
 INSERT INTO `permissions` (`name`, `note`) VALUES ('USER_ROLE.UPDATE', null );

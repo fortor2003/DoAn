@@ -1,4 +1,8 @@
 var tbPoint='';
+var tbTranGift='';
+var tbTranPoint='';
+var tbBalance='';
+
 $( document ).ready(function() {
    //region on off conten
    $('.content section').hide();
@@ -19,28 +23,149 @@ $( document ).ready(function() {
         $(this).addClass('active');
     });
     //endregion on off conten
+    //region transaction
+    $('#btnSearchTrans').on("click",function () {
+        console.log($('#txtTimeTrans').val());
+        tbTranPoint = $('#tbTransPoint').DataTable( {
+            serverSide: true,
+            ordering: false,
+            searching: false,
+            ajax: function ( data, callback, settings ) {
+                let size = data.length;
+                let page = ((data.start + size) / size) - 1;
+                $.ajax({
+                    url:`api/v1/transactions?page=${page}&size=${size}&filter=amount.type:eq:POINT,createdAt:inc:${$('#txtTimeTrans').val()}`,
+                    type:"get",
+                    headers: {
+                        "Accept" : "application/json; charset=utf-8;",
+                        "Content-Type":"application/json;",
+                        "Authorization":"Bearer "+$('#hidToken').val()
+                    },
+                    contentType:"application/json; charset=utf-8",
+                    data:null,
+                    dataType:"json",
+                    success: function (dataResult) {//cập nhật thành công
+                        callback( {
+                            draw: data.draw,
+                            data: dataResult.content,
+                            recordsTotal: dataResult.totalElements,
+                            recordsFiltered: dataResult.totalElements
+                        });
+                    },
+                    error: function (xhr) {
+                        let aa='';
+                        $.each(xhr.responseJSON, function( index, value ) {
+                            aa+=' '+value.defaultMessage;
+                        });
+                        Swal.fire({
+                            icon: 'error',
+                            title: xhr.status,
+                            text: aa
+                        })
+                    }
+                });
+            },
+            "columns": [
+                {"data": "amount.code"},
+                {"data": "beforeValue"},
+                {"data": "afterValue"},
+                {"data": "updatedAt", "defaultContent": ""},
+                {"data": "updatedBy.username", "defaultContent": ""},
+            ]
+        } );
+        tbTranGift = $('#tbTransGift').DataTable( {
+            serverSide: true,
+            ordering: false,
+            searching: false,
+            ajax: function ( data, callback, settings ) {
+                let size = data.length;
+                let page = ((data.start + size) / size) - 1;
+                $.ajax({
+                    url:`api/v1/transactions?page=${page}&size=${size}&filter=amount.type:eq:GIFT,createdAt:inc:${$('#txtTimeTrans').val()}`,
+                    type:"get",
+                    headers: {
+                        "Accept" : "application/json; charset=utf-8;",
+                        "Content-Type":"application/json;",
+                        "Authorization":"Bearer "+$('#hidToken').val()
+                    },
+                    contentType:"application/json; charset=utf-8",
+                    data:null,
+                    dataType:"json",
+                    success: function (dataResult) {//cập nhật thành công
+                        callback( {
+                            draw: data.draw,
+                            data: dataResult.content,
+                            recordsTotal: dataResult.totalElements,
+                            recordsFiltered: dataResult.totalElements
+                        });
+                    },
+                    error: function (xhr) {
+                        let aa='';
+                        $.each(xhr.responseJSON, function( index, value ) {
+                            aa+=' '+value.defaultMessage;
+                        });
+                        Swal.fire({
+                            icon: 'error',
+                            title: xhr.status,
+                            text: aa
+                        })
+                    }
+                });
+            },
+            "columns": [
+                {"data": "amount.code"},
+                {"data": "beforeValue"},
+                {"data": "afterValue"},
+                {"data": "updatedAt", "defaultContent": ""},
+                {"data": "updatedBy.username", "defaultContent": ""},
+            ]
+        } );
+    });
+
+
+
+    //endregion transaction
 
     //region set Point
     tbPoint = $('#tbSetPoint').DataTable( {
         serverSide: true,
-        // ordering: false,
-        // searching: false,
+        ordering: false,
+        searching: false,
         ajax: function ( data, callback, settings ) {
-            console.log(data)
             let size = data.length;
             let page = ((data.start + size) / size) - 1;
-            $.get( `api/manager/amounts?page=${page}&size=${size}&filter=type:eq:POINT`, function( dataResult ) {
-                callback( {
-                    draw: data.draw,
-                    data: dataResult.content,
-                    recordsTotal: dataResult.totalElements,
-                    recordsFiltered: dataResult.totalElements
-                });
+            $.ajax({
+                url:`api/v1/amounts?page=${page}&size=${size}&filter=type:eq:POINT`,
+                type:"get",
+                headers: {
+                    "Accept" : "application/json; charset=utf-8;",
+                    "Content-Type":"application/json;",
+                    "Authorization":"Bearer "+$('#hidToken').val()
+                },
+                contentType:"application/json; charset=utf-8",
+                data:null,
+                dataType:"json",
+                success: function (dataResult) {//cập nhật thành công
+                    callback( {
+                        draw: data.draw,
+                        data: dataResult.content,
+                        recordsTotal: dataResult.totalElements,
+                        recordsFiltered: dataResult.totalElements
+                    });
+                },
+                error: function (xhr) {
+                    let aa='';
+                    $.each(xhr.responseJSON, function( index, value ) {
+                        aa+=' '+value.defaultMessage;
+                    });
+                    Swal.fire({
+                        icon: 'error',
+                        title: xhr.status,
+                        text: aa
+                    })
+                }
             });
         },
-        dom:"<'row'<'col-sm-6'l><'col-sm-6'<'#searchInput'>>>" +
-            "<'row'<'col-sm-12'tr>>" +
-            "<'row'<'col-sm-5'i><'col-sm-7'p>>",
         "columns": [
             {"data": ""},
             {"data": ""},
@@ -134,20 +259,45 @@ $( document ).ready(function() {
 
     //region set Balance
     $('#tbSetBanlance tbody').empty();
-    $('#tbSetBanlance').DataTable( {
+    tbBalance = $('#tbSetBanlance').DataTable( {
         serverSide: true,
         ordering: false,
         searching: false,
         ajax: function ( data, callback, settings ) {
             let size = data.length;
             let page = ((data.start + size) / size) - 1;
-            $.get( `api/manager/amounts?page=${page}&size=${size}&filter=type:eq:GIFT`, function( dataResult ) {
-                callback( {
-                    draw: data.draw,
-                    data: dataResult.content,
-                    recordsTotal: dataResult.totalElements,
-                    recordsFiltered: dataResult.totalElements
-                });
+            let url= $('#txtSearchBalance').val()?`api/v1/amounts?page=${page}&size=${size}&filter=type:eq:GIFT,code:inc:${$('#txtSearchBalance').val()}`:`api/v1/amounts?page=${page}&size=${size}&filter=type:eq:GIFT`;
+            $.ajax({
+                url:url,
+                type:"get",
+                headers: {
+                    "Accept" : "application/json; charset=utf-8;",
+                    "Content-Type":"application/json;",
+                    "Authorization":"Bearer "+$('#hidToken').val()
+                },
+                contentType:"application/json; charset=utf-8",
+                data:null,
+                dataType:"json",
+                success: function (dataResult) {//cập nhật thành công
+                    console.log(dataResult)
+                    callback( {
+                        draw: data.draw,
+                        data: dataResult.content,
+                        recordsTotal: dataResult.totalElements,
+                        recordsFiltered: dataResult.totalElements
+                    });
+                },
+                error: function (xhr) {
+                    let aa='';
+                    $.each(xhr.responseJSON, function( index, value ) {
+                        aa+=' '+value.defaultMessage;
+                    });
+                    Swal.fire({
+                        icon: 'error',
+                        title: xhr.status,
+                        text: aa
+                    })
+                }
             });
         },
         "columns": [
@@ -173,14 +323,11 @@ $( document ).ready(function() {
             },
         ]
     } );
+    $('#btnSearchBalance').on("click",function () {
+        tbBalance.ajax.reload();
+    });
     //endregion set Balance
 
 
-    // "api/manager/amounts?page=0&size=10&filter=code:eq:012146571827523"
-    // $.get( "api/manager/transactions?page=0&size=10", function( data ) {
-    //     console.log(data);
-    // });
-    // $.get( "api/manager/amounts/create-example-data", function( data ) {
-    //     console.log(data);
-    // });
+
 });

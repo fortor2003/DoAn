@@ -108,7 +108,8 @@ $( document ).ready(function() {
                         type:"PUT",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
-                            "Content-Type":"application/json;"
+                            "Content-Type":"application/json;",
+                            "Authorization":"Bearer "+token
                         },
                         contentType:"application/json; charset=utf-8",
                         data:JSON.stringify(data),

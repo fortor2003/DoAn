@@ -4,23 +4,14 @@ var tbTranPoint='';
 var tbBalance='';
 
 $( document ).ready(function() {
+
    //region on off conten
-   $('.content section').hide();
-   $('#his').on("click",function () {
-       $('.content section').hide();
-       $('.content section[data-name="his"]').show();
-   })
-    $('#setbalance').on("click",function () {
-        $('.content section').hide();
-        $('.content section[data-name="setbalance"]').show();
-    })
-    $('#setpoint').on("click",function () {
-        $('.content section').hide();
-        $('.content section[data-name="setpoint"]').show();
-    })
-    $('.nav a').click(function() {//active menu
-        $('.nav a').removeClass('active');
-        $(this).addClass('active');
+    $('div.content-wrapper > section.content').hide();
+    $('#history').show();
+    $('ul[role="menu"] a').on('click', function () {
+        const selector = $(this).attr('href');
+        $('div.content-wrapper > section.content').hide();
+        $(selector).show();
     });
     //endregion on off conten
     //region transaction
@@ -301,9 +292,9 @@ $( document ).ready(function() {
             });
         },
         "columns": [
-            {"data": ""},
-            {"data": "code"},
-            {"data": "value"},
+            {"data": "", width: '6%'},
+            {"data": "code", width: '47%'},
+            {"data": "value", width: '47%'},
         ],
         "columnDefs": [
             {

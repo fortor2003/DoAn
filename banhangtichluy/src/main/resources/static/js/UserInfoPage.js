@@ -20,65 +20,79 @@ $( document ).ready(function() {
     });
     $("#btnSearchPoint").on("click",function () {
         if($("#txtPhonePoint").val()){
-            $.get(`api/manager/amounts/POINT/${$('#txtPhonePoint').val()}`, function(data){
-                $("#idThe").val(data.id);
-                $("#txtFirstNamePoint").val(data.firstName);
-                $("#txtLastNamePoint").val(data.lastName);
-                $("#txtEmailPoint").val(data.email);
-                $("#spPoint").html(data.value);
-            }).fail(function( jqXHR) { //ko tìm thấy dử liệu
-                if(parseInt(jqXHR.status)===404){
-                    Swal.fire({
-                        title: 'New user',
-                        text:'Do you want to create user ?',
-                        showCancelButton: true,
-                        confirmButtonText: `Save`,
-                    }).then((result) => {
-                        /* Read more about isConfirmed, isDenied below */
-                        if (result.isConfirmed) {
-                            let data = {
-                                "type":"POINT",
-                                "code":$("#txtPhonePoint").val(),
-                                "value":0,
-                                "firstName": $("#txtFirstNamePoint").val()?$("#txtFirstNamePoint").val():"null",
-                                "lastName": $("#txtLastNamePoint").val()?$("#txtLastNamePoint").val():"null",
-                                "email":$("#txtEmailPoint").val()?$("#txtEmailPoint").val():"null@null.null",
-                                "phone":$("#txtPhonePoint").val(),
-                                "note":""
-                            };
-                            $.ajax({
-                                url:"api/manager/amounts",
-                                type:"POST",
-                                headers: {
-                                    "Accept" : "application/json; charset=utf-8;",
-                                    "Content-Type":"application/json;"
-                                },
-                                contentType:"application/json; charset=utf-8",
-                                data:JSON.stringify(data),
-                                dataType:"json",
-                                success: function (result) {//tạo mới
-                                    $("#idThe").val(result.id);
-                                    $("#txtFirstNamePoint").val(result.firstName);
-                                    $("#txtLastNamePoint").val(result.lastName);
-                                    $("#txtEmailPoint").val(result.email);
-                                    $("#txtPhonePoint").val(result.code);
-                                    $("#spPoint").html(result.value);
-                                },
-                                error: function (xhr) {
-                                    let aa='';
-                                    $.each(xhr.responseJSON, function( index, value ) {
-                                        aa+=' '+value.defaultMessage;
-                                    });
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: xhr.status,
-                                        text: aa
-                                    })
-                                }
-                            });
-                            Swal.fire('Saved!', '', 'success')
-                        }
-                    })
+            $.ajax({
+                url:`api/v1/amounts/POINT/${$('#txtPhonePoint').val()}`,
+                type:"get",
+                headers: {
+                    "Accept" : "application/json; charset=utf-8;",
+                    "Content-Type":"application/json;",
+                    "Authorization":"Bearer "+$('#hidToken').val()
+                },
+                contentType:"application/json; charset=utf-8",
+                data:null,
+                dataType:"json",
+                success: function (data) {//cập nhật thành công
+                    $("#idThe").val(data.id);
+                    $("#txtFirstNamePoint").val(data.firstName);
+                    $("#txtLastNamePoint").val(data.lastName);
+                    $("#txtEmailPoint").val(data.email);
+                    $("#spPoint").html(data.value);
+                },
+                error: function (jqXHR) {
+                    if(parseInt(jqXHR.status)===404){
+                        Swal.fire({
+                            title: 'New user',
+                            text:'Do you want to create user ?',
+                            showCancelButton: true,
+                            confirmButtonText: `Save`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                let data = {
+                                    "type":"POINT",
+                                    "code":$("#txtPhonePoint").val(),
+                                    "value":0,
+                                    "firstName": $("#txtFirstNamePoint").val()?$("#txtFirstNamePoint").val():"null",
+                                    "lastName": $("#txtLastNamePoint").val()?$("#txtLastNamePoint").val():"null",
+                                    "email":$("#txtEmailPoint").val()?$("#txtEmailPoint").val():"null@null.null",
+                                    "phone":$("#txtPhonePoint").val(),
+                                    "note":""
+                                };
+                                $.ajax({
+                                    url:"api/v1/amounts",
+                                    type:"POST",
+                                    headers: {
+                                        "Accept" : "application/json; charset=utf-8;",
+                                        "Content-Type":"application/json;",
+                                        "Authorization":"Bearer "+$('#hidToken').val()
+                                    },
+                                    contentType:"application/json; charset=utf-8",
+                                    data:JSON.stringify(data),
+                                    dataType:"json",
+                                    success: function (result) {//tạo mới
+                                        $("#idThe").val(result.id);
+                                        $("#txtFirstNamePoint").val(result.firstName);
+                                        $("#txtLastNamePoint").val(result.lastName);
+                                        $("#txtEmailPoint").val(result.email);
+                                        $("#txtPhonePoint").val(result.code);
+                                        $("#spPoint").html(result.value);
+                                    },
+                                    error: function (xhr) {
+                                        let aa='';
+                                        $.each(xhr.responseJSON.message, function( index, value ) {
+                                            aa+=' '+value;
+                                        });
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: xhr.status,
+                                            text: aa
+                                        })
+                                    }
+                                });
+                                Swal.fire('Saved!', '', 'success')
+                            }
+                        })
+                    }
                 }
             });
         }else{ /// search value null
@@ -104,7 +118,7 @@ $( document ).ready(function() {
                         "note":""
                     }
                     $.ajax({
-                        url:`api/manager/amounts/${$("#idThe").val()}/add-value`,
+                        url:`api/v1/amounts/${$("#idThe").val()}/add-value`,
                         type:"PUT",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
@@ -129,15 +143,23 @@ $( document ).ready(function() {
                             });
                         },
                         error: function (xhr) {
-                            let aa='';
-                            $.each(xhr.responseJSON, function( index, value ) {
-                                aa+=' '+value.defaultMessage;
-                            });
-                            Swal.fire({
-                                icon: 'error',
-                                title: xhr.status,
-                                text: aa
-                            })
+                            if(xhr.status==400){
+                                let aa='';
+                                $.each(xhr.responseJSON.message, function( index, value ) {
+                                    aa+=' '+value;
+                                });
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: xhr.status,
+                                    text: aa
+                                })
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: xhr.status,
+                                    text: xhr.responseText
+                                })
+                            }
                         }
                     });
 
@@ -165,11 +187,12 @@ $( document ).ready(function() {
                         "note":""
                     }
                     $.ajax({
-                        url:`api/manager/amounts/${$("#idThe").val()}/add-value`,
+                        url:`api/v1/amounts/${$("#idThe").val()}/add-value`,
                         type:"PUT",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
-                            "Content-Type":"application/json;"
+                            "Content-Type":"application/json;",
+                            "Authorization":"Bearer "+token
                         },
                         contentType:"application/json; charset=utf-8",
                         data:JSON.stringify(data),
@@ -190,21 +213,21 @@ $( document ).ready(function() {
                             });
                         },
                         error: function (xhr) {
-                            if(xhr.status==500){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: xhr.status,
-                                    text: xhr.responseText
-                                })
-                            }else{
+                            if(xhr.status==400){
                                 let aa='';
-                                $.each(xhr.responseJSON, function( index, value ) {
-                                    aa+=' '+value.defaultMessage;
+                                $.each(xhr.responseJSON.message, function( index, value ) {
+                                    aa+=' '+value;
                                 });
                                 Swal.fire({
                                     icon: 'error',
                                     title: xhr.status,
                                     text: aa
+                                })
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: xhr.status,
+                                    text: xhr.responseText
                                 })
                             }
                         }
@@ -253,7 +276,7 @@ $( document ).ready(function() {
         if (!$('#frmSearchG').valid()){
             return;
         }
-        $.get(`api/manager/amounts/GIFT/${$('#txtSearchG').val()}`, function(data){
+        $.get(`api/v1/amounts/GIFT/${$('#txtSearchG').val()}`, function(data){
             $('#txtGiftCard').val(data.code);
             $('#spMoney').html(data.value);
             $('#idTheGift').val(data.id);
@@ -279,11 +302,12 @@ $( document ).ready(function() {
                             "note":""
                         };
                         $.ajax({
-                            url:"api/manager/amounts",
+                            url:"api/v1/amounts",
                             type:"POST",
                             headers: {
                                 "Accept" : "application/json; charset=utf-8;",
-                                "Content-Type":"application/json;"
+                                "Content-Type":"application/json;",
+                                "Authorization":"Bearer "+token
                             },
                             contentType:"application/json; charset=utf-8",
                             data:JSON.stringify(data),
@@ -295,15 +319,23 @@ $( document ).ready(function() {
                                 $('#mdGift').modal('show');
                             },
                             error: function (xhr) {
-                                let aa='';
-                                $.each(xhr.responseJSON, function( index, value ) {
-                                    aa+=' '+value.defaultMessage;
-                                });
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: xhr.status,
-                                    text: aa
-                                });
+                                if(xhr.status==400){
+                                    let aa='';
+                                    $.each(xhr.responseJSON.message, function( index, value ) {
+                                        aa+=' '+value;
+                                    });
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: xhr.status,
+                                        text: aa
+                                    })
+                                }else{
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: xhr.status,
+                                        text: xhr.responseText
+                                    })
+                                }
                             }
                         });
                         Swal.fire({
@@ -343,11 +375,12 @@ $( document ).ready(function() {
                         "note":""
                     }
                     $.ajax({
-                        url:`api/manager/amounts/${$("#idTheGift").val()}/add-value`,
+                        url:`api/v1/amounts/${$("#idTheGift").val()}/add-value`,
                         type:"PUT",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
-                            "Content-Type":"application/json;"
+                            "Content-Type":"application/json;",
+                            "Authorization":"Bearer "+token
                         },
                         contentType:"application/json; charset=utf-8",
                         data:JSON.stringify(data),
@@ -357,21 +390,21 @@ $( document ).ready(function() {
                             $('#spMoney').html(result.value);
                         },
                         error: function (xhr) {
-                            if(xhr.status==500){
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: xhr.status,
-                                    text: xhr.responseText
-                                })
-                            }else{
+                            if(xhr.status==400){
                                 let aa='';
-                                $.each(xhr.responseJSON, function( index, value ) {
-                                    aa+=' '+value.defaultMessage;
+                                $.each(xhr.responseJSON.message, function( index, value ) {
+                                    aa+=' '+value;
                                 });
                                 Swal.fire({
                                     icon: 'error',
                                     title: xhr.status,
                                     text: aa
+                                })
+                            }else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: xhr.status,
+                                    text: xhr.responseText
                                 })
                             }
                         }

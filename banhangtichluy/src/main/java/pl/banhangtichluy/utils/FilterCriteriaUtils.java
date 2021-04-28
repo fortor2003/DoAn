@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.*;
 import pl.banhangtichluy.dto.criteria.FilterCriteria;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -85,7 +86,11 @@ public class FilterCriteriaUtils {
                         return path.loe(valueInteger);
                 }
             } else if (simpleNameOfType.equals("Date")) {
-                return null;
+                DatePath<Date> path = Expressions.datePath(Date.class, propPath.getMetadata());
+                switch (operation) {
+                    case "inc":
+                        return path.stringValue().containsIgnoreCase(value);
+                }
             }
             return null;
         } catch (IllegalArgumentException e) {

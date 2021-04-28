@@ -6,6 +6,7 @@ $( document ).ready(function() {
     $('#btnPoint').on("click",function () {
         $('#mdPoint').modal('show');
     });
+    var token = $('#hidToken').val();
      //region point
     $('#mdPoint').on('hidden.bs.modal', function () {
         $("#idThe").val(0);
@@ -119,7 +120,7 @@ $( document ).ready(function() {
                     }
                     $.ajax({
                         url:`api/v1/amounts/${$("#idThe").val()}/add-value`,
-                        type:"PUT",
+                        type:"PATCH",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
                             "Content-Type":"application/json;",
@@ -188,7 +189,7 @@ $( document ).ready(function() {
                     }
                     $.ajax({
                         url:`api/v1/amounts/${$("#idThe").val()}/add-value`,
-                        type:"PUT",
+                        type:"PATCH",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
                             "Content-Type":"application/json;",
@@ -276,79 +277,93 @@ $( document ).ready(function() {
         if (!$('#frmSearchG').valid()){
             return;
         }
-        $.get(`api/v1/amounts/GIFT/${$('#txtSearchG').val()}`, function(data){
-            $('#txtGiftCard').val(data.code);
-            $('#spMoney').html(data.value);
-            $('#idTheGift').val(data.id);
-            $('#mdGift').modal('show');
-        }).fail(function( jqXHR) { //ko tìm thấy dử liệu
-            if(parseInt(jqXHR.status)===404){
-                Swal.fire({
-                    title: 'New Gift',
-                    text:'Do you want to create gift ?',
-                    showCancelButton: true,
-                    confirmButtonText: `Save`,
-                }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                        let data = {
-                            "type":"GIFT",
-                            "code":$("#txtSearchG").val(),
-                            "value":0,
-                            "firstName": "null",
-                            "lastName": "null",
-                            "email":"null@null.null",
-                            "phone":"null",
-                            "note":""
-                        };
-                        $.ajax({
-                            url:"api/v1/amounts",
-                            type:"POST",
-                            headers: {
-                                "Accept" : "application/json; charset=utf-8;",
-                                "Content-Type":"application/json;",
-                                "Authorization":"Bearer "+token
-                            },
-                            contentType:"application/json; charset=utf-8",
-                            data:JSON.stringify(data),
-                            dataType:"json",
-                            success: function (result) {//tạo mới
-                                $('#txtGiftCard').val(result.code);
-                                $('#spMoney').html(result.value);
-                                $('#idTheGift').val(result.id);
-                                $('#mdGift').modal('show');
-                            },
-                            error: function (xhr) {
-                                if(xhr.status==400){
-                                    let aa='';
-                                    $.each(xhr.responseJSON.message, function( index, value ) {
-                                        aa+=' '+value;
-                                    });
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: xhr.status,
-                                        text: aa
-                                    })
-                                }else{
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: xhr.status,
-                                        text: xhr.responseText
-                                    })
+        $.ajax({
+            url:`api/v1/amounts/GIFT/${$('#txtSearchG').val()}`,
+            type:"GET",
+            headers: {
+                "Accept" : "application/json; charset=utf-8;",
+                "Content-Type":"application/json;",
+                "Authorization":"Bearer "+token
+            },
+            contentType:"application/json; charset=utf-8",
+            data:null,
+            dataType:"json",
+            success: function (data) {//cập nhật thành công
+                $('#txtGiftCard').val(data.code);
+                $('#spMoney').html(data.value);
+                $('#idTheGift').val(data.id);
+                $('#mdGift').modal('show');
+            },
+            error: function (xhr) {
+                if(parseInt(xhr.status)===404){
+                    Swal.fire({
+                        title: 'New Gift',
+                        text:'Do you want to create gift ?',
+                        showCancelButton: true,
+                        confirmButtonText: `Save`,
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            let data = {
+                                "type":"GIFT",
+                                "code":$("#txtSearchG").val(),
+                                "value":0,
+                                "firstName": "null",
+                                "lastName": "null",
+                                "email":"null@null.null",
+                                "phone":"null",
+                                "note":""
+                            };
+                            $.ajax({
+                                url:"api/v1/amounts",
+                                type:"POST",
+                                headers: {
+                                    "Accept" : "application/json; charset=utf-8;",
+                                    "Content-Type":"application/json;",
+                                    "Authorization":"Bearer "+token
+                                },
+                                contentType:"application/json; charset=utf-8",
+                                data:JSON.stringify(data),
+                                dataType:"json",
+                                success: function (result) {//tạo mới
+                                    $('#txtGiftCard').val(result.code);
+                                    $('#spMoney').html(result.value);
+                                    $('#idTheGift').val(result.id);
+                                    $('#mdGift').modal('show');
+                                },
+                                error: function (xhr) {
+                                    if(xhr.status==400){
+                                        let aa='';
+                                        $.each(xhr.responseJSON.message, function( index, value ) {
+                                            aa+=' '+value;
+                                        });
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: xhr.status,
+                                            text: aa
+                                        })
+                                    }else{
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: xhr.status,
+                                            text: xhr.responseText
+                                        })
+                                    }
                                 }
-                            }
-                        });
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Lưu thành công',
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
+                            });
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Lưu thành công',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
 
-                    }
-                })
+                        }
+                    })
+                }
             }
         });
+
     });
     let dau ='';
     $('#btnAddGift').on('click',function () {
@@ -376,7 +391,7 @@ $( document ).ready(function() {
                     }
                     $.ajax({
                         url:`api/v1/amounts/${$("#idTheGift").val()}/add-value`,
-                        type:"PUT",
+                        type:"PATCH",
                         headers: {
                             "Accept" : "application/json; charset=utf-8;",
                             "Content-Type":"application/json;",

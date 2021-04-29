@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -21,8 +22,10 @@ import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.AmountService;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.Locale;
 import java.util.Random;
 
@@ -65,24 +68,24 @@ public class AmountController {
     @PreAuthorize("hasAuthority('AMOUNT.CREATE')")
     @PostMapping("")
     @ApiOperation(value = "Create new amount")
-    public AmountView create(@Valid @RequestBody AmountDto amountDto) {
-        User createdBy = userRepository.findById(2L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+    public AmountView create(@Valid @RequestBody AmountDto amountDto, @ApiIgnore Principal principal) {
+        User createdBy = userRepository.findByUsername(principal.getName(), User.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Principal does not exist"));
         return ammountService.create(amountDto, createdBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
-    @PutMapping("{id}") // admin update
+    @PutMapping(value = "{id}")
     @ApiOperation(value = "Update information of amount")
-    public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto) {
-        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+    public AmountView update(@PathVariable("id") Long id, @Valid @RequestBody AmountDto amountDto, @ApiIgnore Principal principal) {
+        User updatedBy = userRepository.findByUsername(principal.getName(), User.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Principal does not exist"));
         return ammountService.update(id, amountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 
     @PreAuthorize("hasAuthority('AMOUNT.UPDATE')")
     @PatchMapping("{id}/add-value") //user update value point
     @ApiOperation(value = "Add value for amount")
-    public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto) {
-        User updatedBy = userRepository.findById(1L).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID User does not exist"));
+    public AmountView addValue(@PathVariable("id") Long id, @Valid @RequestBody AddValueAmountDto addValueAmountDto, @ApiIgnore Principal principal) {
+        User updatedBy = userRepository.findByUsername(principal.getName(), User.class).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Principal does not exist"));
         return ammountService.addValue(id, addValueAmountDto, updatedBy).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "ID Amount does not exist"));
     }
 

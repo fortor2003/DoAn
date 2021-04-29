@@ -1,10 +1,12 @@
 package pl.banhangtichluy.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +15,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Serializable {
 
     @Column(name = "username")
     @JsonProperty(value = "username")
@@ -46,6 +48,7 @@ public class User extends BaseEntity{
 
     @OneToMany(mappedBy = Amount_.CREATED_BY, fetch = FetchType.LAZY)
     @JsonProperty(value = "createdAmounts")
+    @JsonManagedReference
     private List<Amount> createdAmounts;
 
     @OneToMany(mappedBy = Amount_.UPDATED_AT, fetch = FetchType.LAZY)

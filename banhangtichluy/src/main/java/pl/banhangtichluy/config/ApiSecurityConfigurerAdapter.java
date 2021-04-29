@@ -30,19 +30,20 @@ public class ApiSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .antMatcher(basePath + "/**")
                 .authorizeRequests()
                 .antMatchers(basePath + "/auth/login").permitAll()
                 .anyRequest().authenticated()
                 .and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
-            @Override
-            public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().println(HttpStatus.UNAUTHORIZED.name());
-            }
-        });
+                    @Override
+                    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+                        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                        response.getWriter().println(HttpStatus.UNAUTHORIZED.name());
+                    }
+                });
     }
 
     @Override

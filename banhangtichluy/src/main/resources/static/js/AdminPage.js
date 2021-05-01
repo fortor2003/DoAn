@@ -206,7 +206,7 @@ $( document ).ready(function() {
                               <div class="dropdown-menu">
                                 <a class="dropdown-item" onclick="GanThongTinP(${row.code})" href="#">Chỉnh sửa</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Xóa</a>
+                                <a class="dropdown-item" onclick="xoaThongTinP(${row.id})" href="#">Xóa</a>
                               </div>
                             </div>`;
                 }
@@ -241,30 +241,29 @@ $( document ).ready(function() {
     });
     $('#btnUpdateP').on('click',function () {
        let data ={
+           "type": "POINT",
            "code": $('#txtPhoneP').val(),
-           "email": $('#txtEmailP').val(),
+           "value": $('#txtValueP').val(),
            "firstName": $('#txtFistNameP').val(),
            "lastName": $('#txtLastNameP').val(),
-           "note": $('#txtNoteP').val(),
+           "email": $('#txtEmailP').val(),
            "phone": $('#txtPhoneP').val(),
-           "type": "POINT",
-           "value": $('#txtValueP').val()
-       };
-       console.log(data);
-       console.log(`/api/v1/amounts/${$('#txtIdP').val()}`);
+           "note": $('#txtNoteP').val()
+       } ;
         $.ajax({
             url:`/api/v1/amounts/${$('#txtIdP').val()}`,
             type:"put",
             headers: {
-                "Accept" : "application/json; charset=utf-8;",
-                "Content-Type":"application/json;",
+                // "Accept" : "application/json; charset=utf-8;",
+                // "Content-Type":"application/json;",
                 "Authorization":"Bearer "+$('#hidToken').val()
             },
-            // contentType:"application/json; charset=utf-8",
-            data:data,
-            // dataType:"json",
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            dataType:"json",
             success: function (dataResult) {//cập nhật thành công
-                console.log(dataResult)
+                ResetThongTinP();
+                tbPoint.ajax.reload();
             },
             error: function (xhr) {
                 console.log(xhr)
@@ -287,6 +286,91 @@ $( document ).ready(function() {
                 }
             }
         });
+    });
+    $('#btnCreateP').on('click',function () {
+        if($("#txtPhoneP").val()){
+            $.ajax({
+                url:`api/v1/amounts/POINT/${$('#txtPhoneP').val()}`,
+                type:"get",
+                headers: {
+                    "Accept" : "application/json; charset=utf-8;",
+                    "Content-Type":"application/json;",
+                    "Authorization":"Bearer "+$('#hidToken').val()
+                },
+                contentType:"application/json; charset=utf-8",
+                data:null,
+                dataType:"json",
+                success: function (dataResult) {// thành công
+                    $("#txtFistNameP").val(dataResult.firstName);
+                    $("#txtLastNameP").val(dataResult.lastName);
+                    $("#txtEmailP").val(dataResult.email);
+                    $("#txtPhoneP").val(dataResult.code);
+                    $("#txtValueP").val(dataResult.value);
+                    $("#txtNoteP").val(dataResult.note);
+                    $("#txtIdP").val(dataResult.id);
+                    $('#btnUpdateP').show();
+                    $('#btnCreateP').hide();
+                },
+                error: function (jqXHR) {
+                    if(parseInt(jqXHR.status)===404){
+                        Swal.fire({
+                            title: 'New user',
+                            text:'Do you want to create user ?',
+                            showCancelButton: true,
+                            confirmButtonText: `Save`,
+                        }).then((result) => {
+                            /* Read more about isConfirmed, isDenied below */
+                            if (result.isConfirmed) {
+                                let data = {
+                                    "type":"POINT",
+                                    "code":$("#txtPhoneP").val(),
+                                    "value":$('#txtValueP').val()?parseInt($('#txtValueP').val()):0,
+                                    "firstName": $("#txtFistNameP").val()?$("#txtFistNameP").val():"null",
+                                    "lastName": $("#txtLastNameP").val()?$("#txtLastNameP").val():"null",
+                                    "email":$("#txtEmailP").val()?$("#txtEmailP").val():"null@null.null",
+                                    "phone":$("#txtPhoneP").val(),
+                                    "note":$('#txtNoteP').val()?$("#txtNoteP").val():"null"
+                                };
+                                $.ajax({
+                                    url:"api/v1/amounts",
+                                    type:"POST",
+                                    headers: {
+                                        "Accept" : "application/json; charset=utf-8;",
+                                        "Content-Type":"application/json;",
+                                        "Authorization":"Bearer "+$('#hidToken').val()
+                                    },
+                                    contentType:"application/json; charset=utf-8",
+                                    data:JSON.stringify(data),
+                                    dataType:"json",
+                                    success: function (result) {//tạo mới
+                                        tbPoint.ajax.reload();
+                                        ResetThongTinP();
+                                    },
+                                    error: function (xhr) {
+                                        console.log(xhr)
+                                        let aa='';
+                                        $.each(xhr.responseJSON, function( index, value ) {
+                                            aa+=' '+value.field;
+                                        });
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: xhr.status,
+                                            text: aa
+                                        })
+                                    }
+                                });
+                                Swal.fire('Saved!', '', 'success')
+                            }
+                        })
+                    }
+                }
+            });
+        }else{ /// search value null
+            Swal.fire({
+                icon: 'warning',
+                title: "Chưa nhập số điện thoại"
+            })
+        }
     });
     //endregion set Point
 
@@ -354,8 +438,7 @@ $( document ).ready(function() {
                                
                               </button>
                               <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Chỉnh sửa</a>
-                                <div class="dropdown-divider"></div>
+                               
                                 <a class="dropdown-item" href="#">Xóa</a>
                               </div>
                             </div>`;
@@ -390,7 +473,7 @@ function GanThongTinP(code) {
         contentType:"application/json; charset=utf-8",
         data:null,
         dataType:"json",
-        success: function (dataResult) {//cập nhật thành công
+        success: function (dataResult) {// thành công
             $("#txtFistNameP").val(dataResult.firstName);
             $("#txtLastNameP").val(dataResult.lastName);
             $("#txtEmailP").val(dataResult.email);
@@ -422,4 +505,81 @@ function GanThongTinP(code) {
         }
     });
 }
+function xoaThongTinP(id) {
+    $.ajax({
+        url:`api/v1/amounts/${id}`,
+        type:"delete",
+        headers: {
+            "Accept" : "application/json; charset=utf-8;",
+            "Content-Type":"application/json;",
+            "Authorization":"Bearer "+$('#hidToken').val()
+        },
+        contentType:"application/json; charset=utf-8",
+        data:null,
+        dataType:"json",
+        success: function (dataResult) {// thành công
+           tbPoint.ajax.reload();
+            Swal.fire('Xóa thành công!', '', 'success')
+        },
+        error: function (xhr) {
+            if(xhr.status==400){
+                let aa='';
+                $.each(xhr.responseJSON.message, function( index, value ) {
+                    aa+=' '+value;
+                });
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.status,
+                    text: aa
+                })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.status,
+                    text: xhr.responseText
+                })
+            }
+        }
+    });
+}
 //endregion Point
+
+//region Balance
+function XoaBanlace(id) {
+    $.ajax({
+        url:`api/v1/amounts/${id}`,
+        type:"delete",
+        headers: {
+            "Accept" : "application/json; charset=utf-8;",
+            "Content-Type":"application/json;",
+            "Authorization":"Bearer "+$('#hidToken').val()
+        },
+        contentType:"application/json; charset=utf-8",
+        data:null,
+        dataType:"json",
+        success: function (dataResult) {// thành công
+            tbBalance.ajax.reload();
+            Swal.fire('Xóa thành công!', '', 'success')
+        },
+        error: function (xhr) {
+            if(xhr.status==400){
+                let aa='';
+                $.each(xhr.responseJSON.message, function( index, value ) {
+                    aa+=' '+value;
+                });
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.status,
+                    text: aa
+                })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.status,
+                    text: xhr.responseText
+                })
+            }
+        }
+    });
+}
+//endregion Balance

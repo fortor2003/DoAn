@@ -16,7 +16,7 @@ $( document ).ready(function() {
     //region transaction
     let timeSelect = '';
     let today = new Date();
-    let date = today.getFullYear()+'-'+((today.getMonth()+1)<10?'0'+(today.getMonth()+1):(today.getMonth()+1))+'-'+today.getDate();
+    let date = today.getFullYear()+'-'+((today.getMonth()+1)<10?'0'+(today.getMonth()+1):(today.getMonth()+1))+'-'+(today.getDate()<10?'0'+today.getDate():today.getDate());
     tbTransP = $('#tbTransPoint').DataTable( {
         serverSide: true,
         ordering: false,
@@ -439,7 +439,7 @@ $( document ).ready(function() {
                               </button>
                               <div class="dropdown-menu">
                                
-                                <a class="dropdown-item" href="#">Xóa</a>
+                                <a class="dropdown-item" onclick="XoaBanlace(${row.id})" href="#">Xóa</a>
                               </div>
                             </div>`;
                 }

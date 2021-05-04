@@ -7,7 +7,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.DefaultRedirectStrategy;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import pl.banhangtichluy.enums.AtrributeNameSession;
@@ -32,12 +35,20 @@ public class PageSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").permitAll()
                 .successHandler(new AuthenticationSuccessHandler() {
+                    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+
                     @Override
                     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
                         String token = jwtService.generateToken(userDetails);
                         request.getSession().setAttribute(AtrributeNameSession.TOKEN_API.name(), token);
-                        response.sendRedirect(request.getContextPath());
+                        if (AuthorityUtils.authorityListToSet(userDetails.getAuthorities()).contains("ROLE_MANAGER")) {
+                            redirectStrategy.sendRedirect(request, response, "/manager");
+                        } else if (AuthorityUtils.authorityListToSet(userDetails.getAuthorities()).contains("ROLE_STAFF")) {
+                            redirectStrategy.sendRedirect(request, response, "/staff");
+                        } else {
+                            redirectStrategy.sendRedirect(request, response, "/");
+                        }
                     }
                 })
                 .and().logout().logoutSuccessUrl("/login")
@@ -47,7 +58,8 @@ public class PageSecurityConfigurerAdapter extends WebSecurityConfigurerAdapter 
                         request.getSession().invalidate();
                         response.sendRedirect(request.getContextPath());
                     }
-                });
+                })
+        ;
     }
 
     @Override

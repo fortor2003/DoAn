@@ -12,10 +12,10 @@
                 <a class="nav-link" th:href="@{/}">Home </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link"  th:href="@{/userInfo}">Manager</a>
+                <a class="nav-link"  th:href="@{/staff}">Staff</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/admin}">Admin</a>
+                <a class="nav-link" th:href="@{/manager}">Manager </a>
             </li>
             <li class="nav-item" th:if="${#request.userPrincipal != null}">
                 <a class="nav-link" th:href="@{/logout}">Logout</a>

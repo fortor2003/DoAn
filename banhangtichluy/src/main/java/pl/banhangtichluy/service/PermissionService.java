@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.banhangtichluy.constants.QuerydslConstant;
-import pl.banhangtichluy.dto.views.v2.PermissionView;
+import pl.banhangtichluy.dto.views.PermissionView;
 import pl.banhangtichluy.entity.Permission;
 import pl.banhangtichluy.entity.QPermission;
 import pl.banhangtichluy.reponsitory.PermissionRepository;

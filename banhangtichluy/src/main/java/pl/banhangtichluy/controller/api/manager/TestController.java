@@ -1,34 +1,17 @@
 package pl.banhangtichluy.controller.api.manager;
 
-import com.github.javafaker.Faker;
-import com.github.javafaker.Name;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-import pl.banhangtichluy.dto.PasswordUserDto;
-import pl.banhangtichluy.dto.PersonalInfoUserDto;
-import pl.banhangtichluy.dto.UserDto;
-import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.views.AmountView;
-import pl.banhangtichluy.dto.views.TransactionView;
-import pl.banhangtichluy.dto.views.UserView;
-import pl.banhangtichluy.entity.Amount;
-import pl.banhangtichluy.entity.User;
-import pl.banhangtichluy.enums.AmountType;
 import pl.banhangtichluy.reponsitory.AmountRepository;
 import pl.banhangtichluy.reponsitory.TransactionRepository;
 import pl.banhangtichluy.reponsitory.UserRepository;
 import pl.banhangtichluy.service.JwtService;
-import pl.banhangtichluy.service.TransactionService;
 import pl.banhangtichluy.service.UserService;
-import pl.banhangtichluy.specifications.AmountSpec;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("${spring.data.rest.base-path.manager}/tests")

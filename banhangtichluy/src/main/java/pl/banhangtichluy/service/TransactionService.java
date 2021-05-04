@@ -10,7 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import pl.banhangtichluy.constants.QuerydslConstant;
 import pl.banhangtichluy.dto.criteria.BaseCriteriaDto;
-import pl.banhangtichluy.dto.views.v2.TransactionView;
+import pl.banhangtichluy.dto.views.TransactionView;
 import pl.banhangtichluy.entity.QAmount;
 import pl.banhangtichluy.entity.QTransaction;
 import pl.banhangtichluy.entity.QUser;

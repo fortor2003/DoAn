@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import pl.banhangtichluy.dto.views.v2.PermissionView;
+import pl.banhangtichluy.dto.views.PermissionView;
 import pl.banhangtichluy.service.PermissionService;
 
 import java.util.List;

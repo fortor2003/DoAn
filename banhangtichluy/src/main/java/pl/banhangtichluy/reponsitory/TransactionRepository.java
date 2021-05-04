@@ -1,18 +1,10 @@
 package pl.banhangtichluy.reponsitory;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import pl.banhangtichluy.dto.views.TransactionView;
 import pl.banhangtichluy.entity.Amount;
 import pl.banhangtichluy.entity.Transaction;
 import pl.banhangtichluy.querydsl.ExtendedQuerydslPredicateExecutor;
-
-import java.util.List;
-import java.util.Optional;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, ExtendedQuerydslPredicateExecutor<Amount> {
 

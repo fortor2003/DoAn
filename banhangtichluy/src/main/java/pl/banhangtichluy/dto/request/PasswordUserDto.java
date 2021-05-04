@@ -1,4 +1,4 @@
-package pl.banhangtichluy.dto;
+package pl.banhangtichluy.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

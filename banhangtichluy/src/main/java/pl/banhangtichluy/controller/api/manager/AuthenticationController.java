@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import pl.banhangtichluy.dto.AuthenticateDto;
-import pl.banhangtichluy.dto.views.v2.PersonalInfoView;
-import pl.banhangtichluy.dto.views.v2.UserView;
+import pl.banhangtichluy.dto.request.AuthenticateDto;
+import pl.banhangtichluy.dto.views.PersonalInfoView;
+import pl.banhangtichluy.dto.views.UserView;
 import pl.banhangtichluy.service.JwtService;
 import pl.banhangtichluy.service.RoleService;
 import pl.banhangtichluy.service.UserDetailsServiceImpl;
 import pl.banhangtichluy.service.UserService;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 

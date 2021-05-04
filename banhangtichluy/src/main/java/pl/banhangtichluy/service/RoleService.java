@@ -6,7 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.banhangtichluy.constants.QuerydslConstant;
-import pl.banhangtichluy.dto.views.v2.RoleView;
+import pl.banhangtichluy.dto.views.RoleView;
 import pl.banhangtichluy.entity.QRole;
 import pl.banhangtichluy.entity.Role;
 import pl.banhangtichluy.reponsitory.RoleRepository;

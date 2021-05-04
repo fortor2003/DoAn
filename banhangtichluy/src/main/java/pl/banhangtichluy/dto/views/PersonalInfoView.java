@@ -1,15 +1,11 @@
-package pl.banhangtichluy.dto.views.v2;
+package pl.banhangtichluy.dto.views;
 
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.MappingProjection;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import pl.banhangtichluy.constants.EntityPropsDescriptionConstant;
-import pl.banhangtichluy.entity.QUser;
 
 import java.util.List;
 

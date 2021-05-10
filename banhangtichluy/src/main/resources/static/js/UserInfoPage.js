@@ -273,10 +273,11 @@ $( document ).ready(function() {
 
         },
     });
-    $('#btnSearchG').on("click",function () {
+    $('#btnSearchG').on("submit",function (e) {
         if (!$('#frmSearchG').valid()){
             return;
         }
+        e.preventDefault();
         $.ajax({
             url:`api/v1/amounts/GIFT/${$('#txtSearchG').val()}`,
             type:"GET",
@@ -363,7 +364,10 @@ $( document ).ready(function() {
                 }
             }
         });
-
+    });
+    $('#txtSearchG').keypress(function (e) {
+        if (e.keyCode == 13)
+            $('#btnSearchG').click();
     });
     let dau ='';
     $('#btnAddGift').on('click',function () {

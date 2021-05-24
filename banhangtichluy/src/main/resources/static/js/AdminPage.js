@@ -130,7 +130,6 @@ $( document ).ready(function() {
     } );
     $('#btnSearchTrans').on("click",function () {
         timeSelect=$('#txtTimeTrans').val();
-        console.log(timeSelect)
         tbTransP.ajax.reload();
         tbTransG.ajax.reload();
     });

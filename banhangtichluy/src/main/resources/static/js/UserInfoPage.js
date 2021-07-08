@@ -4,107 +4,110 @@ $( document ).ready(function() {
         $('#mdSearchGift').modal('show');
     });
     $('#btnPoint').on("click",function () {
-        $('#mdPoint').modal('show');
+        $('#mdSearchPoint').modal('show');
     });
     var token = $('#hidToken').val();
      //region point
-    $('#mdPoint').on('hidden.bs.modal', function () {
+    $('#mdViewPoint').on('hidden.bs.modal', function () {
         $("#idThe").val(0);
-        $("#txtFirstNamePoint").val("");
-        $("#txtLastNamePoint").val("");
-        $("#txtEmailPoint").val("");
+        $("#txtFullNamePointV").val("");
         $("#txtPhonePoint").val("");
-        $("#spPoint").html(0);
+        $("#txtPointV").html(0);
     });
-    $('#mdPoint').on('shown.bs.modal', function () {
+    $('#mdSearchPoint').on('shown.bs.modal', function () {
         $('#txtPhonePoint').trigger('focus')
     });
-    $("#btnSearchPoint").on("click",function () {
-        if($("#txtPhonePoint").val()){
-            $.ajax({
-                url:`api/v1/amounts/POINT/${$('#txtPhonePoint').val()}`,
-                type:"get",
-                headers: {
-                    "Accept" : "application/json; charset=utf-8;",
-                    "Content-Type":"application/json;",
-                    "Authorization":"Bearer "+$('#hidToken').val()
-                },
-                contentType:"application/json; charset=utf-8",
-                data:null,
-                dataType:"json",
-                success: function (data) {//cập nhật thành công
-                    $("#idThe").val(data.id);
-                    $("#txtFirstNamePoint").val(data.firstName);
-                    $("#txtLastNamePoint").val(data.lastName);
-                    $("#txtEmailPoint").val(data.email);
-                    $("#spPoint").html(data.value);
-                },
-                error: function (jqXHR) {
-                    if(parseInt(jqXHR.status)===404){
-                        Swal.fire({
-                            title: 'New user',
-                            text:'Do you want to create user ?',
-                            showCancelButton: true,
-                            confirmButtonText: `Save`,
-                        }).then((result) => {
-                            /* Read more about isConfirmed, isDenied below */
-                            if (result.isConfirmed) {
-                                let data = {
-                                    "type":"POINT",
-                                    "code":$("#txtPhonePoint").val(),
-                                    "value":0,
-                                    "firstName": $("#txtFirstNamePoint").val()?$("#txtFirstNamePoint").val():"null",
-                                    "lastName": $("#txtLastNamePoint").val()?$("#txtLastNamePoint").val():"null",
-                                    "email":$("#txtEmailPoint").val()?$("#txtEmailPoint").val():"null@null.null",
-                                    "phone":$("#txtPhonePoint").val(),
-                                    "note":""
-                                };
-                                $.ajax({
-                                    url:"api/v1/amounts",
-                                    type:"POST",
-                                    headers: {
-                                        "Accept" : "application/json; charset=utf-8;",
-                                        "Content-Type":"application/json;",
-                                        "Authorization":"Bearer "+$('#hidToken').val()
-                                    },
-                                    contentType:"application/json; charset=utf-8",
-                                    data:JSON.stringify(data),
-                                    dataType:"json",
-                                    success: function (result) {//tạo mới
-                                        $("#idThe").val(result.id);
-                                        $("#txtFirstNamePoint").val(result.firstName);
-                                        $("#txtLastNamePoint").val(result.lastName);
-                                        $("#txtEmailPoint").val(result.email);
-                                        $("#txtPhonePoint").val(result.code);
-                                        $("#spPoint").html(result.value);
-                                    },
-                                    error: function (xhr) {
-                                        let aa='';
-                                        $.each(xhr.responseJSON.message, function( index, value ) {
-                                            aa+=' '+value;
-                                        });
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: xhr.status,
-                                            text: aa
-                                        })
-                                    }
-                                });
-                                Swal.fire('Saved!', '', 'success')
-                            }
-                        })
+
+    $('#frmSearchPoint').validate({
+        rules: {
+            'txtPhonePoint': 'required'
+        },
+        messages: {
+            'txtPhonePoint': 'Chưa nhập số điện thoại'
+        },
+        submitHandler: function () {
+            try {
+                $.ajax({
+                    url:`api/v1/amounts/POINT/${$('#txtPhonePoint').val()}`,
+                    type:"get",
+                    headers: {
+                        "Accept" : "application/json; charset=utf-8;",
+                        "Content-Type":"application/json;",
+                        "Authorization":"Bearer "+$('#hidToken').val()
+                    },
+                    contentType:"application/json; charset=utf-8",
+                    data:null,
+                    dataType:"json",
+                    success: function (data) {//Tìm thành công
+                        $('#txtFullNamePointV').val(data.firstName + ' ' + data.lastName);
+                        $('#txtPhonePointV').val(data.code);
+                        $('#txtPointV').html(data.value);
+                        $('#idThe').val(data.id);
+                        $('#mdViewPoint').modal('show');
+                    },
+                    error: function (jqXHR) {
+                        if(parseInt(jqXHR.status)===404){//chưa có
+                            $('#txtPhonePointCr').val($('#txtPhonePoint').val())
+                            $('#mdCreatePoint').modal('show');
+                        }
                     }
-                }
-            });
-        }else{ /// search value null
-            $("#idThe").val(0);
-            $("#txtFirstNamePoint").val("");
-            $("#txtLastNamePoint").val("");
-            $("#txtEmailPoint").val("");
-            $("#txtPhonePoint").val("");
-            $("#spPoint").html(0);
+                });
+            } catch (err) {
+                console.error(err);
+                return false;
+            }
         }
     });
+
+    $('#frmCreatePoint').on("submit",function (e) {
+        e.preventDefault();
+        let data = {
+            "type":"POINT",
+            "code":$("#txtPhonePointCr").val(),
+            "value":0,
+            "firstName": $("#txtFirstNamePointCr").val()?$("#txtFirstNamePointCr").val():"null",
+            "lastName": $("#txtLastNamePointCr").val()?$("#txtLastNamePointCr").val():"null",
+            "email":"null@example.com",
+            "phone":$("#txtPhonePointCr").val(),
+            "note":""
+        };
+        $.ajax({
+            url:"api/v1/amounts",
+            type:"POST",
+            headers: {
+                "Accept" : "application/json; charset=utf-8;",
+                "Content-Type":"application/json;",
+                "Authorization":"Bearer "+$('#hidToken').val()
+            },
+            contentType:"application/json; charset=utf-8",
+            data:JSON.stringify(data),
+            dataType:"json",
+            success: function (result) {//tạo mới
+
+                $('#txtFullNamePointV').val(result.firstName + ' ' + result.lastName);
+                $('#txtPhonePointV').val(result.code);
+                $('#txtPointV').html(result.value);
+                $('#idThe').val(result.id);
+                $('#mdCreatePoint').modal('hide');
+                $('#mdViewPoint').modal('show');
+
+                Swal.fire('Saved!', '', 'success')
+            },
+            error: function (xhr) {
+                let aa='';
+                $.each(xhr.responseJSON.message, function( index, value ) {
+                    aa+=' '+value;
+                });
+                Swal.fire({
+                    icon: 'error',
+                    title: xhr.status,
+                    text: aa
+                })
+            }
+        });
+
+    });
+
     $("#btnAddPoint").on("click",function () {
         if($("#idThe").val()>0){
             Swal.fire({
@@ -130,12 +133,7 @@ $( document ).ready(function() {
                         data:JSON.stringify(data),
                         dataType:"json",
                         success: function (result) {//cập nhật thành công
-                            $("#idThe").val(result.id);
-                            $("#txtFirstNamePoint").val(result.firstName);
-                            $("#txtLastNamePoint").val(result.lastName);
-                            $("#txtEmailPoint").val(result.email);
-                            $("#txtPhonePoint").val(result.code);
-                            $("#spPoint").html(result.value);
+                            $("#txtPointV").html(result.value);
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Lưu thành công',
@@ -200,11 +198,8 @@ $( document ).ready(function() {
                         dataType:"json",
                         success: function (result) {//cập nhật thành công
                             $("#idThe").val(result.id);
-                            $("#txtFirstNamePoint").val(result.firstName);
-                            $("#txtLastNamePoint").val(result.lastName);
-                            $("#txtEmailPoint").val(result.email);
-                            $("#txtPhonePoint").val(result.code);
-                            $("#spPoint").html(result.value);
+
+                            $("#txtPointV").html(result.value);
 
                             Swal.fire({
                                 icon: 'success',

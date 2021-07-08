@@ -102,51 +102,108 @@
         </div>
     </div>
 <!--    Point-->
-    <div class="modal fade bd-example-modal-lg" id="mdPoint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <!--tìm-->
+    <div class="modal fade bd-example-modal-lg" id="mdSearchPoint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" >Point Card Transaction</h5>
+                    <h5 class="modal-title" >Search Point Card</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form class="form" id="frmPoint">
+                <form class="form" id="frmSearchPoint">
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-6 col-md-12">
                                 <div class="form-group " >
-                                    <label for="txtFirstNamePoint">First Name</label>
-                                    <input type="text" class="form-control" id="txtFirstNamePoint">
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-12">
-                                <div class="form-group " >
-                                    <label for="txtLastNamePoint">Last Name</label>
-                                    <input type="text" class="form-control" id="txtLastNamePoint">
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-12">
-                                <div class="form-group " >
-                                    <label for="txtEmailPoint">Email</label>
-                                    <input type="text" class="form-control" id="txtEmailPoint">
-                                </div>
-                            </div>
-                            <div class="col-6 col-md-12">
-                                <div class="form-group " >
                                     <label for="txtPhonePoint">Phone</label>
-                                    <input type="number" class="form-control"  id="txtPhonePoint" placeholder="Search Phone">
+                                    <input type="number" class="form-control"  id="txtPhonePoint" name="txtPhonePoint" placeholder="Search Phone" required>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <h1>Points:<span id="spPoint">0</span></h1>
                         </div>
                     </div>
-                    <input type="text" id="idThe" hidden>
-
                     <div class="modal-footer">
                         <input type="submit" id="btnSearchPoint" class="btn btn-default"  value="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Tạo-->
+    <div class="modal fade bd-example-modal-lg" id="mdCreatePoint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Search Point Card</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form" id="frmCreatePoint">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-6">
+                                <div class="form-group " >
+                                    <label for="txtFirstNamePointCr">First Name</label>
+                                    <input type="text" class="form-control" id="txtFirstNamePointCr" name="txtFirstNamePointCr">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="form-group " >
+                                    <label for="txtLastNamePointCr">Last Name</label>
+                                    <input type="text" class="form-control" id="txtLastNamePointCr" name="txtLastNamePointCr">
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-12">
+                                <div class="form-group " >
+                                    <label for="txtPhonePointCr">Phone</label>
+                                    <input type="number" class="form-control"  id="txtPhonePointCr" name="txtPhonePointCr" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" id="btnCreatePoint" class="btn btn-default"  value="Create">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--Thêm bớt-->
+    <div class="modal fade bd-example-modal-lg" id="mdViewPoint" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Point Card</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form class="form" id="frmViewPoint">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-6 col-md-6">
+                                <div class="form-group " >
+                                    <label for="txtFullNamePointV">Full Name</label>
+                                    <input type="text" class="form-control" id="txtFullNamePointV" readonly>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-6">
+                                <div class="form-group " >
+                                    <label for="txtPhonePointV">Phone</label>
+                                    <input type="text" class="form-control" id="txtPhonePointV" readonly>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <div class="form-group " >
+                                    <label style=" font-size: xx-large;">Point: <span id="txtPointV"></span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="text" class="form-control"  id="idThe" name="idThe" hidden>
+                    <div class="modal-footer">
                         <input type="button" id="btnAddPoint" class="btn btn-info"  value="Add Point">
                         <input type="button" id="btnRedeemPoint" class="btn btn-warning"  value="Reddem">
                     </div>
